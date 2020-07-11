@@ -1,42 +1,90 @@
-.basic-flex {
+
+@media only screen and (max-width: 500px) {
+  
+}
+
+//
+@media only screen and (min-height: 1081px) {
+  .basic-flex {
+    justify-content: space-between;
+    flex-direction: column;
+  }
+  .inner {
+    height: 90%;
+  }
+  .thumbnailContainer {
+    width: 1200px;
+    height: 600px;
+  }
+  .thumbnailContainer:hover {
+    height: 850px;
+    transition: height 0.2s;
+  }
+
+  .thumbnailContainer:hover > h1 {
+    transition: font-size 0.2s;
+    font-size: 120px;
+  }
+
+  .thumbnail {
+    width: 1200px;
+    height:850px;
+  }
+
+  .thumb3 {
+    content: url("../../../assets/SpiceAndWolfHorizontal.jpg");
+  }
+
+  .thumb2 {
+    content: url("../../../assets/YourNameHorizontal.png");
+  }
+
+  .thumb1 {
+    content: url("../../../assets/WeatheringWithYouHorizontal.jpg");
+  }
+
+  h1 {
+    position: absolute;
+    font-size: 100px;
+    bottom: -65px;
+    left: 20px;
+    text-align: left;
+    color: white;
+    transition: font-size 0.2s;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+  }
+}
+
+@media only screen and (max-height: 1080px){
+  .basic-flex {
     display: flex;
-    align-items: center;
+    align-items: center; 
     justify-content: space-evenly;
   }
-  .outer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: url('../../../assets/Landscape/RandomLandscape1.jpg');
-    background-size: cover;
-  }
+  
   .inner {
     width: 1200px;
     height: 700px;
   }
-  
-  .box1, .box2, .box3 {
+  .thumbnailContainer {
     width: 300px;
     height: 500px;
-    transition: height 0.2s;
-    overflow: hidden;
-    border: 2px solid rgba(255, 255, 255, 0.26);
-    position: relative;
-    outline: none;
   }
-  
-  .box1:hover, .box2:hover, .box3:hover {
+  .thumbnailContainer:hover {
     height: 650px;
     transition: height 0.2s;
   }
-  
-  .box3:hover > h1 {
+  .thumbnailContainer:hover > h1 {
     transition: font-size 0.2s;
     font-size: 40px;
   }
-  
+
+  .thumbnail {
+    width: 300px;
+    height:650px;
+  }
+
   h1 {
     position: absolute;
     bottom: 0;
@@ -44,17 +92,44 @@
     transform: translateX(-50%);
     color: white;
     transition: font-size 0.2s;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
   }
-  
-  .thumbnail {
-    width: 300px;
-    height:650px;
-    object-fit: cover;
-    pointer-events: none;
-  }
-  
-  .box1, .box2 {
-    filter: grayscale(80%);
-  }
+}
 
-  
+.thumbnailContainer {
+  transition: height 0.2s;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.26);
+  position: relative;
+  outline: none;
+}
+
+.basic-flex {
+  display: flex;
+  align-items: center; 
+  justify-content: space-evenly;
+}
+
+.outer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%; 
+  width: 100%;
+  background: url('../../../assets/Landscape/RandomLandscape1.jpg');
+  background-size: cover;
+  overflow: hidden;
+}
+
+
+
+.thumbnail {
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.box1, .box2 {
+  filter: grayscale(80%);
+}
+
