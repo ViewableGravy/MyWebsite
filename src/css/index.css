@@ -23,6 +23,7 @@
   transition: height 0.2s;
   overflow: hidden;
   border: 2px solid rgba(255, 255, 255, 0.26);
+  position: relative;
 }
 
 .box1:hover, .box2:hover, .box3:hover {
@@ -30,8 +31,9 @@
   transition: height 0.2s;
 }
 
-.thumbcontainer {
-  position: relative;
+.box3:hover > h1 {
+  transition: font-size 0.2s;
+  font-size: 40px;
 }
 
 h1 {
@@ -40,10 +42,15 @@ h1 {
   left: 50%;
   transform: translateX(-50%);
   color: white;
+  transition: font-size 0.2s;
 }
 
 .thumbnail {
   width: 300px;
   height:650px;
   object-fit: cover;
+}
+
+.box1, .box2 {
+  filter: grayscale(80%);
 }

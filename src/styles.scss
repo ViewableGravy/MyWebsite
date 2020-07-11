@@ -1,0 +1,57 @@
+/* You can add global styles to this file, and also import other style files */
+.basic-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.outer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: url('Assets/Landscape/RandomLandscape1.jpg');
+    background-size: cover;
+}
+.inner {
+    width: 1200px;
+    height: 700px;
+}
+
+.box1, .box2, .box3 {
+    width: 300px;
+    height: 500px;
+    transition: height 0.2s;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.26);
+    position: relative;
+}
+
+.box1:hover, .box2:hover, .box3:hover {
+    height: 650px;
+    transition: height 0.2s;
+}
+
+.box3:hover > h1 {
+    transition: font-size 0.2s;
+    font-size: 40px;
+}
+
+h1 {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    transition: font-size 0.2s;
+}
+
+.thumbnail {
+    width: 300px;
+    height:650px;
+    object-fit: cover;
+}
+
+.box1, .box2 {
+    filter: grayscale(80%);
+}
