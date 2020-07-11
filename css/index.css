@@ -30,6 +30,18 @@
   transition: height 0.2s;
 }
 
+.thumbcontainer {
+  position: relative;
+}
+
+h1 {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+}
+
 .thumbnail {
   width: 300px;
   height:650px;
