@@ -1,68 +1,5 @@
 
-@media only screen and (max-width: 500px) {
-  
-}
-
-//
-@media only screen and (min-height: 1081px) {
-  .basic-flex {
-    justify-content: space-between;
-    flex-direction: column;
-  }
-  .inner {
-    height: 90%;
-  }
-  .thumbnailContainer {
-    width: 1200px;
-    height: 600px;
-  }
-  .thumbnailContainer:hover {
-    height: 850px;
-    transition: height 0.2s;
-  }
-
-  .thumbnailContainer:hover > h1 {
-    transition: font-size 0.2s;
-    font-size: 120px;
-  }
-
-  .thumbnail {
-    width: 1200px;
-    height:850px;
-  }
-
-  .thumb3 {
-    content: url("../../../assets/SpiceAndWolfHorizontal.jpg");
-  }
-
-  .thumb2 {
-    content: url("../../../assets/YourNameHorizontal.png");
-  }
-
-  .thumb1 {
-    content: url("../../../assets/WeatheringWithYouHorizontal.jpg");
-  }
-
-  h1 {
-    position: absolute;
-    font-size: 100px;
-    bottom: -65px;
-    left: 20px;
-    text-align: left;
-    color: white;
-    transition: font-size 0.2s;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: black;
-  }
-}
-
-@media only screen and (max-height: 1080px){
-  .basic-flex {
-    display: flex;
-    align-items: center; 
-    justify-content: space-evenly;
-  }
-  
+@media only screen and (min-width: 1080px){
   .inner {
     width: 1200px;
     height: 700px;
@@ -80,11 +17,6 @@
     font-size: 40px;
   }
 
-  .thumbnail {
-    width: 300px;
-    height:650px;
-  }
-
   h1 {
     position: absolute;
     bottom: 0;
@@ -95,41 +27,165 @@
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;
   }
+
+  .thumbnailContainer {
+    margin-left: 25px;
+    margin-right: 25px;
+    transition: height 0.2s;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.26);
+    position: relative;
+    outline: none;
+    display: flex;
+    align-items: center; 
+    justify-content: space-evenly;
+  }
+  
+  .desktop-basic-flex {
+    display: flex;
+    align-items: center; 
+    justify-content: space-evenly;
+  }
+  
+  .outer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%; 
+    width: 100%;
+    background: url('../../../assets/Landscape/RandomLandscape1.jpg');
+    background-size: cover;
+    overflow: hidden;
+  }
+  
+  .thumbnail {
+    object-fit: cover;
+    pointer-events: none;
+    width: 300px;
+    height:650px;
+  }
+  
+  #thumbnail_container_1, #thumbnail_container_2 {
+    filter: grayscale(80%);
+  }
+
+  #listContainer {
+    display: flex;
+    align-items: center; 
+    justify-content: space-evenly;
+    margin-top: 0;
+    margin-bottom: 0;
+    height: 650px;
+  }
 }
 
-.thumbnailContainer {
-  transition: height 0.2s;
-  overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.26);
-  position: relative;
-  outline: none;
+ul {
+  padding-left: 0;
+  width: 80%;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-.basic-flex {
-  display: flex;
-  align-items: center; 
-  justify-content: space-evenly;
+@media (min-width: 320px) and (max-width: 480px) { 
+  .outer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh; 
+    width: 100vw;
+    background: url('../../../assets/Landscape/RandomLandscape1.jpg');
+    background-size: cover;
+    overflow: hidden;
+    display: flex;
+    align-items: center; 
+    justify-content: space-evenly;
+  }
+  
+  .inner {
+    width: 100%;
+    height: 80%;
+    overflow: hidden;
+    display: flex;
+    align-items: center; 
+    justify-content: space-evenly;
+  }
+
+  .left {
+    transition: all 0.2s;
+    z-index: 0;
+    position: absolute;
+    top: 10%;
+    left: 0;
+    height: 80%;
+    width: 60%;
+  }
+
+  .right {
+    transition: all 0.2s;
+    z-index: 0;
+    position: absolute;
+    top: 10%;
+    right: 0;
+    height: 80%;
+    width: 60%;
+  }
+
+  .middle {
+    transition: all 0.2s;
+    z-index: 2;
+    position: absolute;
+    overflow: hidden;
+    height: 100%;
+    left: 15%;
+    right: 15%;
+    width: 70%;
+  }
+
+  .middle:hover {
+    transition: all 0.2s;
+    grid-row-start: 1;
+    grid-row-end: 6;
+  }
+
+  .middle:hover > h1 {
+    transition: font-size 0.2s;
+    font-size: 40px;
+  }
+
+  #listContainer {
+    height:100%;
+    width: 95%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  h1 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 5%;
+    margin: 0 0 0 0;
+    color: white;
+    transition: font-size 0.2s;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+  }
+  
+  .thumbnail {
+    position:absolute;
+    object-fit: cover;
+    pointer-events: none;
+    width: 100%;
+    height:100%;
+  }
+
 }
 
-.outer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%; 
-  width: 100%;
-  background: url('../../../assets/Landscape/RandomLandscape1.jpg');
-  background-size: cover;
-  overflow: hidden;
-}
 
 
+/*
 
-.thumbnail {
-  object-fit: cover;
-  pointer-events: none;
-}
-
-.box1, .box2 {
-  filter: grayscale(80%);
-}
-
+right - 5-10% on left side of screen
+middle - middle of screen (10-15% from each side of screen) and zoomed a little
+left - 5-10% on the right side of screen
+*/
