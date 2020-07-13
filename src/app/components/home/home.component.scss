@@ -179,6 +179,20 @@ ul {
     height:100%;
   }
 
+  .button-left {
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    width: 10vw;
+    height: 10vw;
+    zindex: 2;
+    background: url('../../../assets/backButton.png');
+  }
+
+  .button-right {
+    
+  }
+
 }
 
 
