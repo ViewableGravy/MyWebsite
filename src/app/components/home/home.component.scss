@@ -77,6 +77,11 @@
     margin-bottom: 0;
     height: 650px;
   }
+
+  #bulletContainer {
+    visibility: hidden;
+    overflow: hidden;
+  }
 }
 
 ul {
@@ -84,6 +89,10 @@ ul {
   width: 80%;
   margin-top: 0;
   margin-bottom: 0;
+}
+
+ol {
+  list-style: none;
 }
 
 @media (min-width: 320px) and (max-width: 480px) { 
@@ -172,20 +181,32 @@ ul {
     height:100%;
   }
 
-  .button-left {
-    position: absolute;
-    bottom: 5%;
-    left: 5%;
-    width: 10vw;
-    height: 10vw;
-    z-index: 2;
-    background: url('../../../assets/backButton.png');
+  #bulletContainer {
+    visibility: visible;
+    position: fixed;
+    width: 30vw;
+    height: 4vh;
+    left: 50vw;
+    transform: translateX(-50%);
+    bottom: 0vh;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0;
   }
 
-  .button-right {
-    
+  .bullet {
+    transition: all 0.5s;
+    background-color: white;
+    width: 20%;
+    height: 0;
+    padding-bottom: 20%;
+    border-radius: 50%;
+    opacity: 50%;
   }
 
+  .highlighted {
+    opacity: 80%;
+  }
 }
 
 
