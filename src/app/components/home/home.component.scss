@@ -196,7 +196,7 @@ ol {
   }
 
   .bullet {
-    opacity: 50%;
+    opacity: 0.5;
     transition: all 0.5s;
     visibility: visible;
     background-color: white;
@@ -208,7 +208,7 @@ ol {
 
   .highlighted {
     transition: all 0.5s;
-    opacity: 80%;
+    opacity: 0.8;
     visibility: visible;
   }
 }
