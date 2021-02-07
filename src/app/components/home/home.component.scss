@@ -196,6 +196,7 @@ ol {
   }
 
   .bullet {
+    opacity: 50%;
     transition: all 0.5s;
     visibility: visible;
     background-color: white;
@@ -203,19 +204,11 @@ ol {
     height: 0;
     padding-bottom: 20%;
     border-radius: 50%;
-    opacity: 50%;
   }
 
   .highlighted {
+    transition: all 0.5s;
     opacity: 80%;
+    visibility: visible;
   }
 }
-
-
-
-/*
-
-right - 5-10% on left side of screen
-middle - middle of screen (10-15% from each side of screen) and zoomed a little
-left - 5-10% on the right side of screen
-*/
