@@ -192,10 +192,12 @@ ol {
     display: flex;
     justify-content: space-evenly;
     padding: 0;
+    overflow: visible;
   }
 
   .bullet {
     transition: all 0.5s;
+    visibility: visible;
     background-color: white;
     width: 20%;
     height: 0;
