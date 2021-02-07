@@ -1,10 +1,8 @@
-
-
 <body>
-  <div class="outer desktop-basic-flex">
+  <div class="outer desktop-basic-flex" (swipe)="onSwipe($event)">
     <div class="inner desktop-basic-flex">
       <ol id="listContainer">
-        <li class="thumbnailContainer left" id="thumbnail_Container_1">
+        <li class="thumbnailContainer left top-left" id="thumbnail_Container_1">
           <img class="thumbnail" id="thumbnail_1" src="assets/WeatheringWithYouVertical.jpg">
           <h1>Server - ToDo</h1>
         </li>
@@ -12,13 +10,11 @@
           <img class="thumbnail" id="thumbnail_2" src="assets/YourName.jpg">
           <h1>ToDo</h1>
         </li>
-        <li class="thumbnailContainer right"  id="thumbnail_Container_3" [routerLink]="'/Gravylang'">
+        <li class="thumbnailContainer right top-right"  id="thumbnail_Container_3" [routerLink]="'/Gravylang'">
           <img class="thumbnail" id="thumbnail_3" src="assets/SpiceAndWolf.jpg">
           <h1>Gravylang</h1>
         </li>
       </ol>
     </div>
   </div>
-  <div class="button-left"></div>
-  <div class="button-right"></div>
 </body>

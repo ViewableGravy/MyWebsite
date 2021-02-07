@@ -111,52 +111,44 @@ ul {
     justify-content: space-evenly;
   }
 
+  .thumbnailContainer {
+    position: fixed;
+    transition: all 0.5s;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.4);
+    overflow: hidden;
+  }
+
   .left {
-    transition: all 0.2s;
     z-index: 0;
-    position: absolute;
-    top: 10%;
+    top: 15%;
     left: 0;
-    height: 80%;
+    height: 70%;
     width: 60%;
   }
 
   .right {
-    transition: all 0.2s;
     z-index: 0;
-    position: absolute;
-    top: 10%;
-    right: 0;
-    height: 80%;
+    top: 15%;
+    left: 45%;
+    height: 70%;
     width: 60%;
   }
 
+  .top-right {
+    z-index: 1;
+  }
+
   .middle {
-    transition: all 0.2s;
     z-index: 2;
-    position: absolute;
-    overflow: hidden;
-    height: 100%;
+    height: 85%;
+    top: 7.5%;
     left: 15%;
-    right: 15%;
     width: 70%;
-  }
-
-  .middle:hover {
-    transition: all 0.2s;
-    grid-row-start: 1;
-    grid-row-end: 6;
-  }
-
-  .middle:hover > h1 {
-    transition: font-size 0.2s;
-    font-size: 40px;
   }
 
   #listContainer {
     height:100%;
     width: 95%;
-    overflow: hidden;
     position: relative;
   }
 
@@ -186,7 +178,7 @@ ul {
     left: 5%;
     width: 10vw;
     height: 10vw;
-    zindex: 2;
+    z-index: 2;
     background: url('../../../assets/backButton.png');
   }
 
