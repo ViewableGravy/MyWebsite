@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -35,7 +34,7 @@ export class HomeComponent implements OnInit {
       
       let initialTopRight = document.getElementsByClassName("top-right")[0];
       if(this.IsNotNullOrUndefined(initialTopRight)) {
-         initialTopRight.classList.remove('top-right');
+        initialTopRight.classList.remove('top-right');
       }
     
       let initialMiddle = document.getElementsByClassName('middle')[0];
@@ -73,7 +72,7 @@ export class HomeComponent implements OnInit {
     if(this.IsNotNullOrUndefined(topRight)) {
       let initialTopLeft = document.getElementsByClassName("top-left")[0];
       if(this.IsNotNullOrUndefined(initialTopLeft)) {
-         initialTopLeft.classList.remove('top-left');
+        initialTopLeft.classList.remove('top-left');
       }
     
       let initialMiddle = document.getElementsByClassName("middle")[0];

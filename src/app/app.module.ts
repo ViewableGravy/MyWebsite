@@ -7,12 +7,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GravylangComponent } from './components/gravylang/gravylang.component';
 import { HomeComponent } from './components/home/home.component';
+import { SkillTreeComponent } from './components/skill-tree/skill-tree.component';
+
+import * as Hammer from 'hammerjs';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+
+export class MyHammerConfig extends HammerGestureConfig {
+  overrides = <any> {
+    swipe: { direction: Hammer.DIRECTION_ALL },
+  };
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     GravylangComponent,
-    HomeComponent
+    HomeComponent,
+    SkillTreeComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +32,12 @@ import { HomeComponent } from './components/home/home.component';
     MonacoEditorModule.forRoot(),
     HammerModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

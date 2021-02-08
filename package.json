@@ -21,6 +21,7 @@
     "@angular/router": "~10.0.3",
     "hammerjs": "^2.0.8",
     "monaco-editor": "^0.20.0",
+    "ng2-page-scroll": "^4.0.0-beta.12",
     "ngx-monaco-editor": "^9.0.0",
     "normalize.css": "^8.0.1",
     "rxjs": "~6.5.5",

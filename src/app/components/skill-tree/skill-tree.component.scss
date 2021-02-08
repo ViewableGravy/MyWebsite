@@ -1,0 +1,40 @@
+#page {
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+#page > section {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    padding: 5px;
+    box-sizing: border-box;
+    transition: all 0.5s cubic-bezier(0.1, 1, 0.5, 1);;
+}
+
+#page > .below {
+    top: 100vh;
+}
+#page > .above {
+    top: -100vh;
+}
+
+.focused {
+    top: 0;
+}
+
+#introduction {
+    background-color: lightblue;
+}
+
+#tree {
+    background-color: lightcoral;
+}
+
+p {
+    margin: 0 0 0 0;
+    text-align: center;
+    font-size: xx-large;
+}
+
