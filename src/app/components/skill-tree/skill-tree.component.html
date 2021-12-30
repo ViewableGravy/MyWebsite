@@ -3,7 +3,12 @@
     <p>skill-tree works!</p>
   </section>
   <section id="tree" class="below" (onwheel)="MoveUp()">
-    <p>This is where the tree goes</p>
+    <button (click)="MoveUp()">Home</button>
+    <div class="container" id="container" #container>
+      <div class="timeline" id="timeline">
+        <skill-listcomponent></skill-listcomponent>
+      </div>
+    </div>
   </section>
 </div>
 
