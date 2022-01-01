@@ -1,10 +1,10 @@
 <div id="page" (swipe)="onSwipe($event)">
   <section id="introduction" class="focused" (onwheel)="MoveDown()">
-    <p>skill-tree works!</p>
+    <p> Scroll down to see this wonderful work in progress</p>
   </section>
   <section id="tree" class="below" (onwheel)="MoveUp()">
     <button (click)="MoveUp()">Home</button>
-    <div class="container" id="container" #container>
+    <div class="container" id="container" (scroll)="timelineScroll($event)" #container>
       <div class="timeline" id="timeline">
         <skill-listcomponent></skill-listcomponent>
       </div>

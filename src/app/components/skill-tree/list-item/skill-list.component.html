@@ -1,5 +1,5 @@
 <ul>
-  <li *ngFor="let item of items">
+  <li *ngFor="let item of items | slice:min:max" #cards>
     <div class="content">
       <h2>{{item.heading}}</h2>
       <p>{{item.body}}</p>
