@@ -7,37 +7,56 @@ import { SkillListModule, SkillListComponent } from './list-item/skill-list.comp
   templateUrl: './skill-tree.component.html',
   styleUrls: ['./skill-tree.component.scss']
 })
-export class SkillTreeComponent implements AfterViewInit {
+export class SkillTreeComponent {
   @ViewChild('container') public container: ElementRef;
   @ViewChild(SkillListComponent) private skillList: SkillListComponent;
 
   private topCard;
   private bottomCard;
+  eFilter = Filter;
 
-  constructor() { 
-  }
+  constructor(private ref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.scrollBottom();
   }
 
-  ngAfterViewInit(): void {
-    this.scrollBottom();
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    let width = event.target.innerWidth - 1015;
+
+    if (width > 85) 
+      return;
+
+    if (width < 0)
+      width = 0;
+
+    let percent = width / 85;
+    let suggested = document.getElementById('Suggested-Scroll');
+
+    suggested.style.opacity = percent.toString();
+  }
+
+  public ApplyFilter(filter: any) {
+    console.log(Filter[filter])
   }
 
   @HostListener('mousewheel', ['$event']) 
-  scroll(event: any) {
+  private scroll(event: any) {
     if (document.getElementById('tree').classList.contains("focused")) {
       //timeline
     } else {
       let wheelDirection = Math.max(-1, Math.min(1, (event.deltaY || -event.detail)));
       if (wheelDirection === 1) {
-        this.MoveDown();
+        if (this.skillList.ready) {
+          this.MoveDown();
+        } else {
+          alert("please try again now")
+        }
       }
     }
   }
 
-  timelineScroll(event) {
+  public timelineScroll() {
     if (!document.getElementById('tree').classList.contains("focused")) {
       return;
     }
@@ -46,14 +65,11 @@ export class SkillTreeComponent implements AfterViewInit {
       c.nativeElement.style.border = "none";
     });
 
-    
-
-    let cards = this.skillList.cards.toArray();
     let first=-1; //top element position in array
     let last=-1; //bottom element position in array (should be higher)
 
     //optimisation - store these instead of calculating every scroll event (then only check before and after first)
-    cards.forEach((c, i) => {
+    this.skillList.cards.toArray().forEach((c, i) => {
       if (!this.isPartiallyInViewport(c.nativeElement)) 
         return;
         
@@ -63,55 +79,29 @@ export class SkillTreeComponent implements AfterViewInit {
       last = i;
     });
 
-    cards[first].nativeElement.style.border = "2px solid green";
-    cards[last].nativeElement.style.border = "2px solid blue";
+    this.HandleTop(first)
 
-    if (first <= 2) {
-      //if there is 3 elements rendered on the page above it, then we are going to add more
-      const previousScroll = this.container.nativeElement.scrollTop;
-      let height = this.getRealHeight(this.skillList.cards.toArray()[0]) + this.getRealHeight(this.skillList.cards.toArray()[1]);
-        console.log(height);
-      if (this.skillList.loadNewTops()) {
-        //problem is that skillList hasn't updated yet and hence wrong numnbers - force recheck (changedetector or update array instead)
-        height = this.getRealHeight(this.skillList.cards.toArray()[0]) + this.getRealHeight(this.skillList.cards.toArray()[1]);
-        console.log(height)
-        this.container.nativeElement.scrollTop = previousScroll + height;
-        console.log(`height: ${height} \nprev: ${previousScroll}\ncur:${this.container.nativeElement.scrollTop}`);
-        console.log("add")
-        return;
-      }
-    }
-
-    if (first >= 5) {
-      const previousScroll = this.container.nativeElement.scrollTop;
-      let height = this.getRealHeight(this.skillList.cards.toArray()[0]) + this.getRealHeight(this.skillList.cards.toArray()[1]);
-      if (this.skillList.cullTop()) {
-        this.container.nativeElement.scrollTop = previousScroll - height;
-        return;
-      }
-    }
-
-    if (cards.length - 1 - last < 3) {
-      this.skillList.loadNewBottom(); //easy since it doesn't affect height
+    if (this.skillList.cards.toArray().length - 1 - last < 3) {
+      this.skillList.loadNewBottom();
       return;
     }
-
-    if (cards.length - 1 - last > 3) {
-      this.skillList.cullBottom(); //easy since it doesn't affect height
+    
+    if (this.skillList.cards.toArray().length - 1 - last > 3) {
+      this.skillList.cullBottom();
       return;
     }
   }
 
-  onSwipe(event) {
+  public onSwipe(event) {
     console.log(event);
-    if(Math.abs(event.deltaY) > 40 ) {
+    if(Math.abs(event.deltaY) > 40) {
       if (event.deltaY < 0) {
         this.MoveDown();
       }
     }
   }
 
-  MoveDown() : void {
+  public MoveDown() : void {
     const foo = document.getElementById('page');
     for (let i = 0; i < foo.children.length; i++) {
       if(foo.children[i].classList.contains("focused")) {
@@ -125,7 +115,7 @@ export class SkillTreeComponent implements AfterViewInit {
     }
   }
 
-  MoveUp() : void {
+  public MoveUp() : void {
     const foo = document.getElementById('page');
     for (let i = 0; i < foo.children.length; i++) {
       if(foo.children[i].classList.contains("focused")) {
@@ -141,7 +131,29 @@ export class SkillTreeComponent implements AfterViewInit {
     }
   }
 
-  isPartiallyInViewport(element) {
+  @debounce(50)
+  private HandleTop(first) {
+    if (first < 4) {
+      const previousScroll = this.container.nativeElement.scrollTop;
+
+      if (this.skillList.loadNewTops()) {
+        const newElementsHeight = this.getRealHeight(this.skillList.cards.toArray()[0]) + this.getRealHeight(this.skillList.cards.toArray()[1]); //new element added
+        this.container.nativeElement.scrollTop = previousScroll + newElementsHeight;
+        return;
+      }
+    }
+
+    if (first >= 7) {
+      const previousScroll = this.container.nativeElement.scrollTop;
+      const height = this.getRealHeight(this.skillList.cards.toArray()[0]) + this.getRealHeight(this.skillList.cards.toArray()[1]);
+      if (this.skillList.cullTop()) {
+        this.container.nativeElement.scrollTop = previousScroll - height;
+        return;
+      }
+    }
+  }
+
+  private isPartiallyInViewport(element) {
     const rect = element.getBoundingClientRect();
     return (
         rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
@@ -149,16 +161,33 @@ export class SkillTreeComponent implements AfterViewInit {
     );
   }
 
-  scrollBottom(): void {
-    try {
-      this.container.nativeElement.scrollTop = this.container.nativeElement.scrollHeight;
-    } catch (err) {}  
-  }
-
-  getRealHeight(element: any): number {
+  private getRealHeight(element: any): number {
     const styles = window.getComputedStyle(element.nativeElement);
     const margin = parseFloat(styles['marginTop']) + parseFloat(styles['marginBottom']);
     return margin + element.nativeElement.offsetHeight;
   }
 
 }
+
+export function debounce(delay: number = 300): MethodDecorator {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    const timeoutKey = Symbol();
+
+    const original = descriptor.value;
+
+    descriptor.value = function (...args) {
+      clearTimeout(this[timeoutKey]);
+      this[timeoutKey] = setTimeout(() => original.apply(this, args), delay);
+    };
+
+    return descriptor;
+  };
+}
+
+export enum Filter {
+  Professional,
+  Gaming,
+  Financial,
+  Personal
+}
+

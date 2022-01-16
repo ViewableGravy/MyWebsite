@@ -40,6 +40,10 @@ ul li:last-child {
     display: none;
 }
 
+ul li img {
+    width: 100%;
+}
+
 @media only screen and (min-width: 768px) {
 
     ul li {

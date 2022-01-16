@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, NgModule, OnInit, ViewChild, QueryList, ViewChildren, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, Input, NgModule, OnInit, ViewChild, QueryList, ViewChildren, ElementRef, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -9,6 +9,8 @@ import { BrowserModule } from '@angular/platform-browser';
 })
 export class SkillListComponent implements AfterViewInit {
     @ViewChildren('cards') public cards: QueryList<ElementRef>;
+    @ViewChild('list') public list: ElementRef;
+    @ViewChild('fire') private fire: ElementRef;
 
     //Local "cache" of cards. Not all are loaded however this means that scrolling quickly should be smooth af
     //This will get updated less frequently from a database but will get more data at a time to put it into memory
@@ -167,7 +169,11 @@ export class SkillListComponent implements AfterViewInit {
         },
         {
             heading: "thirteenth Card",
-            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"
+            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+            image: {
+                img: "https://cliparting.com/wp-content/uploads/2018/03/cool-pictures-2018-2.jpg",
+                aspect: "4 / 3"
+            }
         },
         {
             heading: "twelth Card",
@@ -175,54 +181,68 @@ export class SkillListComponent implements AfterViewInit {
         },
         {
             heading: "eleventh Card",
-            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"
+            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+            image: {
+                img: "https://c4.wallpaperflare.com/wallpaper/227/583/604/anime-anime-girls-digital-art-artwork-2d-hd-wallpaper-preview.jpg",
+                aspect: "14/22"
+            }
         },
-        {
+        { //220
             heading: "tenth Card",
             body: "dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"
         },
-        {
+        { //160
             heading: "nineth Card",
             body: "Lorem ipsum dolor sit amet"
         },
-        {
-            heading: "Eighth Card",
-            body: "ex ea commodo consequat"
+        { //160
+            heading: "Rrrrruuuufff",
+            body: "Lorem Ruffffsum",
+            image: {
+                img: "./assets/test/cool-pictures-2018-2.jpg",
+                aspect: "4 / 3"
+            }
+        },
+        { //220
+            heading: "Dr. Seuss",
+            body: "You have brains in your head. You have feet in your shoes. You can steer yourself any direction you choose"
         },
         {
-            heading: "seventh Card",
-            body: "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"
+            heading: "Steve Jobs",
+            body: "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma — which is living with the results of other people's thinking"
         },
         {
-            heading: "Sixth Card",
-            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"
+            heading: "Eleanor Roosevelt",
+            body: "The future belongs to those who believe in the beauty of their dreams"
         },
         {
-            heading: "Fifth Card",
-            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"
+            heading: "Robert Louis Stevenson",
+            body: "Don't judge each day by the harvest you reap but by the seeds that you plant",
+            image: {
+                img: "https://c4.wallpaperflare.com/wallpaper/28/832/21/ultrawide-8k-no-mans-sky-poster-wallpaper-preview.jpg",
+                aspect: "84/29"
+            }
         },
         {
-            heading: "Fourth Card",
-            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"
+            heading: "Margaret Mead",
+            body: "Always remember that you are absolutely unique. Just like everyone else"
         },
         {
-            heading: "Third Card",
-            body: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"
+            heading: "Franklin D. Roosevelt",
+            body: "When you reach the end of your rope, tie a knot in it and hang on"
         },
         {
-            heading: "Second Card",
-            body: "incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
-        },
-        {
-            heading: "first card",
-            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+            heading: "Mother Teresa",
+            body: "Spread love everywhere you go. Let no one ever come to you without leaving happier"
         }
     ];
 
     min = 8;
     max = 15;
 
-    constructor() { }
+    ready = false;
+
+    constructor(private ref: ChangeDetectorRef) { }
 
     ngOnInit(): void {
         this.max = this.items.length;
@@ -230,13 +250,33 @@ export class SkillListComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
+        let images = document.images;
+        let counter = 0;
+        let incrementCounter = () => {
+            counter++;
+            if ( counter === images.length ) {
+                this.scrollBottom();
+                this.ready = true;
+            }
+        }
+
+        [].forEach.call( images, ( img ) => {
+            if (img.complete)
+                incrementCounter();
+            else
+                img.addEventListener( 'load', incrementCounter, false );
+        });
     }
 
+    private scrollBottom() {
+        if (!document.getElementById('tree').classList.contains("focused"))
+            document.getElementById("fire").scrollIntoView();
+    }
 
-//learn how to force re-render
     public loadNewTops(): boolean {
         if (this.min >= 2) {
             this.min -= 2;
+            this.ref.detectChanges();
             return true;
         }
 
@@ -246,6 +286,7 @@ export class SkillListComponent implements AfterViewInit {
     public cullBottom(): boolean {
         if (this.max > 1) {
             this.max--;
+            this.ref.detectChanges();
             return true;
         }
 
@@ -255,6 +296,7 @@ export class SkillListComponent implements AfterViewInit {
     public loadNewBottom(): boolean {
         if (this.max < this.items.length) {
             this.max++;
+            this.ref.detectChanges();
             return true;
         }
 
@@ -264,10 +306,15 @@ export class SkillListComponent implements AfterViewInit {
     public cullTop(): boolean {
         if (this.min < this.items.length + 1) {
             this.min += 2;
+            this.ref.detectChanges();
             return true;
         }
 
         return false;
+    }
+
+    public ApplyFilter() : boolean {
+        return true;
     }
 }
 
