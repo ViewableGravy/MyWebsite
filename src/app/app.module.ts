@@ -11,6 +11,7 @@ import { SkillTreeComponent } from './components/skill-tree/skill-tree.component
 
 import * as Hammer from 'hammerjs';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { SkillListComponent, SkillListModule } from './components/skill-tree/list-item/skill-list.component';
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {
@@ -30,7 +31,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     AppRoutingModule,
     FormsModule,
     MonacoEditorModule.forRoot(),
-    HammerModule
+    HammerModule,
+    SkillListModule
   ],
   providers: [
     {

@@ -1,9 +1,28 @@
 <div id="page" (swipe)="onSwipe($event)">
   <section id="introduction" class="focused" (onwheel)="MoveDown()">
-    <p>skill-tree works!</p>
+    <p> Eventually you will be welcomed to a timeline of my life when you scroll down<br> For now you may scroll down to view the unfinished product</p>
   </section>
   <section id="tree" class="below" (onwheel)="MoveUp()">
-    <p>This is where the tree goes</p>
+    <button (click)="MoveUp()">Home</button>
+    <div class="container" id="container" (scroll)="timelineScroll()" #container>
+      <div class="timeline" id="timeline">
+        <skill-listcomponent id="skill-list"></skill-listcomponent>
+      </div>
+      <div id="Suggested-Scroll">
+        <div>
+          <div></div>
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div id="filter">
+      <button (click)="ApplyFilter(eFilter.Professional)">🖥️</button>
+      <button (click)="ApplyFilter(eFilter.Gaming)">🕹️</button>
+      <button (click)="ApplyFilter(eFilter.Financial)">💰</button>
+      <button (click)="ApplyFilter(eFilter.Personal)">😜</button>
+    </div>
   </section>
 </div>
 

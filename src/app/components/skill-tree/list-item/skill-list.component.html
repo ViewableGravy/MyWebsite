@@ -1,0 +1,16 @@
+<ul #list>
+  <li *ngFor="let item of items | slice:min:max" #cards>
+    <div class="content">
+      <h2>{{item.heading}}</h2>
+      <p>{{item.body}}</p>
+      <img *ngIf="item.image" src={{item.image.img}} [style.aspect-ratio]="item.image.aspect"/>
+    </div>
+  </li>
+  <a>
+    <li id="fire">
+      <img src="../../../assets/Fire-GIFs-Get-the-best-GIF-on-GIPHY.gif">
+    </li>
+  </a>
+  
+</ul>
+
