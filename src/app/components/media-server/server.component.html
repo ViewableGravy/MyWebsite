@@ -1,0 +1,6 @@
+<ul>
+  <li *ngFor="let item of domains" style="--clr:{{ item.color }}">
+    <a href="https://{{ item.domain }}/" [attr.data-text]="&nbsp;item.name">{{ item.name }}</a>
+    <sub>{{ item.domain }}</sub>
+  </li>
+</ul>

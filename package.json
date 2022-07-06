@@ -24,6 +24,7 @@
     "ng2-page-scroll": "^4.0.0-beta.12",
     "ngx-monaco-editor": "^9.0.0",
     "normalize.css": "^8.0.1",
+    "npm": "^8.13.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

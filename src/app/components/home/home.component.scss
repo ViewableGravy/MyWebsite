@@ -7,6 +7,7 @@
   .thumbnailContainer {
     width: 300px;
     height: 500px;
+    text-align: center;
   }
   .thumbnailContainer:hover {
     height: 650px;
@@ -26,6 +27,7 @@
     transition: font-size 0.2s;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;
+    width: 90%;
   }
 
   .thumbnailContainer {
@@ -37,41 +39,41 @@
     position: relative;
     outline: none;
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: space-evenly;
   }
-  
+
   .desktop-basic-flex {
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: space-evenly;
   }
-  
+
   .outer {
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%; 
+    height: 100%;
     width: 100%;
     background: url('../../../assets/Landscape/RandomLandscape1.jpg');
     background-size: cover;
     overflow: hidden;
   }
-  
+
   .thumbnail {
     object-fit: cover;
     pointer-events: none;
     width: 300px;
     height:650px;
   }
-  
+
   #thumbnail_container_1, #thumbnail_container_2 {
     filter: grayscale(80%);
   }
 
   #listContainer {
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: space-evenly;
     margin-top: 0;
     margin-bottom: 0;
@@ -96,28 +98,28 @@ ol {
   padding: 0;
 }
 
-@media (min-width: 320px) and (max-width: 480px) { 
+@media (min-width: 320px) and (max-width: 480px) {
   .outer {
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%; 
+    height: 100%;
     width: 100%;
     overflow-y: hidden;
     background: url('../../../assets/Landscape/RandomLandscape1.jpg');
     background-size: cover;
     overflow: hidden;
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: space-evenly;
   }
-  
+
   .inner {
     width: 100%;
     height: 80%;
     overflow: hidden;
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: space-evenly;
   }
 
@@ -177,7 +179,7 @@ ol {
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;
   }
-  
+
   .thumbnail {
     position:absolute;
     object-fit: cover;

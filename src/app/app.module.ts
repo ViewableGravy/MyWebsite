@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { GravylangComponent } from './components/gravylang/gravylang.component';
 import { HomeComponent } from './components/home/home.component';
 import { SkillTreeComponent } from './components/skill-tree/skill-tree.component';
+import { ServerHomeComponent } from './components/media-server/server.component'
 
 import * as Hammer from 'hammerjs';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
@@ -24,7 +25,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     AppComponent,
     GravylangComponent,
     HomeComponent,
-    SkillTreeComponent
+    SkillTreeComponent,
+    ServerHomeComponent
   ],
   imports: [
     BrowserModule,
