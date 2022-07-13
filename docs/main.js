@@ -3103,31 +3103,37 @@ const domains = [
     {
         "name": "radarr",
         "domain": "radarr.gravy.cc",
+        "path": "",
         "color": "#FFC230"
     },
     {
         "name": "lidarr",
         "domain": "lidarr.gravy.cc",
+        "path": "",
         "color": "#009252"
     },
     {
         "name": "sonarr",
         "domain": "sonarr.gravy.cc",
+        "path": "",
         "color": "#2193B5"
     },
     {
         "name": "plex",
         "domain": "plex.gravy.cc",
+        "path": "",
         "color": "#e5a00d"
     },
     {
         "name": "deluge",
         "domain": "deluge.gravy.cc",
+        "path": "",
         "color": "#4C90E8"
     },
     {
         "name": "Kuma",
         "domain": "uptime.gravy.cc",
+        "path": "/status/subdomains",
         "color": "#7BE7A3"
     }
 ];
@@ -3168,7 +3174,7 @@ function ServerHomeComponent_li_8_Template(rf, ctx) { if (rf & 1) {
     const item_r1 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵstyleMapInterpolate1"]("--clr:", item_r1.color, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate1"]("href", "https://", item_r1.domain, "/", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate2"]("href", "https://", item_r1.domain, "", item_r1.path, "", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵattribute"]("data-text", item_r1.name);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](item_r1.name);
@@ -3192,7 +3198,7 @@ ServerHomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefi
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5, "\n");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "ul");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, "\n  ");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](8, ServerHomeComponent_li_8_Template, 8, 7, "li", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](8, ServerHomeComponent_li_8_Template, 8, 8, "li", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](9, "\n");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](10, "\n");
