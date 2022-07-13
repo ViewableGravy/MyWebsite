@@ -23,5 +23,10 @@ export const domains = [
     "name": "deluge",
     "domain": "deluge.gravy.cc",
     "color": "#4C90E8"
+  },
+  {
+    "name": "Kuma",
+    "domain": "uptime.gravy.cc",
+    "color": "#7BE7A3"
   }
 ]
