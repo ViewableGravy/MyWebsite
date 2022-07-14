@@ -2,7 +2,7 @@
 
 /***/ "./node_modules/css-loader/dist/cjs.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/resolve-url-loader/index.js?!./node_modules/sass-loader/dist/cjs.js?!./src/styles.scss":
 /*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ref--14-1!./node_modules/postcss-loader/src??embedded!./node_modules/resolve-url-loader??ref--14-3!./node_modules/sass-loader/dist/cjs.js??ref--14-4!./src/styles.scss ***!
+  !*** ./node_modules/css-loader/dist/cjs.js??ref--13-1!./node_modules/postcss-loader/src??embedded!./node_modules/resolve-url-loader??ref--13-3!./node_modules/sass-loader/dist/cjs.js??ref--13-4!./src/styles.scss ***!
   \*********************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11,7 +11,7 @@
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(true);
 // Module
-exports.push([module.i, "body {\n  -webkit-user-select: none;\n          user-select: none;\n  margin: 0 0 0 0;\n}", "",{"version":3,"sources":["styles.scss"],"names":[],"mappings":"AAAA;EACE,yBAAA;UAAA,iBAAA;EACA,eAAA;AACF","file":"styles.scss","sourcesContent":["body {\r\n  user-select: none;\r\n  margin: 0 0 0 0;\r\n}"]}]);
+exports.push([module.i, "body {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n  margin: 0 0 0 0;\n}", "",{"version":3,"sources":["styles.scss"],"names":[],"mappings":"AAAA;EACE,yBAAA;KAAA,sBAAA;UAAA,iBAAA;EACA,eAAA;AACF","file":"styles.scss","sourcesContent":["body {\n  user-select: none;\n  margin: 0 0 0 0;\n}"]}]);
 // Exports
 module.exports = exports;
 
@@ -411,7 +411,7 @@ module.exports = function (list, options) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var api = __webpack_require__(/*! ../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-            var content = __webpack_require__(/*! !../node_modules/css-loader/dist/cjs.js??ref--14-1!../node_modules/postcss-loader/src??embedded!../node_modules/resolve-url-loader??ref--14-3!../node_modules/sass-loader/dist/cjs.js??ref--14-4!./styles.scss */ "./node_modules/css-loader/dist/cjs.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/resolve-url-loader/index.js?!./node_modules/sass-loader/dist/cjs.js?!./src/styles.scss");
+            var content = __webpack_require__(/*! !../node_modules/css-loader/dist/cjs.js??ref--13-1!../node_modules/postcss-loader/src??embedded!../node_modules/resolve-url-loader??ref--13-3!../node_modules/sass-loader/dist/cjs.js??ref--13-4!./styles.scss */ "./node_modules/css-loader/dist/cjs.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/resolve-url-loader/index.js?!./node_modules/sass-loader/dist/cjs.js?!./src/styles.scss");
 
             content = content.__esModule ? content.default : content;
 
@@ -439,7 +439,7 @@ module.exports = content.locals || {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! E:\Programming\MyWebsite\src\styles.scss */"./src/styles.scss");
+module.exports = __webpack_require__(/*! /home/gravy/Documents/gravy.cc/src/styles.scss */"./src/styles.scss");
 
 
 /***/ })
