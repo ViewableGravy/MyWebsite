@@ -1,30 +1,21 @@
 
-#Install Node to build and run application
-
-FROM node:16
-
-#Create this folder 
+#Install Node (Probably not required at this point) to build and run application
+FROM node:16 as node
 WORKDIR /usr/src/app
 
+#Move package.json and install npm packages
 COPY package*.json ./
 COPY . .
+RUN npm install --force --silent
 
-#install dependencies
-RUN npm install -g --force --silent
-RUN npm install @angular/cli --force --silent
-
-#build the application
-RUN npm run build --silent
-
-#copy the build
-COPY ./docs ./docs/
+#Build Package
+RUN npm run build
 
 #Setup Nginx
 FROM nginx:latest
 
-COPY ./docs /usr/share/nginx/html
+#COPY ./gravy.cc/docs /usr/share/nginx/html
+COPY --from=node /usr/src/app/docs /usr/share/nginx/html
+COPY ./config/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 80
-
-
-
+EXPOSE 4200
