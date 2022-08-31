@@ -87,12 +87,12 @@ ul li a:hover + sub {
 
 ul li sub {
   position: absolute;
-  transform: translate(-60% , 135%);
-  font-size: 1.2em;
-  z-index: 2;
-  color: rgba(0, 255, 234, 0.5);
+  color: rgb(0, 255, 234);
+  right: 0px;
+  bottom: -2px;
   pointer-events: none;
-  transition: 1s;
+  font-size: 1.2em;
+  text-shadow: 2px 2px rgb(0, 110, 77);
 }
 
 p {
