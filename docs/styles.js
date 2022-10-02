@@ -11,7 +11,7 @@
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(true);
 // Module
-exports.push([module.i, "body {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n  margin: 0 0 0 0;\n}", "",{"version":3,"sources":["styles.scss"],"names":[],"mappings":"AAAA;EACE,yBAAA;KAAA,sBAAA;UAAA,iBAAA;EACA,eAAA;AACF","file":"styles.scss","sourcesContent":["body {\n  user-select: none;\n  margin: 0 0 0 0;\n}"]}]);
+exports.push([module.i, "body {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n  margin: 0 0 0 0;\n}", "",{"version":3,"sources":["styles.scss"],"names":[],"mappings":"AAAA;EACE,yBAAA;KAAA,sBAAA;UAAA,iBAAA;EACA,eAAA;AACF","file":"styles.scss","sourcesContent":["body {\r\n  user-select: none;\r\n  margin: 0 0 0 0;\r\n}"]}]);
 // Exports
 module.exports = exports;
 
@@ -439,7 +439,7 @@ module.exports = content.locals || {};
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/gravy/Documents/docker/gravy.cc/src/styles.scss */"./src/styles.scss");
+module.exports = __webpack_require__(/*! E:\Programming\MyWebsite\src\styles.scss */"./src/styles.scss");
 
 
 /***/ })

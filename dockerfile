@@ -9,7 +9,7 @@ COPY . .
 RUN npm install --force --silent
 
 #Build Package
-RUN npm run build
+RUN npm run prod
 
 #Setup Nginx
 FROM nginx:latest
