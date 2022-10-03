@@ -18,7 +18,8 @@
     }
   ],
   "compilerOptions": {
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "composite": true
   },
   "include": [
     "src/**/*.ts"
