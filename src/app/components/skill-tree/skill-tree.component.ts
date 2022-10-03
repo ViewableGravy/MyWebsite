@@ -1,4 +1,3 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, HostListener, NgModule, ViewChild, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewInit, QueryList } from '@angular/core';
 import { SkillListModule, SkillListComponent } from './list-item/skill-list.component'
 
