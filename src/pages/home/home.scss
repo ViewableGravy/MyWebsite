@@ -1,0 +1,133 @@
+.home_outer {
+    .background {
+        background-image: url('../../assets/Landscape/RandomLandscape1.jpg');
+        background-size: cover;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+        position: absolute; 
+    }
+    
+    .InitDiv {
+        height: 100vh;
+        width: 100vw;
+        background: black;
+        cursor: pointer;
+    }
+    
+    .InitOuterCenter {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .InitH1, .InitP {
+        position: relative;
+        color: white;
+        text-align: center;
+        user-select: none;
+    }
+    
+    @keyframes fadeInOut {
+        0% {
+            opacity:0.9;
+        }
+        100% {
+            opacity:0;
+        }
+    }
+    
+    .InitP {
+        animation: fadeInOut ease-in-out 1.5s infinite;
+        animation-direction: alternate;
+    }
+    
+    ol {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        padding: 0;
+        align-items: center;
+    }
+    
+    li {
+        margin-left: 25px;
+        margin-right: 25px;
+        min-width: 300px;
+        height: 500px;
+        transition: height .2s;
+        overflow: hidden;
+        border: 2px solid hsla(0,0%,100%,.26);
+        position: relative;
+        outline: none;
+    }
+    
+    li:hover {
+        height: 650px;
+    }
+    
+    li:hover > h1 {
+        font-size: 40px;
+    }
+    
+    img {
+        position:relative;
+        object-fit: cover;
+        pointer-events: none;
+        width: 300px;
+        height: 650px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .title {
+        position: absolute;
+        bottom: 20px;
+        text-align: center;
+        margin: auto;
+        width: 100%;
+        color: white;
+        -webkit-text-stroke: 1px black;
+        transition: font-size 0.2s;
+    }
+
+    .ipod_outer {
+        height: 330px;
+    
+        .ipod {
+            display: flex;
+            justify-content: center;
+            height: 100%;
+            width: 300px;
+            background: rgb(61,0,48);
+            background: linear-gradient(90deg, rgba(61,0,48,1) 0%, rgb(219, 0, 175) 6%, rgb(219, 0, 175) 94%, rgba(144,0,124,1) 100%);
+            border-radius: 0 0 0 5px;
+
+            .Screen {
+                background: grey;
+                width: 270px;
+                height: 300px; 
+                margin-top: 15px;
+                position: relative;
+                background-size: contain;
+
+                .title {
+                    position: absolute;
+                    bottom: 0;
+                    background: black;
+                }
+            }
+        }
+    }
+}
+
+
+
+
