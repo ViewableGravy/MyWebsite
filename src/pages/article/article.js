@@ -11,7 +11,7 @@ export const BlogArticle = () => {
   const [error, setError] = useState(null);
 
   React.useEffect(() => {
-    fetch(`http://192.168.1.193:3000/api/blog/posts/${article}`)
+    fetch(`http://localhost:3000/api/blog/posts/${article}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`This is an HTTP error: The status is ${response.status}`)
@@ -26,9 +26,7 @@ export const BlogArticle = () => {
         setError(err.message);
         setPosts(null);
       })
-      .finally(() => {
-        setLoading(false);
-      })
+      .finally(() => setLoading(false))
   }, [])
   
   return (

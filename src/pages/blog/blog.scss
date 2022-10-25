@@ -1,8 +1,18 @@
+#root, body {
+  height: 100vh;
+  //height: calc(var(--vh, 1vh) * 100);
+  height: -webkit-fill-available;
+}
+
 #blog_container {
   
   min-height: 100vh;
   min-width: 100vw;
   background-color: #252839;
+
+  a {
+    color: aqua;
+  }
 
   p {
     font-size: 17px;
@@ -34,6 +44,7 @@
     }
   }
 
+  //About Me section
   .About {
     display: flex;
     justify-content: space-evenly;
@@ -66,6 +77,7 @@
     }
   }
 
+  //Posts
   #posts {
     list-style: none;
     padding: 0;
@@ -92,10 +104,6 @@
         font-size: small;
       }
 
-      a {
-        color: aqua;
-      }
-
       .date {
         //change colour based on how old it is (green recent, red really old)
         color: rgb(0, 255, 0);
@@ -103,33 +111,49 @@
     }
   } 
 
+  //apply to menu items all the time
   #menu {
     padding: 0;
     padding-top: 20px;
-    //border: 1px solid white;
     display: flex;
     justify-content: space-between;
+
+    > div {
+      display: flex;
+
+      * {
+        color: white;
+        word-break: keep-all;
+        white-space: nowrap;
+        text-decoration:none;
+        font-family: Montserrat,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+      }
+    }
 
     #Author {
       font-size: x-large;
       font-weight: bold;
     }
 
-    > div {
-      display: flex;
-    
+    #left.desktop, #right.desktop {
+      min-height: 100%;
+      
       * {
-        font-size: large;
-        font-family: Montserrat,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-        color: #cbd2d9;
-        text-decoration:none;
-        white-space: nowrap;
-        word-break: keep-all;
-        color: white;
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-top: auto;
+        cursor: pointer;
       }
     }
+  }
+
+  //Desktop mode settings
+  #menu.desktop {
+    > div * {
+      font-size: large;
+    }
   
-    #left.desktop, #right.desktop {
+    #left, #right {
       min-height: 100%;
       
       * {
@@ -141,15 +165,48 @@
     }
   }    
 
-  @media (min-width: 576px) {
+  #menu.mobile {
     #right {
-      div {
-        position:absolute;
-      }
-    }
-  }
+      transition: right 0.35s;
 
-  @media (max-width: 576px) {
+      background: white;
+      height: auto;
+      width: 75vw;
+      position: absolute;
+      
+      height: 100%;
+      top: 0;
+      right: -75vw;
+      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: center;
+      gap: 10vh;
+      z-index: 2;
+
+      * {
+        color: black;
+        font-size: 55px;
+        font-weight: bold;
+      }
+
+      #close {
+        background-color: red;
+        width: 40px;;
+        height: 40px;
+        z-index: -100;
+        top: 0;
+        right: 0;
+        position: absolute;
+        right: 8vw;
+        top: 8vw;
+      }
+
+    }
+
+    #right.open {
+      right: 0;
+    }
+
     .borger {
       display: flex;
       flex-direction: column-reverse;
@@ -201,6 +258,14 @@
         z-index: 1;
         border-top-right-radius: 100px 20px;
         border-top-left-radius:  100px 20px;
+      }
+    }
+  }
+
+  @media (min-width: 576px) {
+    #right {
+      div {
+        position:absolute;
       }
     }
   }

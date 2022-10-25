@@ -2,36 +2,47 @@ import React, { useState, useEffect } from 'react';
 import './blog.scss'
 import { useNavigate } from 'react-router-dom'
 import Portrait from '../../assets/Lleyton.png'
+import classNames from 'classnames'
 
 export const Blog = () => {
+  // let vh = window.innerHeight * 0.01;
+  //  // Then we set the value in the --vh custom property to the root of the document
+  // document.documentElement.style.setProperty('--vh', `${vh}px`);
+
   const navigate = useNavigate();
   const [posts, setPosts] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [mobileView, setMatches] = useState(
     window.matchMedia("(max-width: 576px)").matches //initial state based on screen
   )
   const [menuOpen, setMenuOpen] = useState(false); //use to change menu state of mobile burger menu
 
+  const menuItems = {
+    desktop: true,
+    mobile: false,
+    open: false
+  };
+
+  const [menuItemsClasses, setMenuItems] = useState(classNames(menuItems))
+
   useEffect(() => {
-    fetch('http://192.168.1.193:3000/api/blog/posts')
+    setMenuItems(classNames({
+      desktop: !mobileView,
+      mobile: mobileView,
+      open: menuOpen
+    }))
+  }, [mobileView, menuOpen])
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/blog/posts')
       .then((response) => {
         if (!response.ok) {
           throw new Error(`This is an HTTP error: The status is ${response.status}`)
         }
         return response.json();
       })
-      .then((data) => {
-        setPosts(data);
-        setError(null);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setPosts(null);
-      })
-      .finally(() => {
-        setLoading(false);
-      })
+      .then((data) => setPosts(data))
+      .catch((err) => console.log(err))
+      .finally(() => {})
 
     window
       .matchMedia("(max-width: 576px)")
@@ -42,21 +53,26 @@ export const Blog = () => {
     <div id="blog_container">
       <div id="outer">
         <div id="background">
-          <div id="menu">
-            <div id="left" className={mobileView ? 'mobile' : 'desktop'}>
+          <div id="menu" className={ menuItemsClasses }>
+            <div id="left" >
               <span id="Author">ViewableGravy</span> 
               { !mobileView && <span id="category">Category: ALL</span> }
-            </div>
-            { 
-              !mobileView && 
-                <div id="right" className={mobileView ? 'mobile' : 'desktop'}>
-                  <a>...</a>
-                  <a href="https://status.gravy.cc/">Uptime</a>
-                  <a href="https://github.com/ViewableGravy">github</a>
-                  <a onClick={() => navigate('/')}>Home</a>
-                </div> 
-              ||
-                <div className={mobileView ? 'borger mobile' : 'borger desktop'} onClick={()=> setMenuOpen(!menuOpen)}>
+            </div> 
+              <div id="right" className={ menuItemsClasses }>
+                <a>...</a>
+                <a href="https://status.gravy.cc/">Uptime</a>
+                <a href="https://github.com/ViewableGravy">github</a>
+                <a onClick={() => navigate('/')}>Home</a>
+                
+                <div id="close">
+                  <div></div>
+                  <div></div>
+                </div>
+
+              </div> 
+              { 
+              mobileView &&
+                <div className={"borger"} onClick={()=> setMenuOpen(!menuOpen)}>
                   <div></div>
                   <div></div>
                   <div></div>
@@ -64,13 +80,13 @@ export const Blog = () => {
                   <div></div>
                   <div></div>
                 </div>
-            }
+              }
           </div>
           <div className="About">
             <div className="circle">
               <img src={Portrait}></img>
             </div>
-            <p>I like making things in NodeJS, React and Express. I also love server administration, self hosting and writing bash scripts. I currently Work at VentraIP Australia as a technical support Representative.</p>
+            <p>I like making things in NodeJS, React and Express. I also love server administration, self hosting and writing bash scripts. I currently Work at <a href="https://ventraip.com.au/">VentraIP Australia</a> as a technical support Representative.</p>
           </div>
           <h1>Posts</h1>
           <ul id="posts">
