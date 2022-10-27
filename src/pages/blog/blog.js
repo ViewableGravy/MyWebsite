@@ -63,12 +63,10 @@ export const Blog = () => {
                 <a href="https://status.gravy.cc/">Uptime</a>
                 <a href="https://github.com/ViewableGravy">github</a>
                 <a onClick={() => navigate('/')}>Home</a>
-                
-                <div id="close">
-                  <div></div>
-                  <div></div>
-                </div>
-
+                {
+                  mobileView &&  <div id="close" onClick={() => setMenuOpen(!menuOpen)}>
+                  </div>
+                }
               </div> 
               { 
               mobileView &&
