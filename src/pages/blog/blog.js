@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './blog.scss'
 import { useNavigate } from 'react-router-dom'
-import Portrait from '../../assets/Lleyton.png'
+import Portrait from '../../assets/images/Lleyton.png'
 import classNames from 'classnames'
 
 export const Blog = () => {

@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import SpiceAndWolf from '../../assets/SpiceAndWolf.jpg';
-import WeatheringWithYou from '../../assets/WeatheringWithYouVertical.jpg'
 import './home.scss'
 import { useNavigate } from 'react-router-dom'
 
+import MadeInAbyss from '../../assets/images/home/MadeInAbyss.jpg'
+import SpiceAndWolf from '../../assets/images/home/SpiceAndWolf_444.webp'
+import WeatheringWithYou from '../../assets/images/home/WeatheringWithYouVertical_720.webp'
+
 export const Home = () => {
   let navigate = useNavigate();
-  let webSocket = null; 
+  // let webSocket = null; 
   
   const [ welcome, setWelcome ] = useState(true);
-  const [ song, setSong ] = useState(null);
-  const [ spotifyData, setSpotifyData ] = useState(null);
+  // const [ song, setSong ] = useState(null);
+  // const [ spotifyData, setSpotifyData ] = useState(null);
 
-  useEffect(() => {
-    webSocket = new WebSocket('ws://localhost:3000/');
+  // useEffect(() => {
+  //   webSocket = new WebSocket('ws://localhost:3000/');
 
-    webSocket.onmessage = (message) => {
-      const data = JSON.parse(message.data);
-      setSpotifyData(data);
-      
-      
-      setSong(data.item?.name || null);
-    }
+  //   webSocket.onmessage = (message) => {
+  //     const data = JSON.parse(message.data);
+  //     setSpotifyData(data);      
+  //     setSong(data.item?.name || null);
+  //   }
 
-    return () => {
-      console.log("removed test")
-      webSocket.close();
-    }
-  }, [])
+  //   return () => {
+  //     console.log("removed test")
+  //     webSocket.close();
+  //   }
+  // }, [])
 
   useEffect(() => {
     const state = localStorage.getItem('welcome');
@@ -56,11 +56,11 @@ export const Home = () => {
       <div className='home_outer'>
         <div className='background'>
           <ol>
-            <li onClick={() => navigate('/subdomains')}>
+            <li className='active' onClick={() => navigate('/subdomains')}>
               <img src={WeatheringWithYou} alt="test"/>
               <h1 className='title'>Subdomains</h1>
             </li>
-            <li className="ipod_outer">
+            {/* <li className="ipod_outer">
               <div className="ipod">
                 <div className="Screen" style={ { "backgroundImage" : `url(${spotifyData?.item?.album?.images[1]?.url})` } }>
                   <h3 className='title'>{song}</h3>
@@ -75,8 +75,12 @@ export const Home = () => {
                   <div className="Pause"></div>
                 </div>
               </div>
+            </li> */}
+            <li>
+              <img src={MadeInAbyss} alt="test"/>
+              <h1 className='title'>In Progress</h1>
             </li>
-            <li onClick={() => navigate('/blog')}>
+            <li className='active' onClick={() => navigate('/blog')}>
               <img src={SpiceAndWolf} alt="test"/>
               <h1 className='title'>Blog</h1>
             </li>

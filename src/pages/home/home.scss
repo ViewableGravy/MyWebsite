@@ -1,6 +1,6 @@
 .home_outer {
     .background {
-        background-image: url('../../assets/Landscape/RandomLandscape1.jpg');
+        background-image: url('../../assets/images/home/RandomLandscape1.jpg');
         background-size: cover;
         overflow: hidden;
         height: 100%;
@@ -69,11 +69,12 @@
         outline: none;
     }
     
-    li:hover {
+    li.active:hover {
         height: 650px;
+        cursor: pointer;
     }
     
-    li:hover > h1 {
+    li.active:hover > h1 {
         font-size: 40px;
     }
     
@@ -98,34 +99,34 @@
         transition: font-size 0.2s;
     }
 
-    .ipod_outer {
-        height: 330px;
+    // .ipod_outer {
+    //     height: 330px;
     
-        .ipod {
-            display: flex;
-            justify-content: center;
-            height: 100%;
-            width: 300px;
-            background: rgb(61,0,48);
-            background: linear-gradient(90deg, rgba(61,0,48,1) 0%, rgb(219, 0, 175) 6%, rgb(219, 0, 175) 94%, rgba(144,0,124,1) 100%);
-            border-radius: 0 0 0 5px;
+    //     .ipod {
+    //         display: flex;
+    //         justify-content: center;
+    //         height: 100%;
+    //         width: 300px;
+    //         background: rgb(61,0,48);
+    //         background: linear-gradient(90deg, rgba(61,0,48,1) 0%, rgb(219, 0, 175) 6%, rgb(219, 0, 175) 94%, rgba(144,0,124,1) 100%);
+    //         border-radius: 0 0 0 5px;
 
-            .Screen {
-                background: grey;
-                width: 270px;
-                height: 300px; 
-                margin-top: 15px;
-                position: relative;
-                background-size: contain;
+    //         .Screen {
+    //             background: grey;
+    //             width: 270px;
+    //             height: 300px; 
+    //             margin-top: 15px;
+    //             position: relative;
+    //             background-size: contain;
 
-                .title {
-                    position: absolute;
-                    bottom: 0;
-                    background: black;
-                }
-            }
-        }
-    }
+    //             .title {
+    //                 position: absolute;
+    //                 bottom: 0;
+    //                 background: black;
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 
