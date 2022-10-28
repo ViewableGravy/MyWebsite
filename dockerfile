@@ -8,7 +8,7 @@ COPY . .
 RUN npm install
 
 #Build Package
-RUN npm run prod
+RUN npm run build
 
 #Setup Nginx
 FROM nginx:latest
