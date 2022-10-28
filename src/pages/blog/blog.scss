@@ -1,0 +1,285 @@
+#root, body {
+  height: 100vh;
+  //height: calc(var(--vh, 1vh) * 100);
+  height: -webkit-fill-available;
+  height: fill-available;
+  width: fill-available;
+
+  background-color: #252839;
+}
+
+#blog_container {
+  
+  min-height: 100vh;
+  min-width: 100%;
+  background-color: #252839;
+
+  a {
+    color: aqua;
+  }
+
+  p {
+    font-size: 17px;
+    margin-top: 10px;
+    color: white;
+    line-height: 23pt;
+  }
+
+  #outer {
+    background-size: cover;
+    box-sizing: border-box;
+  }
+  
+  #background {
+    background-color: #252839;
+    max-width: 800px;
+    padding: 15px;
+    box-sizing: border-box;
+    
+    margin-left: auto;
+    margin-right: auto;
+    
+    //border: 1px solid red;
+  
+    h1 {
+      color: white;
+      padding: 0 10px 0 10px;
+      margin: 30px 0 15px 0;
+    }
+  }
+
+  //About Me section
+  .About {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 20px 10px 0 10px;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    padding: 20px 0 20px 0;
+
+    .circle {
+      overflow: hidden;
+      width: 110px;
+      height: 110px;
+      border-radius: 110px;
+      flex-shrink: 0;
+
+      img {
+        width: 110px;
+        height: 110px;
+        display: block;
+      }
+    }
+
+    p {
+      margin-left: 20px;
+    }
+
+    @media (max-width: 576px) {
+      flex-direction: column;
+    }
+  }
+
+  //Posts
+  #posts {
+    list-style: none;
+    padding: 0;
+    margin: 0px 0 16px 0;
+
+    li {
+      //border: 1px solid yellow;
+      padding: 5px 10px 0 10px;
+
+      * {
+        color: white;
+      }
+
+      h2 {
+        cursor: pointer;
+        font-size: 30px;
+        color: orange;
+        font-weight: bold;
+        margin: 18px 0 0 0;
+        text-decoration: underline;
+      }
+
+      span, a {
+        font-size: small;
+      }
+
+      .date {
+        //change colour based on how old it is (green recent, red really old)
+        color: rgb(0, 255, 0);
+      }
+    }
+  } 
+
+  //apply to menu items all the time
+  #menu {
+    padding: 0;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+
+    > div {
+      display: flex;
+
+      * {
+        cursor: pointer;
+        color: white;
+        word-break: keep-all;
+        white-space: nowrap;
+        text-decoration:none;
+        font-family: Montserrat,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+      }
+    }
+
+    #Author {
+      font-size: x-large;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+
+    #left.desktop, #right.desktop {
+      min-height: 100%;
+      
+      * {
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-top: auto;
+        cursor: pointer;
+      }
+    }
+  }
+
+  //Desktop mode settings
+  #menu.desktop {
+    > div * {
+      font-size: large;
+    }
+  
+    #left, #right {
+      min-height: 100%;
+      
+      * {
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-top: auto;
+        cursor: pointer;
+      }
+    }
+  }    
+
+  #menu.mobile {
+    
+    overflow: hidden;
+    max-width: 100vw;
+
+    #right {
+      transition: right 0.35s;
+
+      background: white;
+      width: 75vw;
+      position: fixed;
+      
+      height: 100%;
+      top: 0;
+      right: -75vw;
+      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: center;
+      gap: 10vh;
+      z-index: 2;
+
+      * {
+        color: black;
+        font-size: 55px;
+        font-weight: bold;
+      }
+
+      #close {
+        width: 40px;
+        height: 40px;
+        z-index: -100;
+        top: 0;
+        right: 0;
+        position: absolute;
+        right: 8vw;
+        top: 8vw;
+      }
+
+      #close:after {
+        content: "\00d7"; // This will render the 'X'
+      }
+
+    }
+
+    #right.open {
+      right: 0;
+    }
+
+    .borger {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      gap: 0.15px 0;
+      width: 30px;
+      padding-right: 20px;;
+
+      > div:nth-child(1) {
+        background: rgb(215, 165, 121);
+        height: 6px;
+        width: 112%;
+        transform: rotateZ(1deg);
+        z-index: 1;
+      }
+
+      > div:nth-child(2) {
+        background: rgb(114, 72, 60); 
+        height: 7px;
+        width: 100%;
+        transform: rotateZ(-0.5deg);
+      }
+
+      div:nth-child(3) {
+        background: rgb(216, 214, 77);
+        height: 2px;
+        width: 115%;
+        transform: rotateZ(-0.3deg);
+      }
+
+      div:nth-child(4) {
+        background: rgb(214, 55, 53);
+        height: 4px;
+        width: 105%;
+        transform: rotateZ(-0.5deg);
+      }
+
+      div:nth-child(5) {
+        background: rgb(123, 177, 102);
+        height: 4.5px;
+        width: 110%;
+        transform: rotateZ(0.5deg);
+      }
+
+      div:nth-child(6) {
+        background: rgb(215, 165, 121);
+        height: 8px;
+        width: 116%;
+        z-index: 1;
+        border-top-right-radius: 100px 20px;
+        border-top-left-radius:  100px 20px;
+      }
+    }
+  }
+
+  @media (min-width: 576px) {
+    #right {
+      div {
+        position:absolute;
+      }
+    }
+  }
+  
+}

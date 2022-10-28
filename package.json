@@ -1,16 +1,9 @@
 {
-  "name": "appname",
-  "version": "0.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
-  },
+  "name": "demo-app",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "@angular/animations": "~10.0.3",
     "@angular/common": "~10.0.3",
     "@angular/compiler": "~10.0.3",
@@ -28,25 +21,49 @@
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
+=======
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.4",
+    "@testing-library/user-event": "^13.5.0",
+    "classnames": "^2.3.2",
+    "framer-motion": "^6.2.8",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-responsive-carousel": "^3.2.23",
+    "react-router-dom": "^6.2.2",
+    "react-scripts": "5.0.0",
+    "react-transition-group": "^4.4.2",
+    "sass": "^1.55.0",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "PORT=3006 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+>>>>>>> react
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1000.2",
-    "@angular/cli": "^10.0.2",
-    "@angular/compiler-cli": "~10.0.3",
-    "@types/jasmine": "~3.5.0",
-    "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^12.11.1",
-    "codelyzer": "^6.0.0",
-    "jasmine-core": "~3.5.0",
-    "jasmine-spec-reporter": "~5.0.0",
-    "karma": "~5.0.0",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage-istanbul-reporter": "~3.0.2",
-    "karma-jasmine": "~3.3.0",
-    "karma-jasmine-html-reporter": "^1.5.0",
-    "protractor": "~7.0.0",
-    "ts-node": "~8.3.0",
-    "tslint": "~6.1.0",
-    "typescript": "~3.9.5"
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/preset-react": "^7.16.7",
+    "webpack-dev-server": "^4.7.4"
   }
 }

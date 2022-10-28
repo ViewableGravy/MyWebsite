@@ -1,0 +1,107 @@
+#article_container {
+    #outer {
+      background-color: #252839;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    #background {
+      background-color: #252839;
+      max-width: 800px;
+      height: 100vh;
+      padding: 15px;
+      box-sizing: border-box;
+      
+      margin-left: auto;
+      margin-right: auto;
+      
+      //border: 1px solid red;
+    
+      h1 {
+        color: white;
+        padding: 0 10px 0 10px;
+        margin: 30px 0 15px 0;
+      }
+    }
+  
+    #post {
+      list-style: none;
+      padding: 0;
+      margin: 0px 0 16px 0;
+  
+      li {
+        //border: 1px solid yellow;
+        padding: 5px 10px 0 10px;
+  
+        * {
+          color: white;
+        }
+  
+        p {
+          font-size: 17px;
+          margin-top: 10px;
+          line-height: 23pt;
+        }
+  
+        h2 {
+          font-size: 30px;
+          color: orange;
+          font-weight: bold;
+          margin: 0;
+          text-decoration: underline;
+        }
+  
+        span, a {
+          font-size: small;
+        }
+  
+        a {
+          color: aqua;
+        }
+  
+        .date {
+          //change colour based on how old it is (green recent, red really old)
+          color: rgb(0, 255, 0);
+        }
+      }
+    }
+    
+    #menu {
+      padding: 0;
+      padding-top: 20px;
+      //border: 1px solid white;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+  
+      div:first-child {
+        *:first-child {
+          font-size: x-large;
+          font-weight: bold;
+        }
+      }
+    
+      div {
+        height: 100%;
+        display: flex;
+        align-items: flex-end;
+    
+        * {
+          white-space: nowrap;
+          word-break: keep-all;
+          color: white;
+          margin-right: 10px;
+          margin-left: 10px;
+          margin-top: auto;
+          font-size: large;
+          font-family: Montserrat,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+          color: #cbd2d9;
+          text-decoration:none;
+        }
+      }
+    }    
+  }
+  
