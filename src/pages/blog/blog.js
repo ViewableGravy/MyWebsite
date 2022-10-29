@@ -3,11 +3,16 @@ import './blog.scss'
 import { useNavigate } from 'react-router-dom'
 import Portrait from '../../assets/images/Lleyton.png'
 import classNames from 'classnames'
+import { Link } from 'react-router-dom';
 
 export const Blog = () => {
-  // let vh = window.innerHeight * 0.01;
-  //  // Then we set the value in the --vh custom property to the root of the document
-  // document.documentElement.style.setProperty('--vh', `${vh}px`);
+  const server = process.env.REACT_APP_BACKEND_SERVER ?? 'localhost';
+  const port = process.env.REACT_APP_BACKEND_PORT ?? '3000';
+  const protocol = process.env.REACT_APP_BACKEND_PROTOCOL ?? 'http';
+
+  const api = `${protocol}://${server}:${port}/api`
+
+  console.log(api)
 
   const navigate = useNavigate();
   const [posts, setPosts] = useState(null);
@@ -33,7 +38,7 @@ export const Blog = () => {
   }, [mobileView, menuOpen])
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/blog/posts')
+    fetch(`${api}/blog/posts`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`This is an HTTP error: The status is ${response.status}`)
@@ -48,66 +53,84 @@ export const Blog = () => {
       .matchMedia("(max-width: 576px)")
       .addEventListener('change', e => setMatches( e.matches ))
   }, [])
-  
+
+  const Menu = () => {
+    return (
+      <div id="menu" className={ menuItemsClasses }>
+        <div id="left" >
+          <span id="Author">ViewableGravy</span> 
+        </div> 
+          <div id="right" className={ menuItemsClasses }>
+            <a href="https://status.gravy.cc/">Uptime</a>
+            <a href="https://github.com/ViewableGravy">github</a>
+            <a onClick={() => navigate('/')}>Home</a>
+            <a onClick={() => navigate('/blog')}>Posts</a>
+            { mobileView &&  <div id="close" onClick={() => setMenuOpen(!menuOpen)}></div> }
+          </div> 
+          { 
+          mobileView &&
+            <div className={"borger"} onClick={()=> setMenuOpen(!menuOpen)}>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          }
+      </div>
+    )
+  }
+
+  const About = () => {
+    return (
+      <div className="About">
+        <div className="circle">
+          <img src={Portrait}></img>
+        </div>
+        <p>I like making things in NodeJS, React and Express. I also love server administration, self hosting and writing bash scripts. I currently Work at <a href="https://ventraip.com.au/">VentraIP Australia</a> as a technical support Representative.</p>
+      </div>
+    )
+  }
+
+  const Posts = () => {
+    return (
+      <>
+        <h1>Posts</h1>
+        <ul id="posts">
+        {
+          posts && posts.map(post => 
+            <li key={post._id}>
+              <Link to={`/blog/${post.slug}`}>
+                <h2>{post.title}</h2>
+              </Link>
+              <span>Author:</span><a className='author'> {post.author} </a>
+              <span>Posted:</span><span className='date'> {post.date}</span>
+              <p dangerouslySetInnerHTML={{ __html: post.summary }}></p>
+              <span>Tags: </span>
+              {
+                post.tags.map((tag, index, arr) => 
+                  <span key={index}>
+                    <a>{ tag }</a>
+                    <span>{index + 1 === arr.length ? "" : ", " }</span>
+                  </span>
+                )
+              }
+            </li>
+          )
+        }
+        </ul>
+      </>
+    )
+  }
+
   return (
     <div id="blog_container">
       <div id="outer">
         <div id="background">
-          <div id="menu" className={ menuItemsClasses }>
-            <div id="left" >
-              <span id="Author">ViewableGravy</span> 
-              { !mobileView && <span id="category">Category: ALL</span> }
-            </div> 
-              <div id="right" className={ menuItemsClasses }>
-                <a>...</a>
-                <a href="https://status.gravy.cc/">Uptime</a>
-                <a href="https://github.com/ViewableGravy">github</a>
-                <a onClick={() => navigate('/')}>Home</a>
-                {
-                  mobileView &&  <div id="close" onClick={() => setMenuOpen(!menuOpen)}>
-                  </div>
-                }
-              </div> 
-              { 
-              mobileView &&
-                <div className={"borger"} onClick={()=> setMenuOpen(!menuOpen)}>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                </div>
-              }
-          </div>
-          <div className="About">
-            <div className="circle">
-              <img src={Portrait}></img>
-            </div>
-            <p>I like making things in NodeJS, React and Express. I also love server administration, self hosting and writing bash scripts. I currently Work at <a href="https://ventraip.com.au/">VentraIP Australia</a> as a technical support Representative.</p>
-          </div>
-          <h1>Posts</h1>
-          <ul id="posts">
-          {
-            posts && posts.map(post => 
-              <li key={post._id}>
-                <h2 onClick={()=> navigate(`/blog/${post.slug}`)}>{post.title}</h2>
-                <span>Author:</span><a className='author'> {post.author} </a>
-                <span>Posted:</span><span className='date'> {post.date}</span>
-                <p dangerouslySetInnerHTML={{ __html: post.summary }}></p>
-                <span>Tags: </span>
-                {
-                  post.tags.map((tag, index, arr) => 
-                    <span key={index}>
-                      <a>{ tag }</a>
-                      <span>{index + 1 === arr.length ? "" : ", " }</span>
-                    </span>
-                  )
-                }
-              </li>
-            )
-          }
-          </ul>
+          { Menu() }
+          { About() }
+          { Posts() }
         </div>
       </div>
     </div>
