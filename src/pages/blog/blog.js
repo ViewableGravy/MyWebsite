@@ -88,7 +88,7 @@ export const Blog = () => {
         <div className="circle">
           <img src={Portrait}></img>
         </div>
-        <p>I like making things in NodeJS, React and Express. I also love server administration, self hosting and writing bash scripts. I currently Work at <a href="https://ventraip.com.au/">VentraIP Australia</a> as a technical support Representative.</p>
+        <p>I'm passionate about making things in NodeJS and React. Recently I've been enjoying WebSockets, Express API's and learning new SASS skills. I also love self hosting, automation and writing scripts (bash). I currently Work at <a href="https://ventraip.com.au/">VentraIP Australia</a> as a technical support Representative.</p>
       </div>
     )
   }
