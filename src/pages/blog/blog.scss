@@ -1,17 +1,14 @@
 :root {
   --article-name: #e00882;
   --inline-link: #00ffeed0;
-  --background: #252839;
+  --background: #272539;
   --standard-text: #f3f3f3;
-  --menu-text: #e00883;
+  --menu-text: #e008ce;
 }
 
 #root, body {
   height: 100vh;
-  //height: calc(var(--vh, 1vh) * 100);
   height: -webkit-fill-available;
-  height: fill-available;
-  width: fill-available;
 
   background-color: var(--background);
 }
@@ -46,12 +43,6 @@
     
     margin-left: auto;
     margin-right: auto;
-  
-    h1 {
-      color: white;
-      padding: 0 10px 0 10px;
-      margin: 30px 0 15px 0;
-    }
   }
 
   //About Me section
@@ -85,6 +76,14 @@
     @media (max-width: 576px) {
       flex-direction: column;
     }
+  }
+
+  #posts-title {
+    color: white;
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    margin-top: 30px;
   }
 
   //Posts

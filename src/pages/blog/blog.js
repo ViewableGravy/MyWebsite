@@ -96,7 +96,7 @@ export const Blog = () => {
   const Posts = () => {
     return (
       <>
-        <h1>Posts</h1>
+        <h1 id="posts-title">[WIP] Posts</h1>
         <ul id="posts">
         {
           posts && posts.map(post => 
