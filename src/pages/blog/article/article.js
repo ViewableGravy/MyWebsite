@@ -1,50 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import './article.scss'
 import { useNavigate, useParams } from 'react-router-dom'
+import Menu from '../menu/menu'
 
 export const BlogArticle = () => {
   const { article } = useParams();
-
-  const navigate = useNavigate();
   const [posts, setPosts] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   React.useEffect(() => {
     fetch(`http://localhost:3000/api/blog/posts/${article}`)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`This is an HTTP error: The status is ${response.status}`)
+        if (response.ok)
+          return response.json();
+
+        if (response.status === 404) {
+          //show 404 page
         }
-        return response.json();
+
+        throw new Error(`This is an HTTP error: The status is ${response.status}`)
       })
-      .then((data) => {
-        setPosts(data);
-        setError(null);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setPosts(null);
-      })
-      .finally(() => setLoading(false))
+      .then(data => setPosts(data))
+      .catch(err => setPosts(null));
   }, [])
   
   return (
     <div id="article_container">
       <div id="outer">
         <div id="background">
-          <div id="menu">
-            <div>
-              <span>ViewableGravy</span>
-              <span>Category: ALL</span>
-            </div>
-            <div>
-              <a>...</a>
-              <a href="https://status.gravy.cc/">Uptime</a>
-              <a href="https://github.com/ViewableGravy">github</a>
-              <a onClick={() => navigate('/')}>Home</a>
-            </div>
-          </div>
+          <Menu author="ViewableGravy"/>
           <ul id="post">
           {
             posts && posts.map(post => 

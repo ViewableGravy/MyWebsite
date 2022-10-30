@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import Portrait from '../../assets/images/Lleyton.png'
 import classNames from 'classnames'
 import { Link } from 'react-router-dom';
+import { Menu } from './menu/menu.js'
 
 export const Blog = () => {
   const server = process.env.REACT_APP_BACKEND_SERVER ?? 'localhost';
@@ -54,34 +55,6 @@ export const Blog = () => {
       .addEventListener('change', e => setMatches( e.matches ))
   }, [])
 
-  const Menu = () => {
-    return (
-      <div id="menu" className={ menuItemsClasses }>
-        <div id="left" >
-          <span id="Author">ViewableGravy</span> 
-        </div> 
-          <div id="right" className={ menuItemsClasses }>
-            <a href="https://status.gravy.cc/">Uptime</a>
-            <a href="https://github.com/ViewableGravy">github</a>
-            <a onClick={() => navigate('/')}>Home</a>
-            <a onClick={() => navigate('/blog')}>Posts</a>
-            { mobileView &&  <div id="close" onClick={() => setMenuOpen(!menuOpen)}></div> }
-          </div> 
-          { 
-          mobileView &&
-            <div className={"borger"} onClick={()=> setMenuOpen(!menuOpen)}>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          }
-      </div>
-    )
-  }
-
   const About = () => {
     return (
       <div className="About">
@@ -128,7 +101,7 @@ export const Blog = () => {
     <div id="blog_container">
       <div id="outer">
         <div id="background">
-          { Menu() }
+          <Menu author="ViewableGravy" /> {/* add option to customize links */}
           { About() }
           { Posts() }
         </div>
