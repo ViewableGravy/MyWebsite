@@ -76,12 +76,26 @@
     }
   }
 
+  #posts-head {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+
   #posts-title {
     color: white;
-    margin: auto;
-    width: 50%;
     text-align: center;
     margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  #toggle_container {
+    position: absolute;
+    display: inline;
+    right: 40px;
+    vertical-align: middle;
   }
 
   //Posts

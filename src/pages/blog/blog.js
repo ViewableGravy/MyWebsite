@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './blog.scss'
 import { useNavigate } from 'react-router-dom'
-import Portrait from '../../assets/images/Lleyton.png'
-import classNames from 'classnames'
 import { Link } from 'react-router-dom';
 import { Menu } from './menu/menu.js'
+import { FlipToggle } from './toggle/toggle'
+import Portrait from '../../assets/images/Lleyton.png'
+import classNames from 'classnames'
 
 export const Blog = () => {
   const server = process.env.REACT_APP_BACKEND_SERVER ?? 'localhost';
@@ -69,7 +70,10 @@ export const Blog = () => {
   const Posts = () => {
     return (
       <>
-        <h1 id="posts-title">[WIP] Posts</h1>
+        <div id ="posts-head">
+          <h1 id="posts-title">[WIP] Posts</h1>
+          <FlipToggle id="edit-mode-toggle"/>
+        </div>
         <ul id="posts">
         {
           posts && posts.map(post => 
