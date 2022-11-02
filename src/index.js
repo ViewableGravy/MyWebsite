@@ -11,17 +11,23 @@ import { Blog } from "./pages/blog/blog"
 import { BlogArticle } from "./pages/blog/article/article"
 import { Subdomains } from "./pages/subdomains/subdomains";
 import './index.css'
+import { Login } from './pages/login/login';
+
+import { GlobalStateProvider } from './global'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-        <Routes>
-          <Route path='/' element={<Home/>} />
-          <Route path='/blog' element={<Blog/>} />
-          <Route path='/blog/:article' element={<BlogArticle/>} />
-          <Route path='/subdomains' element={<Subdomains/>} />
-        </Routes>
-    </Router>
-  </React.StrictMode>,
+  <GlobalStateProvider>
+    <React.StrictMode>
+      <Router>
+          <Routes>
+            <Route path='/' element={<Home/>} />
+            <Route path='/blog' element={<Blog/>} />
+            <Route path='/blog/:article' element={<BlogArticle/>} />
+            <Route path='/subdomains' element={<Subdomains/>} />
+            <Route path='/login' element={<Login/>} />
+          </Routes>
+      </Router>
+    </React.StrictMode>
+  </GlobalStateProvider>,
   document.getElementById('root')
 );

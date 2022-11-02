@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import './menu.scss'
+import { useGlobalState } from '../../../global';
+import { logout } from '../../../logic/authentication';
 
 // author: string
 export const Menu = ({ author }) => {
@@ -11,6 +13,8 @@ export const Menu = ({ author }) => {
     mobile: false,
     open: false
   });
+
+  const [state, dispatch] = useGlobalState();
 
   const [mobileView, setMatches] = useState(window.matchMedia("(max-width: 576px)").matches)
   const [menuOpen, setMenuOpen] = useState(false); //mobile menu open/close state
@@ -35,7 +39,12 @@ export const Menu = ({ author }) => {
       <div id="left" >
         <span id="Author">{author}</span>
       </div>
-      <div id="right" className={menuItemsClasses}>
+      <div id="right" className={menuItemsClasses}> 
+        {
+          !state.token 
+            ? <a onClick={() => navigate('/login')}>Login</a>
+            : <a onClick={() => logout(dispatch)}>Logout</a> 
+        }
         <a href="https://status.gravy.cc/">Uptime</a>
         <a href="https://github.com/ViewableGravy">github</a>
         <a onClick={() => navigate('/')}>Home</a>

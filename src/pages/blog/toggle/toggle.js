@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './toggle.scss'
 
 export const FlipToggle = () => {
-  const [state, setState] = useState(true);
+  const [state, setState] = useState(false);
 
   return (
     <div id="toggle_container">

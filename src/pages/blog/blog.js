@@ -6,6 +6,7 @@ import { Menu } from './menu/menu.js'
 import { FlipToggle } from './toggle/toggle'
 import Portrait from '../../assets/images/Lleyton.png'
 import classNames from 'classnames'
+import { useGlobalState } from '../../global';
 
 export const Blog = () => {
   const server = process.env.REACT_APP_BACKEND_SERVER ?? 'localhost';
@@ -14,7 +15,7 @@ export const Blog = () => {
 
   const api = `${protocol}://${server}:${port}/api`
 
-  console.log(api)
+  const [state, dispatch] = useGlobalState();
 
   const navigate = useNavigate();
   const [posts, setPosts] = useState(null);
@@ -71,8 +72,10 @@ export const Blog = () => {
     return (
       <>
         <div id ="posts-head">
-          <h1 id="posts-title">[WIP] Posts</h1>
-          <FlipToggle id="edit-mode-toggle"/>
+          <h1 id="posts-title">Posts</h1>
+          {
+            state.token && <FlipToggle className="FlipToggle"/>
+          }  
         </div>
         <ul id="posts">
         {

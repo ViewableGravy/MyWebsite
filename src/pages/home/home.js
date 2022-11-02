@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './home.scss'
 import { useNavigate } from 'react-router-dom'
+import { useGlobalState } from '../../global';
 
 import MadeInAbyss from '../../assets/images/home/MadeInAbyss.jpg'
 import SpiceAndWolf from '../../assets/images/home/SpiceAndWolf_444.webp'
@@ -9,8 +10,11 @@ import WeatheringWithYou from '../../assets/images/home/WeatheringWithYouVertica
 export const Home = () => {
   let navigate = useNavigate();
   // let webSocket = null; 
+
+  const [gState, dispatch] = useGlobalState();
   
   const [ welcome, setWelcome ] = useState(true);
+
   // const [ song, setSong ] = useState(null);
   // const [ spotifyData, setSpotifyData ] = useState(null);
 
@@ -76,7 +80,7 @@ export const Home = () => {
                 </div>
               </div>
             </li> */}
-            <li>
+            <li onClick={() => console.log(gState)}>
               <img src={MadeInAbyss} alt="test"/>
               <h1 className='title'>In Progress</h1>
             </li>
