@@ -52,6 +52,7 @@ export const Login = () => {
       });
 
       localStorage.setItem('token', data.access_token);
+      localStorage.setItem('username', data.username);
 
       navigate(-1);
     } catch (err) {
