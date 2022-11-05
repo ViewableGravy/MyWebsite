@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import './login.scss'
 import { useGlobalState } from '../../functionality/globalState';
@@ -29,7 +29,7 @@ export const Login = () => {
       });
       
       dispatch({ token: data.access_token, username: data.username });
-      navigate(-1);
+      navigate('/');
     } catch (err) {
       if (err.response.status === 401) {
         alert('incorrect email or password');
@@ -45,19 +45,30 @@ export const Login = () => {
   
   return (
     <div className='component login'>
-      <form>
-        <label>
-          Email:
-          <input type="text" name="email" onChange={e => setEmail(e.target.value)} value={email}/>
-        </label>
-        <label>
-          Password:
-          <input type="text" name="password" onChange={e => setPassword(e.target.value)} value={password}/>
-        </label>
-      </form>
-      
-      <button onClick={() => Login()}/>
-      { showLoading && <LoadingAnimation diameter={200}></LoadingAnimation>}
+      <div className='center'>
+        <div className='title'>
+          <h1 className='login-title'>Gravy.cc</h1>
+          <h2 className='login-description'>Login to Gravy.cc</h2>
+        </div>
+        <form>
+          <button disabled className='google sso-button' onClick={() => {}}></button>
+          <button disabled className='facebook sso-button' onClick={() => {}}></button>
+          <div className="or-text-div"> 
+            <span className='or-text-span'>
+              Or
+            </span>
+          </div>
+          <input type="text" placeholder='E-mail address' name="email" onChange={e => setEmail(e.target.value)} value={email}/>
+          <input type="text" placeholder='Password' name="password" onChange={e => setPassword(e.target.value)} value={password}/>
+          <Link to={{ pathname: '/' }} className='forgot-password'>
+            <p>Forgot Password?</p>
+          </Link>
+          <button className='submit' onClick={() => Login()}>Login</button>
+          <div className='loading-animation'>
+            { showLoading && <LoadingAnimation diameter={100}></LoadingAnimation>}
+          </div>
+        </form>
+      </div>
     </div>
   )
 }

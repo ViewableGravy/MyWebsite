@@ -5,21 +5,21 @@
 
 .login {
   .loading_container {
-    position: relative;
+    position: absolute;
     // border: 1px solid white;
     margin: 0;
   
     .inner {
       width: 50%;
       height: 50%;
-      border: 1px solid cyan;
+      border: 3px solid cyan;
       animation: spin 0.5s linear infinite;
     }
   
     .middle {
       width: 70%;
       height: 70%;
-      border: 1px solid magenta;
+      border: 3px solid magenta;
       animation: spin 1s linear infinite;
       animation-direction: reverse;
     }
@@ -27,7 +27,7 @@
     .outer {
       width: 90%;
       height: 90%;
-      border: 1px solid yellow;
+      border: 3px solid rgb(51, 255, 0);
       animation: spin 1.5s linear infinite;
     }
   
@@ -43,19 +43,17 @@
       border-bottom-color: transparent;
       border-radius: 100vw;
     }
-  
-    
-  }
 
-  p {
-    color: white;
-    margin: 0;
-    position: absolute;
-    left: 50px; //default if no width
-    transform: translateX(-50%);
-    font-size: 50px;
+    p {
+      color: black;
+      font-weight: bold;
+      margin: 0;
+      position: absolute;
+      left: 50px; //default if no width
+      transform: translateX(-50%);
+      font-size: 50px;
+    }
   }
-  
 }
 
 

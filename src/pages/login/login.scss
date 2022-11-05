@@ -1,3 +1,145 @@
 .component.login {
   
+    //center the form
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+
+    p, h1 {
+      color: black;
+    }
+
+    .center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 800px;
+      width: 600px;
+      border-radius: 20px;
+      box-shadow: 0px 2px 5px 5px #39ccd48f;
+
+      background-color: white;;
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      h1, h2 {
+        color:rgba(38, 35, 231, 0.781);
+      }
+    }
+    
+    form {
+      // display: flex;
+      // flex-direction: column;
+      // align-items: center;
+      // justify-content: center;
+      height: 70%;
+      width: 90%;
+      border: 1px solid green;
+      margin-left: 5%;
+      margin-right: 5%;
+
+      .sso-button {
+        width: 80%;
+        height: 50px;
+        background-color: #00bfff;
+        margin-bottom: 10px;;
+
+        //center horizontally
+        margin-left: 50%;
+        transform: translateX(-50%);
+      
+        &:hover {
+          background-color: #00bfff;
+        }
+
+        &:disabled {
+          background-color: #00bfff;
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    
+      input {
+        width: 71%;
+        height: 50px;
+        margin: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.466);
+        border-radius: 5px;
+        padding: 0 10px;
+        font-size: 20px;
+        color: black;
+        background-color: transparent;
+        border-radius: 5px;
+        transition: all 0.2s ease-in-out;
+
+        margin-left: 50%;
+        transform: translateX(-50%);
+    
+        &:focus {
+          border: 1px solid #00bfff;
+        }
+      }
+
+      .submit {
+        
+        width: 75%;
+        height: 30px;
+        margin: 10px;
+        border: 1px solid rgb(194, 191, 35);
+        border-radius: 5px;
+        padding: 0 10px;
+        font-size: 20px;
+        color: white;
+        background-color: rgb(194, 191, 35);
+        border-radius: 5px;
+        transition: all 0.2s ease-in-out;
+
+        margin-left: 50%;
+        transform: translateX(-50%);
+    
+        &:focus {
+          border: 1px solid #00bfff;
+        }
+      }
+
+      .forgot-password {
+        margin-left: 50%;
+        transform: translateX(-50%);
+
+        p {
+          text-align: center;
+        }
+      }
+
+      .or-text-div {
+        width: 80%; 
+        height: 15px; 
+        border-bottom: 1px solid rgba(0, 0, 0, 0.253); 
+        text-align: center;
+        margin-bottom: 20px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+
+        .or-text-span {
+          font-size: 20px; 
+          background-color: white; 
+          padding: 0 10px;
+          font-weight: bold;
+        }
+      }
+
+      .loading-animation {
+        margin-left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+      }
+    }
+  }
 }

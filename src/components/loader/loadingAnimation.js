@@ -29,14 +29,14 @@ export const LoadingAnimation = (props) => {
   }, []);
 
   return (
-    <>
-    <div className='loading_container' style={style}>
-      <div className='loading inner'/>
-      <div className='loading middle'/>
-      <div className='loading outer'/>
+    <div className='loading_container'>
+      <div className='spinning_container' style={style}>
+        <div className='loading inner'/>
+        <div className='loading middle'/>
+        <div className='loading outer'/>
+      </div>
+      <p style={{left: diameter/2, "fontSize": diameter/6}}>{loadingText}</p>
     </div>
-    <p style={{left: diameter/2, "fontSize": diameter/8}}>{loadingText}</p>
-    </>
   );  
 };
 
