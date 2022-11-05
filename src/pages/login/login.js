@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import './login.scss'
-import { useGlobalState } from '../../global';
+import { useGlobalState } from '../../functionality/globalState';
+import { LoadingAnimation } from '../../components/loader/loadingAnimation';
 
 const server = process.env.REACT_APP_BACKEND_SERVER ?? 'localhost';
 const port = process.env.REACT_APP_BACKEND_PORT ?? '3000';
@@ -10,59 +11,36 @@ const protocol = process.env.REACT_APP_BACKEND_PROTOCOL ?? 'http';
 
 const apiUrl = `${protocol}://${server}:${port}/api`;
 
-axios.interceptors.request.use(
-  config => {
-    const { origin } = new URL(config.url);
-    const allowedOrigins = [apiUrl];
-    const token = localStorage.getItem('token');
-    if (allowedOrigins.includes(origin)) {
-      config.headers.authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  error => {
-    return Promise.reject(error);
-  }
-);
-
 //on load should check if in cookies and then skip this page
 export const Login = () => {
   let navigate = useNavigate();
-  const storedJwt = localStorage.getItem('loginToken');
 
   const [state, dispatch] = useGlobalState();
-  
-  const [token, setToken] = useState(storedJwt || null);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [showLoading, setShowLoading] = useState(false);
 
   const Login = async () => {
-
     try {
+      setShowLoading(true);
       const { data } = await axios.post(`${apiUrl}/login`, {
-        email: email,
-        password: password
+        email,
+        password
       });
-
-      setToken(data.access_token);
-
-      dispatch({ 
-        token: data.access_token,
-        username: data.username
-      });
-
-      localStorage.setItem('token', data.access_token);
-      localStorage.setItem('username', data.username);
-
+      
+      dispatch({ token: data.access_token, username: data.username });
       navigate(-1);
     } catch (err) {
-      // let user know that there was other errors, e.g. wrong details or cannot connect to backend
-      console.log(err);
-    }
-  };
+      if (err.response.status === 401) {
+        alert('incorrect email or password');
+        setShowLoading(false);
+      }
 
-  const refreshToken = async () => {
-    //return token using existing one
+      if (err.response.status === 408) {
+        alert('timeout');
+        setShowLoading(false);
+      }
+    }
   }
   
   return (
@@ -79,6 +57,7 @@ export const Login = () => {
       </form>
       
       <button onClick={() => Login()}/>
+      { showLoading && <LoadingAnimation diameter={200}></LoadingAnimation>}
     </div>
   )
 }

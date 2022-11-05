@@ -6,7 +6,7 @@ import { Menu } from './menu/menu.js'
 import { FlipToggle } from './toggle/toggle'
 import Portrait from '../../assets/images/Lleyton.png'
 import classNames from 'classnames'
-import { useGlobalState } from '../../global';
+import { useGlobalState } from '../../functionality/globalState';
 
 export const Blog = () => {
   const server = process.env.REACT_APP_BACKEND_SERVER ?? 'localhost';
@@ -49,7 +49,7 @@ export const Blog = () => {
         return response.json();
       })
       .then((data) => setPosts(data))
-      .catch((err) => console.log(err))
+      .catch((err) => {})
       .finally(() => {})
 
     window

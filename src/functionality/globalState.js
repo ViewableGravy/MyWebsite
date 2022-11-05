@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { updateAuthToken } from "./authentication";
+import { refreshOrExpireExistingtoken } from "./authentication";
 
 //https://beta.reactjs.org/learn/scaling-up-with-reducer-and-context
 
@@ -15,9 +17,18 @@ export const useGlobalState = () => [
 export const GlobalStateProvider = ({ children }) => {
 
   const [state, dispatch] = React.useReducer(
-    (state, newValue) => ({ ...state, ...newValue }),
+    (state, newValue) => {
+      updateAuthToken(newValue);
+      //other initializing states here
+      return { ...state, ...newValue };
+    },
     {}
   );
+
+  //load in the token from local storage
+  useEffect(() => {
+    refreshOrExpireExistingtoken(dispatch);
+  }, []);
 
   return (
     <globalStateContext.Provider value={state}>

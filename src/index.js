@@ -13,7 +13,7 @@ import { Subdomains } from "./pages/subdomains/subdomains";
 import './index.css'
 import { Login } from './pages/login/login';
 
-import { GlobalStateProvider } from './global'
+import { GlobalStateProvider } from './functionality/globalState'
 
 ReactDOM.render(
   <GlobalStateProvider>

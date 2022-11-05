@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import './menu.scss'
-import { useGlobalState } from '../../../global';
-import { logout } from '../../../logic/authentication';
+import { useGlobalState } from '../../../functionality/globalState';
+import { logout } from '../../../functionality/authentication';
 
 // author: string
 export const Menu = ({ author }) => {

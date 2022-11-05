@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './home.scss'
 import { useNavigate } from 'react-router-dom'
-import { useGlobalState } from '../../global';
+import { useGlobalState } from '../../functionality/globalState';
 
 import MadeInAbyss from '../../assets/images/home/MadeInAbyss.jpg'
 import SpiceAndWolf from '../../assets/images/home/SpiceAndWolf_444.webp'

@@ -1,0 +1,73 @@
+:root {
+  --width: 50px;
+  --height: 50px;
+}
+
+.login {
+  .loading_container {
+    position: relative;
+    // border: 1px solid white;
+    margin: 0;
+  
+    .inner {
+      width: 50%;
+      height: 50%;
+      border: 1px solid cyan;
+      animation: spin 0.5s linear infinite;
+    }
+  
+    .middle {
+      width: 70%;
+      height: 70%;
+      border: 1px solid magenta;
+      animation: spin 1s linear infinite;
+      animation-direction: reverse;
+    }
+  
+    .outer {
+      width: 90%;
+      height: 90%;
+      border: 1px solid yellow;
+      animation: spin 1.5s linear infinite;
+    }
+  
+    .loading {
+      position: absolute;
+      
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-radius: 100vw;
+    }
+  
+    
+  }
+
+  p {
+    color: white;
+    margin: 0;
+    position: absolute;
+    left: 50px; //default if no width
+    transform: translateX(-50%);
+    font-size: 50px;
+  }
+  
+}
+
+
+
+
+
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
