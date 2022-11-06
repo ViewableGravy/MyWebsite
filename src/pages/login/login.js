@@ -29,7 +29,7 @@ export const Login = () => {
       });
       
       dispatch({ token: data.access_token, username: data.username });
-      navigate('/');
+      navigate(-1);
     } catch (err) {
       if (err.response.status === 401) {
         alert('incorrect email or password');
@@ -50,7 +50,7 @@ export const Login = () => {
           <h1 className='login-title'>Gravy.cc</h1>
           <h2 className='login-description'>Login to Gravy.cc</h2>
         </div>
-        <form>
+        <div className='form'>
           <button disabled className='google sso-button' onClick={() => {}}></button>
           <button disabled className='facebook sso-button' onClick={() => {}}></button>
           <div className="or-text-div"> 
@@ -67,7 +67,7 @@ export const Login = () => {
           <div className='loading-animation'>
             { showLoading && <LoadingAnimation diameter={100}></LoadingAnimation>}
           </div>
-        </form>
+        </div>
       </div>
     </div>
   )
