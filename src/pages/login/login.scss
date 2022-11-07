@@ -1,5 +1,4 @@
 .login-page-outer {
-
   --width: 600px;
   --image-height: calc(var(--width) / 4);
 
@@ -7,13 +6,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: calc(100vh + 44px);
+  min-height: 700px;
   width: 100vw;
   position: relative;
 
   .login-page-inner {
     background: linear-gradient(90deg, rgba(0,159,253,1) 0%, rgb(48, 48, 151) 100%);
-    height: calc(var(--width) / 2);
+    min-height: calc(var(--width) / 2);
     max-width: var(--width);
     position: relative;
     border-radius: 10px;
@@ -27,6 +27,9 @@
     margin: 0;
     margin-bottom: 150px;
     color: white;
+
+    
+    margin-top: 50px;
 
     @media screen and (max-width: 600px) {
       margin-bottom: calc(150px - ((600px - 100vw) / 4));
@@ -87,6 +90,7 @@
     caret-color: white;
     color: rgba(0, 0, 0, 0.7);
     font-weight: bold;
+    border-radius: 0;
 
     font-family: 'Roboto', sans-serif;
     letter-spacing: 1px;
@@ -153,7 +157,7 @@
     width: calc(100vw - 40px);
     max-width: var(--width);
 
-    height: calc(var(--width) / 8);
+    min-height: calc(var(--width) / 8);
     border-radius: 10px;
     font-size: 20px;
     font-weight: bold;
