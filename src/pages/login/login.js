@@ -99,9 +99,27 @@ export const Login = () => {
       <div className='login-page-inner'>
         
         <img className='icon' src={loginImage}/>
-        <input className={`${userIncorrect} username`} type='text' placeholder='E-mail Address' onChange={e => { setEmail(e.target.value); setUserIncorrect('')}} value={email}/>
+        <input 
+          className={`${userIncorrect} username`} 
+          type='text' 
+          placeholder='E-mail Address' 
+          onChange={ e => { 
+            setEmail(e.target.value); 
+            setUserIncorrect('')}
+          } 
+          onKeyDown={e => e.key === "Enter" && Login()}
+          value={email}/>
         <div className='pass-container'>
-          <input className={`${passIncorrect} password`} type={showPassword ? 'text' : 'password'} placeholder='Password' onChange={e => { setPassword(e.target.value); setPassIncorrect('')}} value={password}/>
+          <input 
+            className={`${passIncorrect} password`} 
+            type={showPassword ? 'text' : 'password'} 
+            placeholder='Password' 
+            onChange={ e => { 
+              setPassword(e.target.value); 
+              setPassIncorrect('')}
+            } 
+            onKeyDown={e => e.key === "Enter" && Login()}
+            value={password}/>
           <i className={eyeState} id="togglePassword" onClick={() => setShowPassword(current => !current)}></i>
         </div>
         
