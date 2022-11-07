@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './blog.scss'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom';
@@ -7,30 +7,44 @@ import { FlipToggle } from './toggle/toggle'
 import Portrait from '../../assets/images/Lleyton.png'
 import classNames from 'classnames'
 import { useGlobalState } from '../../functionality/globalState';
+import axios from 'axios';
 
 export const Blog = () => {
   const server = process.env.REACT_APP_BACKEND_SERVER ?? 'localhost';
   const port = process.env.REACT_APP_BACKEND_PORT ?? '3000';
   const protocol = process.env.REACT_APP_BACKEND_PROTOCOL ?? 'http';
-
   const api = `${protocol}://${server}:${port}/api`
 
-  const [state, dispatch] = useGlobalState();
-
   const navigate = useNavigate();
-  const [posts, setPosts] = useState(null);
-  const [mobileView, setMatches] = useState(
-    window.matchMedia("(max-width: 576px)").matches //initial state based on screen
-  )
-  const [menuOpen, setMenuOpen] = useState(false); //use to change menu state of mobile burger menu
+  const [state, dispatch] = useGlobalState();
+  const [toggleState, setToggleState] = useState('Published');
 
-  const menuItems = {
+  const [posts, setPosts] = useState(null);
+  const [mobileView, setMatches] = useState(window.matchMedia("(max-width: 576px)").matches)
+  const [menuOpen, setMenuOpen] = useState(false); //use to change menu state of mobile burger menu
+  const [menuItemsClasses, setMenuItems] = useState(classNames({
     desktop: true,
     mobile: false,
     open: false
-  };
+  }))
 
-  const [menuItemsClasses, setMenuItems] = useState(classNames(menuItems))
+  const getPosts = async () => {
+    try {
+      const response = await axios.get(`${api}/blog/posts`);
+      setPosts(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const getDrafts = async () => {
+    try {
+      const response = await axios.get(`${api}/blog/admin/post/drafts`);
+      setPosts(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
     setMenuItems(classNames({
@@ -41,16 +55,7 @@ export const Blog = () => {
   }, [mobileView, menuOpen])
 
   useEffect(() => {
-    fetch(`${api}/blog/posts`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`This is an HTTP error: The status is ${response.status}`)
-        }
-        return response.json();
-      })
-      .then((data) => setPosts(data))
-      .catch((err) => {})
-      .finally(() => {})
+    getPosts();
 
     window
       .matchMedia("(max-width: 576px)")
@@ -69,27 +74,61 @@ export const Blog = () => {
   }
 
   const Posts = () => {
+    useEffect(() => {
+      toggleState === 'Published' 
+        ? getPosts() 
+        : getDrafts();
+    }, [toggleState])
+
+    const changeToggle = () => {
+      toggleState === 'Published'
+        ? setToggleState('Drafts')
+        : setToggleState('Published');
+    }
+
     return (
       <>
-        <div id ="posts-head">
+        <div id="posts-head">
           <h1 id="posts-title">Posts</h1>
-          {
-            state.token && <FlipToggle className="FlipToggle"/>
-          }  
+          { state.token && <FlipToggle className="FlipToggle" onChange={changeToggle}/> }  
+        </div>
+
+        <ul className="posts">
+          { posts && posts.map((post) =>
+              <li className='blog-item' key={post._id}>
+                <Link to={`/blog/${post.slug}`} className='title_container'>
+                  <h2 className='title'>{post.title}</h2>
+                  <p className={'summary'} dangerouslySetInnerHTML={{ __html: post.summary }}></p>
+                </Link>
+                <div className='right-section'>
+                  <p className='date'>{post.date}</p>
+                  <div className='tags'>
+                    {
+                      post.tags && post.tags.map((tag, index) => <Link to={'/'} className={`tag ${index}`}>{tag}</Link>)
+                    }
+                  </div>
+                </div>
+              </li>
+            )
+          }
+        </ul>
+        {/* <div id ="posts-head">
+          <h1 id="posts-title">Posts</h1>
+          { state.token && <FlipToggle className="FlipToggle" onChange={changeToggle}/> }  
         </div>
         <ul id="posts">
         {
           posts && posts.map(post => 
             <li key={post._id}>
-              <Link to={`/blog/${post.slug}`}>
-                <h2>{post.title}</h2>
+              <Link to={`/blog/${post.slug}`} className='title_container'>
+                { toggleState === 'Drafts' && <span>{'[Draft] '}</span> }<h2>{post.title}</h2>
               </Link>
               <span>Author:</span><a className='author'> {post.author} </a>
               <span>Posted:</span><span className='date'> {post.date}</span>
               <p dangerouslySetInnerHTML={{ __html: post.summary }}></p>
               <span>Tags: </span>
               {
-                post.tags.map((tag, index, arr) => 
+                post?.tags && post.tags.map((tag, index, arr) => 
                   <span key={index}>
                     <a>{ tag }</a>
                     <span>{index + 1 === arr.length ? "" : ", " }</span>
@@ -99,7 +138,7 @@ export const Blog = () => {
             </li>
           )
         }
-        </ul>
+        </ul> */}
       </>
     )
   }
