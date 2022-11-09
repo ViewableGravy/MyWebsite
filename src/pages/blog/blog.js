@@ -20,7 +20,7 @@ const About = () => {
       <div className="circle">
         <img src={Portrait}></img>
       </div>
-      <p>I'm passionate about making things in NodeJS and React. Recently I've been enjoying WebSockets, Express API's and learning new SASS skills. I also love self hosting, automation and writing scripts (bash). I currently Work at <a href="https://ventraip.com.au/">VentraIP Australia</a> as a technical support Representative.</p>
+      <p>Hi, my name is Lleyton but online you can call my Gravy. I'm passionate about making things; right now that's in NodeJS and React but I wouldn't turn down a job with C#. Recently I'm entertaining myself with WebSockets, Express API's and learning new SASS skills but I also love Server Administration, automation and writing scripts. I currently Work at <a href="https://ventraip.com.au/">VentraIP Australia</a> as a technical support Representative</p>
     </div>
   )
 }
@@ -44,30 +44,91 @@ const getDrafts = async (setPosts) => {
   }
 }
 
+const getWindowDimensions = () => [window.innerWidth, window.innerHeight];
+const useWindowDimensions = () => {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    const handleResize = () => setWindowDimensions(getWindowDimensions());
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+}
+
+//todo - add toggle (+) on left to toggle between on and off rather than just clicking the text
+//on mobile this can be hidden and just clicking on an option while closed will toggle the state on (and show a minus to close)
 const TagsWrapper = ({ tagDetails }) => {
-  const tags = tagDetails.map(() => createRef()); //create an array of refs for each tag
+  // const tags = tagDetails?.map(() => createRef()); //create an array of refs for each tag
+  const [wWidth,] = useWindowDimensions();
+  let tags = tagDetails?.map((_, i) => ({ index: i, tag: createRef() }))
+
   let timeout = null; 
   const colors = ['#ce3175', '#4e3d42', '#000000', '#4fb477']
 
-  const tagHover = () => {
-    const widths = tags.map((tag) => tag.current.offsetWidth);
-    tags.forEach((tag, index) => {
+  const incrementTags = (t) => tags = t.map(({tag, index}) => ({ tag: tag, index: ++index >= tags.length ? 0 : index }));
+  const getFrontTag = (t) => t.find(({index}) => index + 1 === t.length);
+  const resetTagsIndex = (t) => t.map(({tag}, index) => ({ tag: tag, index: index }));
+  const resetTagsStyling = (t) => t.forEach(({tag}) => {
+    tag.current.style.width = null;
+    tag.current.style.color = null;
+    tag.current.style.zIndex = null;
+    tag.current.style.right = null;
+  });
+
+  const tagHoverDesktop = () => {
+    if (wWidth > 576) {
+      resetTagsStyling(tags);
+
+      const widths = tags.map(({tag}) => tag.current.offsetWidth);
+      tags.forEach(({tag}, index) => {
         //culmination of widths before this one
         const totalWidth = widths.slice(0, index).reduce((a, b) => a + b + 10, 0);
 
         //how far to the right
         tag.current.style.right = `${totalWidth}px`;
-    });
+      });
+    }
+  }
+
+  const rotateTags = () => {
+    if (wWidth < 576 && wWidth > 380) {
+      incrementTags(tags);
+
+      getFrontTag(tags).tag.current.style.width = null;
+      getFrontTag(tags).tag.current.style.color = null;
+
+      tags?.forEach(({tag, index}) => {
+      
+        tag.current.style.right = `${index * 10}px`
+        tag.current.style.zIndex = index;
+
+        if (getFrontTag(tags).index === index) {
+          tag.current.style.width = null;
+        } else {
+          tag.current.style.width = `${getFrontTag(tags).tag.current.offsetWidth - 8 - 8 - 10}px`;
+          tag.current.style.color = 'transparent';
+        }
+      });
+    }
   }
 
   const tagDefault = () => {
-    tags.forEach((tag, index) => {
-      tag.current.style.right = `${index * 5}px`;
-    });
+    resetTagsStyling(tags);
+
+    tags?.forEach(({tag, index}) => {
+      // only apply this styling on normal mobile and desktop (not tiny mobile)
+      if (tag.current && wWidth > 380) {
+        tag.current.style.right = `${index * 10}px`;
+        tag.current.style.zIndex = index;
+      }
+    })
   }
 
   const mouseOver = () => {
-    tagHover();
+    tagHoverDesktop();
     if (timeout) {
       clearTimeout(timeout);
       timeout = null; 
@@ -75,28 +136,33 @@ const TagsWrapper = ({ tagDetails }) => {
   }
 
   const mouseLeave = () => {
-    timeout = setTimeout(() => {
-      tagDefault();
-    }, 500);
+    if (wWidth >= 576) {
+      timeout = setTimeout(() => {
+        tagDefault();
+      }, 500);
+    }
   }
+
+  useEffect(() => { tagDefault(); }, [wWidth]);
 
   useEffect(() => {
     tagDefault();
+
     //until this is specified in database, select a random colour for tag
-    tags.forEach((tag) => {
+    tags?.forEach(({tag}) => {
       const color = colors[Math.floor(Math.random() * colors.length)];
       tag.current.style.backgroundColor = color;
       colors.splice(colors.indexOf(color), 1);
-      console.log(colors);
     });
   }, [])
 
   return (
     <>
-      <div className={'tags'}> {
+      <div className={'tags'}> 
+        {
           tagDetails && tagDetails.map((tag, index) => 
           <Link 
-            ref={tags[index]} 
+            ref={tags[index].tag} 
             to={'/'} 
             className={`tag`} 
             onMouseEnter={mouseOver} 
@@ -104,12 +170,14 @@ const TagsWrapper = ({ tagDetails }) => {
           >
             {tag}
           </Link>)
-      } </div>
+        } 
+      </div>
+      <div onClick={rotateTags}>test</div>
     </>
   )
 }
 
-const Posts = ({  }) => {
+const Posts = () => {
   const [posts, setPosts] = useState(null);
   const [toggleState, setToggleState] = useState('Published');
   const [state, dispatch] = useGlobalState();
