@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Children, createRef } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
 import './blog.scss'
 import { Link } from 'react-router-dom';
 import { Menu } from './menu/menu.js'
@@ -18,7 +18,7 @@ const About = () => {
   return (
     <div className="About">
       <div className="circle">
-        <img src={Portrait}></img>
+        <img alt={'ViewableGravy Portrait'} src={Portrait}></img>
       </div>
       <p>Hi, my name is Lleyton but online you can call my Gravy. I'm passionate about making things; right now that's in NodeJS and React but I wouldn't turn down a job with C#. Recently I'm entertaining myself with WebSockets, Express API's and learning new SASS skills but I also love Server Administration, automation and writing scripts. I currently Work at <a href="https://ventraip.com.au/">VentraIP Australia</a> as a technical support Representative</p>
     </div>
@@ -68,10 +68,13 @@ const TagsWrapper = ({ tagDetails }) => {
   let timeout = null; 
   const colors = ['#ce3175', '#4e3d42', '#000000', '#4fb477']
 
-  const incrementTags = (t) => tags = t.map(({tag, index}) => ({ tag: tag, index: ++index >= tags.length ? 0 : index }));
-  const getFrontTag = (t) => t.find(({index}) => index + 1 === t.length);
-  const resetTagsIndex = (t) => t.map(({tag}, index) => ({ tag: tag, index: index }));
-  const resetTagsStyling = (t) => t.forEach(({tag}) => {
+  const incrementTags = (ts) => tags = ts.map(({tag, index}) => ({ tag: tag, index: ++index >= tags.length ? 0 : index }));
+  const getFrontTag = (ts) => ts.find(({index}) => index + 1 === ts.length);
+  // const resetTagsIndex = (ts) => ts.map(({tag}, index) => ({ tag: tag, index: index }));
+  const getTagFromEvent = (e) => tags.find(({tag}) => tag.current === e.target);
+  const isFrontTag = (t) => t.index + 1 === tags.length;
+  const indexesFromFrontTag = (tag) => getFrontTag(tags).index - tag.index;  
+  const resetTagsStyling = (ts) => ts.forEach(({tag}) => {
     tag.current.style.width = null;
     tag.current.style.color = null;
     tag.current.style.zIndex = null;
@@ -80,8 +83,6 @@ const TagsWrapper = ({ tagDetails }) => {
 
   const tagHoverDesktop = () => {
     if (wWidth > 576) {
-      resetTagsStyling(tags);
-
       const widths = tags.map(({tag}) => tag.current.offsetWidth);
       tags.forEach(({tag}, index) => {
         //culmination of widths before this one
@@ -93,22 +94,28 @@ const TagsWrapper = ({ tagDetails }) => {
     }
   }
 
-  const rotateTags = () => {
+  const rotateTags = (increment) => {
     if (wWidth < 576 && wWidth > 380) {
-      incrementTags(tags);
+      if (!increment) 
+        incrementTags(tags)
+      else 
+        for (let i = 0; i < increment; i++)
+          incrementTags(tags)
 
-      getFrontTag(tags).tag.current.style.width = null;
-      getFrontTag(tags).tag.current.style.color = null;
+      const front = getFrontTag(tags);
+
+      front.tag.current.style.width = null;
+      front.tag.current.style.color = null;
 
       tags?.forEach(({tag, index}) => {
       
         tag.current.style.right = `${index * 10}px`
         tag.current.style.zIndex = index;
 
-        if (getFrontTag(tags).index === index) {
+        if (front.index === index) {
           tag.current.style.width = null;
         } else {
-          tag.current.style.width = `${getFrontTag(tags).tag.current.offsetWidth - 8 - 8 - 10}px`;
+          tag.current.style.width = `${front.tag.current.offsetWidth - 8 - 8 - 10}px`;
           tag.current.style.color = 'transparent';
         }
       });
@@ -143,6 +150,17 @@ const TagsWrapper = ({ tagDetails }) => {
     }
   }
 
+  const tagClick = (e) => {
+    if (wWidth >= 576) return
+
+    const tag = getTagFromEvent(e);
+    if (!isFrontTag(tag)) {
+      rotateTags(indexesFromFrontTag(tag));
+      e.preventDefault();
+    }
+  }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { tagDefault(); }, [wWidth]);
 
   useEffect(() => {
@@ -154,6 +172,8 @@ const TagsWrapper = ({ tagDetails }) => {
       tag.current.style.backgroundColor = color;
       colors.splice(colors.indexOf(color), 1);
     });
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -167,12 +187,12 @@ const TagsWrapper = ({ tagDetails }) => {
             className={`tag`} 
             onMouseEnter={mouseOver} 
             onMouseLeave={mouseLeave}
+            onClick={tagClick}
           >
             {tag}
           </Link>)
         } 
       </div>
-      <div onClick={rotateTags}>test</div>
     </>
   )
 }
@@ -180,7 +200,7 @@ const TagsWrapper = ({ tagDetails }) => {
 const Posts = () => {
   const [posts, setPosts] = useState(null);
   const [toggleState, setToggleState] = useState('Published');
-  const [state, dispatch] = useGlobalState();
+  const [state, ] = useGlobalState();
 
   useEffect(() => {
     toggleState === 'Published' 
