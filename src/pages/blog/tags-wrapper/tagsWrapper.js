@@ -20,7 +20,6 @@ const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 //todo - add toggle (+) on left to toggle between on and off rather than just clicking the text
 //on mobile this can be hidden and just clicking on an option while closed will toggle the state on (and show a minus to close)
 export const TagsWrapper = ({ tagDetails }) => {
-  // const tags = tagDetails?.map(() => createRef()); //create an array of refs for each tag
   const [wWidth,] = useWindowDimensions();
   let tags = tagDetails?.map((_, i) => ({ index: i, tag: createRef() }))
 
@@ -29,9 +28,7 @@ export const TagsWrapper = ({ tagDetails }) => {
 
   const incrementTags = (ts) => tags = ts.map(({tag, index}) => ({ tag: tag, index: ++index >= tags.length ? 0 : index }));
   const decrementTags = (ts) => tags = ts.map(({tag, index}) => ({ tag: tag, index: --index < 0 ? tags.length - 1 : index }));
-
   const getFrontTag = (ts) => ts.find(({index}) => index + 1 === ts.length);
-  // const resetTagsIndex = (ts) => ts.map(({tag}, index) => ({ tag: tag, index: index }));
   const getTagFromEvent = (e) => tags.find(({tag}) => tag.current === e.target);
   const isFrontTag = (t) => t.index + 1 === tags.length;
   const indexesFromFrontTag = (tag) => getFrontTag(tags).index - tag.index;  
