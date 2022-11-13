@@ -15,8 +15,9 @@ const api = `${protocol}://${server}:${port}/api`
 export const Posts = () => {
   const [posts, setPosts] = useState(null);
   const [toggleState, setToggleState] = useState('Published');
-  const [state, ] = useGlobalState();
+  const [state, dispatch] = useGlobalState();
   const [width,] = useWindowDimensions();
+
   let listItems = useRef([]);
 
   const hideBackgroundHightlight = () => {
@@ -67,6 +68,7 @@ export const Posts = () => {
     toggleState === 'Published'
       ? setToggleState('Drafts')
       : setToggleState('Published');
+    dispatch({ draftMode: true })
   }
 
   useEffect(() => {
@@ -92,14 +94,20 @@ export const Posts = () => {
 
       <ul className="posts">
         { posts && posts.map((post, index) =>
-            <li ref={(element) => listItems.current[index] = element} className='blog-item' key={post._id} onMouseOver={() => moveBackgroundHighlight(index)} onMouseLeave={hideBackgroundHightlight}>
+            <li 
+              ref={(element) => listItems.current[index] = element} 
+              className='blog-item' 
+              key={post._id} 
+              onMouseOver={() => moveBackgroundHighlight(index)} 
+              onMouseLeave={hideBackgroundHightlight}
+            >
               <Link to={`/blog/${post.slug}`} className='title_container'>
                 <h2 className='title'>{post.title}</h2>
                 <p className={'summary'} dangerouslySetInnerHTML={{ __html: post.summary }}></p>
               </Link>
               <div className='right-section'>
                 <p className='date'>{post.date}</p>
-                <TagsWrapper tagDetails={post.tags}/>
+                <TagsWrapper tagDetails={post.tags} parentKey={post._id}/>
               </div>
             </li>
           )

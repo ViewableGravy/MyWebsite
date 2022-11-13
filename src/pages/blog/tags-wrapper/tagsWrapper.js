@@ -1,30 +1,34 @@
-import { useEffect, createRef } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, createRef, useState } from 'react';
 import { useSwipeable } from "react-swipeable";
 import { Link } from 'react-router-dom';
 import './tagsWrapper.scss';
 import { useWindowDimensions } from '../../../functionality/helper';
+import { useGlobalState } from '../../../functionality/globalState';
 
 //todo - add toggle (+) on left to toggle between on and off rather than just clicking the text
 //on mobile this can be hidden and just clicking on an option while closed will toggle the state on (and show a minus to close)
-export const TagsWrapper = ({ tagDetails }) => {
+export const TagsWrapper = ({ tagDetails, parentKey }) => {
   const [wWidth,] = useWindowDimensions();
-  let tags = tagDetails?.map((_, i) => ({ index: i, tag: createRef() }))
+  let [tags, setTags] = useState([]);
+  const [state, ] = useGlobalState();
+  const [colors, setColors] = useState(['#ce3175', '#4e3d42', '#000000', '#4fb477'])
 
   let timeout = null; 
-  const colors = ['#ce3175', '#4e3d42', '#000000', '#4fb477']
 
-  const incrementTags = (ts) => tags = ts.map(({tag, index}) => ({ tag: tag, index: ++index >= tags.length ? 0 : index }));
-  const decrementTags = (ts) => tags = ts.map(({tag, index}) => ({ tag: tag, index: --index < 0 ? tags.length - 1 : index }));
-  const getFrontTag = (ts) => ts.find(({index}) => index + 1 === ts.length);
+  const incrementTags = () => tags = tags.map(({tag, index}) => ({ tag: tag, index: ++index >= tags.length ? 0 : index }));
+  const decrementTags = () => tags = tags.map(({tag, index}) => ({ tag: tag, index: --index < 0 ? tags.length - 1 : index }));
+  const getFrontTag   = () => tags.find(({index}) => index + 1 === tags.length);
   const getTagFromEvent = (e) => tags.find(({tag}) => tag.current === e.target);
-  const isFrontTag = (t) => t.index + 1 === tags.length;
-  const indexesFromFrontTag = (tag) => getFrontTag(tags).index - tag.index;  
-  const resetTagsStyling = (ts) => ts?.forEach(({tag}) => {
+  const isFrontTag    = (tag) => tag.index + 1 === tags.length;
+  const indexesFromFrontTag = (tag) => getFrontTag().index - tag.index; 
+  const resetTagsStyling = () => tags?.forEach(({tag}) => {
     tag.current.style.width = null;
     tag.current.style.color = null;
     tag.current.style.zIndex = null;
     tag.current.style.right = null;
   });
+  
 
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => rotateTags(-1),
@@ -51,7 +55,7 @@ export const TagsWrapper = ({ tagDetails }) => {
   const rotateTags = (increment) => {
     if (wWidth < 576 && wWidth > 380) {
       if (!increment) 
-        incrementTags(tags)
+        incrementTags()
       else 
         for (let i = 0; i < Math.abs(increment); i++)
           increment < 0 ? decrementTags(tags) : incrementTags(tags);
@@ -77,7 +81,7 @@ export const TagsWrapper = ({ tagDetails }) => {
   }
 
   const tagDefault = () => {
-    resetTagsStyling(tags);
+    resetTagsStyling();
 
     tags?.forEach(({tag, index}) => {
       // only apply this styling on normal mobile and desktop (not tiny mobile)
@@ -116,37 +120,32 @@ export const TagsWrapper = ({ tagDetails }) => {
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { tagDefault(); }, [wWidth]);
-
-  useEffect(() => {
-    tagDefault();
-
-    //until this is specified in database, select a random colour for tag
-    tags?.forEach(({tag}) => {
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      tag.current.style.backgroundColor = color;
-      colors.splice(colors.indexOf(color), 1);
-    });
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  useEffect(() => tagDefault(), [wWidth, tags]);
+  useEffect(() => setColors(['#ce3175', '#4e3d42', '#000000', '#4fb477']), [])
+  useEffect(() => { }, [state.draftMode]);
+  useEffect(() => setTags(tagDetails ? tagDetails.sort((a,b) => a.length - b.length).map((_, index) => ({ tag: createRef(), index })) : []), [tagDetails])
+  useEffect(() => tags?.forEach(({tag}) => {
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    tag.current.style.backgroundColor = color;
+    colors.splice(colors.indexOf(color), 1);
+  }), [colors])
 
   return (
     <>
       <div {...swipeHandlers} className={'tags'}> 
         {
           tagDetails && tagDetails.map((tag, index) => 
-          <Link 
-            ref={tags[index].tag} 
-            to={'/'} 
-            className={`tag`} 
-            onMouseEnter={mouseOver} 
-            onMouseLeave={mouseLeave}
-            onClick={tagClick}
-            style={{ touchAction: 'pan-x' }}
-          >
-            {tag}
-          </Link>)
+            <Link 
+              key={`${parentKey}-${index}`}
+              ref={tags[index]?.tag} 
+              to={'/'} 
+              className={'tag'} 
+              onMouseEnter={mouseOver} 
+              onMouseLeave={mouseLeave}
+              onClick={tagClick}
+              style={{ touchAction: 'pan-x' }}
+            >{tag}</Link>
+          )
         } 
       </div>
     </>

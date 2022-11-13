@@ -32,7 +32,7 @@ export const Blog = () => {
     <div className={"blog_container"}>
       <div id="outer">
         <div id="background">
-          <Menu author="ViewableGravy" /> {/* add option to customize links */}
+          <Menu author="ViewableGravy" />
           <About/>
           <Posts/>
         </div>
