@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import React, { useState } from 'react';
 import './toggle.scss'
 
 export const FlipToggle = ({ onChange }) => {

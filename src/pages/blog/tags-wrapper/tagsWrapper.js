@@ -1,21 +1,8 @@
-import { useEffect, useState, createRef } from 'react';
+import { useEffect, createRef } from 'react';
 import { useSwipeable } from "react-swipeable";
 import { Link } from 'react-router-dom';
 import './tagsWrapper.scss';
-
-const getWindowDimensions = () => [window.innerWidth, window.innerHeight];
-const useWindowDimensions = () => {
-const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
-
-  useEffect(() => {
-    const handleResize = () => setWindowDimensions(getWindowDimensions());
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  return windowDimensions;
-}
+import { useWindowDimensions } from '../../../functionality/helper';
 
 //todo - add toggle (+) on left to toggle between on and off rather than just clicking the text
 //on mobile this can be hidden and just clicking on an option while closed will toggle the state on (and show a minus to close)
@@ -48,7 +35,6 @@ export const TagsWrapper = ({ tagDetails }) => {
     trackMouse: false,                    // track mouse input
   })
 
-  //todo - add button next to tags to expand them
   const tagHoverDesktop = () => {
     if (wWidth > 576) {
       const widths = tags.map(({tag}) => tag.current.offsetWidth);

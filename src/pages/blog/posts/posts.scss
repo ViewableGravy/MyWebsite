@@ -4,6 +4,10 @@
   align-items: center;
   justify-content: center;
 
+  * {
+    z-index: 1;
+  }
+
   #posts-title {
     color: white;
     text-align: center;
@@ -41,6 +45,16 @@
   
 }
 
+.background-hover {
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  cursor: pointer;
+  position: absolute;
+  transition: all 0.2s ease-in-out;
+}
+
 .posts {
   display: flex;
   flex-direction: column;
@@ -55,6 +69,7 @@
     text-decoration: none;
     color: white;
     cursor: default;
+    z-index: 1;
   }
 
   .blog-item {
@@ -121,8 +136,12 @@
 
     //desktop
     @media screen and (min-width: 576px) {
+      .title, .summary, .date {
+        transition: all 0.2s linear;
+      }
+
       &:hover {
-        background-color: white;
+        // background-color: white;
 
         .title, .summary, .date {
           color: black;
