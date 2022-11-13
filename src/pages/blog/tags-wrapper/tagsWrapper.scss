@@ -1,0 +1,55 @@
+.tags {
+  position: relative;
+  min-width: 100px;
+  min-height: 30px;
+  margin-bottom: 10px;
+
+  .tag {
+    position: absolute;
+    font-size: 14px;
+    max-width: 150px;
+    min-height: 25px;
+    background-color: #ce3175;
+    color: white;
+    top: 0;
+    right: 0;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 1.7;
+    font-family: 'Inter', sans-serif;
+    padding: 8px 8px 8px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .tag::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: -30px; 
+    width: 20px;
+  }
+
+  @media (max-width: 576px) {
+    .tags {
+      &:last-child {
+        z-index: 2;
+      }
+    }
+  }
+
+  @media screen and (max-width: 380px) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;  
+    justify-content: center;
+
+    .tag {
+      position: relative;
+      top: 0;
+      right: 0;
+      margin: 5px 5px 5px 5px;
+    }
+  }
+}

@@ -77,7 +77,7 @@
     align-items: center;
     justify-content: center;
     gap: 10vh;
-    z-index: 2;
+    z-index: 100;
 
     * {
       color: black;
@@ -99,7 +99,6 @@
     #close:after {
       content: "\00d7"; // This will render the 'X'
     }
-
   }
 
   #right.open {
