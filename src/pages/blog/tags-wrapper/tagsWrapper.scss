@@ -20,15 +20,17 @@
     padding: 8px 8px 8px 8px;
     white-space: nowrap;
     overflow: hidden;
-  }
 
-  // .tag::before {
-  //   content: '';
-  //   position: absolute;
-  //   top: 0px;
-  //   left: -30px; 
-  //   width: 20px;
-  // }
+    &.draft {
+      background-color: rgba(255, 255, 255, 0.151);
+      color: rgb(0, 204, 255);
+      border: dashed 2px rgb(0, 204, 255);
+
+      &:hover {
+        background-color: rgba(0, 204, 255, 0.151);
+      }
+    }
+  }
 
   @media (max-width: 576px) {
     .tags:last-child {

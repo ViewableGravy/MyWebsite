@@ -65,10 +65,13 @@ export const Posts = () => {
   }
 
   const changeToggle = () => {
-    toggleState === 'Published'
-      ? setToggleState('Drafts')
-      : setToggleState('Published');
-    dispatch({ draftMode: true })
+    if (toggleState === 'Published') {
+      setToggleState('Drafts');
+      dispatch({draftMode: true});
+    } else {
+      setToggleState('Published');
+      dispatch({draftMode: false});
+    }
   }
 
   useEffect(() => {

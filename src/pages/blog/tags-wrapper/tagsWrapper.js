@@ -119,32 +119,47 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
     }
   }
 
+
+  const mapTagDetailsToTags = (tags) => tags ? tags.map((_, index) => ({ tag: createRef(), index, details: tagDetails[index] })) : [];
+  // must also change the index of the tag in the array (TODO)
+  const sortTags = (tags) => tags ? tags.sort((a,b) => a.details.length - b.details.length) : [];
+  const addDraftTag = (tags) => tags.push({ tag: createRef(), index: tags.length, details: 'New Tag', draft: true });
+  const removeDraftTag = () => tags.filter(({draft}) => !draft);
+
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => tagDefault(), [wWidth, tags]);
   useEffect(() => setColors(['#ce3175', '#4e3d42', '#000000', '#4fb477']), [])
-  useEffect(() => { }, [state.draftMode]);
-  useEffect(() => setTags(tagDetails ? tagDetails.sort((a,b) => a.length - b.length).map((_, index) => ({ tag: createRef(), index })) : []), [tagDetails])
-  useEffect(() => tags?.forEach(({tag}) => {
+
+  useEffect(() => {
+    let mappedTags = mapTagDetailsToTags(tagDetails);
+    state.draftMode ? addDraftTag(mappedTags) : removeDraftTag();
+    setTags(mappedTags);
+  }, [tagDetails, state.draftMode])
+  
+  useEffect(() => tags?.forEach(({tag, draft}) => {
     const color = colors[Math.floor(Math.random() * colors.length)];
-    tag.current.style.backgroundColor = color;
-    colors.splice(colors.indexOf(color), 1);
+    if (!draft) {
+      tag.current.style.backgroundColor = color;
+      colors.splice(colors.indexOf(color), 1);
+    }
   }), [colors])
 
   return (
     <>
       <div {...swipeHandlers} className={'tags'}> 
         {
-          tagDetails && tagDetails.map((tag, index) => 
+          tags.map((tag, index) => 
             <Link 
               key={`${parentKey}-${index}`}
-              ref={tags[index]?.tag} 
+              ref={tag.tag} 
               to={'/'} 
-              className={'tag'} 
+              className={`tag ${tag.draft ? 'draft' : ''}`} 
               onMouseEnter={mouseOver} 
               onMouseLeave={mouseLeave}
               onClick={tagClick}
               style={{ touchAction: 'pan-x' }}
-            >{tag}</Link>
+            >{tag.details}</Link>
           )
         } 
       </div>
