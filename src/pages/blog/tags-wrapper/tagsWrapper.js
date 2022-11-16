@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import './tagsWrapper.scss';
 import { useWindowDimensions } from '../../../functionality/helper';
 import { useGlobalState } from '../../../functionality/globalState';
+import { DraftSettings } from '../draftSettings/draftSettings';
 
 //todo - add toggle (+) on left to toggle between on and off rather than just clicking the text
 //on mobile this can be hidden and just clicking on an option while closed will toggle the state on (and show a minus to close)
@@ -13,6 +14,7 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
   let [tags, setTags] = useState([]);
   const [state, ] = useGlobalState();
   const [colors, setColors] = useState(['#ce3175', '#4e3d42', '#000000', '#4fb477'])
+  const [isHidden, setIsHidden] = useState(true);
 
   let timeout = null; 
 
@@ -23,11 +25,20 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
   const isFrontTag    = (tag) => tag.index + 1 === tags.length;
   const indexesFromFrontTag = (tag) => getFrontTag().index - tag.index; 
   const resetTagsStyling = () => tags?.forEach(({tag}) => {
-    tag.current.style.width = null;
-    tag.current.style.color = null;
-    tag.current.style.zIndex = null;
-    tag.current.style.right = null;
+    if (tag.current?.style?.width) {
+      tag.current.style.width = null;
+      tag.current.style.color = null;
+      tag.current.style.zIndex = null;
+      tag.current.style.right = null;
+    }
   });
+
+  const mapTagDetailsToTags = (tags) => tags ? tags.map((_, index) => ({ tag: createRef(), index, details: tagDetails[index] })) : [];
+  // must also change the index of the tag in the array (TODO)
+  const sortTags = (tags) => tags ? tags.sort((a,b) => a.details.length - b.details.length) : [];
+  const addDraftTag = (ts) => [...ts, { tag: createRef(), index: tags.length, details: 'New Tag', draft: true }] 
+  const removeDraftTag = (ts) => ts.filter(({draft}) => !draft);
+  const getDraftTag = () => tags.find(({draft}) => draft);
   
 
   const swipeHandlers = useSwipeable({
@@ -94,6 +105,7 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
 
   const mouseOver = () => {
     tagHoverDesktop();
+    setIsHidden(false);
     if (timeout) {
       clearTimeout(timeout);
       timeout = null; 
@@ -101,6 +113,7 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
   }
 
   const mouseLeave = () => {
+    setIsHidden(true);
     if (wWidth >= 576) {
       timeout = setTimeout(() => {
         tagDefault();
@@ -119,23 +132,25 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
     }
   }
 
-
-  const mapTagDetailsToTags = (tags) => tags ? tags.map((_, index) => ({ tag: createRef(), index, details: tagDetails[index] })) : [];
-  // must also change the index of the tag in the array (TODO)
-  const sortTags = (tags) => tags ? tags.sort((a,b) => a.details.length - b.details.length) : [];
-  const addDraftTag = (tags) => tags.push({ tag: createRef(), index: tags.length, details: 'New Tag', draft: true });
-  const removeDraftTag = () => tags.filter(({draft}) => !draft);
-
+  const tagEdit = (e) => {
+    if (e.data === '\n') {
+      e.preventDefault();
+      e.target.blur();
+    }
+  }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => tagDefault(), [wWidth, tags]);
+  useEffect(tagDefault, [wWidth, tags]);
   useEffect(() => setColors(['#ce3175', '#4e3d42', '#000000', '#4fb477']), [])
 
   useEffect(() => {
     let mappedTags = mapTagDetailsToTags(tagDetails);
-    state.draftMode ? addDraftTag(mappedTags) : removeDraftTag();
+    mappedTags = state.draftMode 
+      ? addDraftTag(mappedTags)
+      : [...mappedTags]
+
     setTags(mappedTags);
-  }, [tagDetails, state.draftMode])
+  }, [tagDetails, state.draftMode]);
   
   useEffect(() => tags?.forEach(({tag, draft}) => {
     const color = colors[Math.floor(Math.random() * colors.length)];
@@ -149,18 +164,41 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
     <>
       <div {...swipeHandlers} className={'tags'}> 
         {
-          tags.map((tag, index) => 
-            <Link 
-              key={`${parentKey}-${index}`}
-              ref={tag.tag} 
-              to={'/'} 
-              className={`tag ${tag.draft ? 'draft' : ''}`} 
-              onMouseEnter={mouseOver} 
-              onMouseLeave={mouseLeave}
-              onClick={tagClick}
-              style={{ touchAction: 'pan-x' }}
-            >{tag.details}</Link>
-          )
+          tags.map((tag, index) => {
+            if (!tag.draft)
+              return (
+                <Link 
+                  key={`${parentKey}-${index}`}
+                  ref={tag.tag} 
+                  to={'/'} 
+                  className={`tag`} 
+                  onMouseEnter={mouseOver} 
+                  onMouseLeave={mouseLeave}
+                  onClick={tagClick}
+                  style={{ touchAction: 'pan-x' }}
+                >{tag.details}</Link>
+              )
+            else
+              return (
+                <div>
+                  <div 
+                    key={`${parentKey}-${index}`}
+                    ref={tag.tag} 
+                    className={`tag ${tag.draft ? 'draft' : ''}`} 
+                    onMouseEnter={mouseOver} 
+                    onMouseLeave={mouseLeave}
+                    onClick={tagClick}
+                    style={{ touchAction: 'pan-x' }}
+                    contentEditable="true"
+                    suppressContentEditableWarning={true}
+                    onBeforeInput={tagEdit}
+                  >
+                    <DraftSettings hidden={isHidden}/>
+                    <span>{tag.details}</span>
+                  </div>
+                </div>
+              )
+          })
         } 
       </div>
     </>

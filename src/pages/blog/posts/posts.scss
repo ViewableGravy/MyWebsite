@@ -67,7 +67,6 @@
 
   * {
     text-decoration: none;
-    color: white;
     cursor: default;
     z-index: 1;
   }
@@ -101,6 +100,7 @@
         font-weight: 900;
         margin: 0;
         font-family: 'Inter', sans-serif;
+        color: white;
       }
 
       .summary {
