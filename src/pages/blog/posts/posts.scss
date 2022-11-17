@@ -71,6 +71,42 @@
     z-index: 1;
   }
 
+  .draft {
+    background-color: rgba(255, 255, 255, 0.151);
+    color: rgb(0, 204, 255);
+    border: dashed 2px rgb(0, 204, 255);
+    overflow: visible;
+    outline: none;
+    border-radius: 5px;
+
+    &.title {
+      padding: 5px 5px 5px 10px;
+    }
+
+    &.summary {
+      min-height: 80px;
+      margin-bottom: 0px;
+      padding-top: 10px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    &.date {
+      padding: 0 5px 0 10px;
+      margin-top: 10px;
+    }
+
+    &:focus {
+      border: 2px solid rgb(0, 64, 80);
+    }
+
+    &:hover, &:focus {
+      background-color: rgb(162, 236, 255);
+      color: black;
+      font-weight: bold;
+    }
+  }
+
   .blog-item {
     border-bottom: 1px solid rgb(55, 101, 122);
     padding: 20px 10px 20px 10px;
@@ -90,6 +126,8 @@
       align-items: left;
       justify-content: space-between;
       margin-right: 13%;
+      min-width: 65%;
+      width: 100%;
 
       * {
         cursor: pointer;
@@ -118,7 +156,7 @@
       align-items: right;
       justify-content: space-between;
       max-width: 35%;
-      width: 22%;
+      width: 30%;
 
       * {
         cursor: pointer;
@@ -128,14 +166,27 @@
         font-size: 18px;
         margin: 0;
         font-family: 'Inconsolata', monospace;
-        padding-top: 10px; //center with title
         text-align: right;
         white-space: nowrap;
+
+        &:not(.draft) {
+          padding-top: 5px; //center with title
+        }
+
+        // &.draft {
+        //   margin-top: 10px;
+        // }
+        
       }
     }
 
     //desktop
     @media screen and (min-width: 576px) {
+      .date {
+        margin-top: 0;
+        padding-top: 0;
+      }
+
       .title, .summary, .date {
         transition: all 0.2s linear;
       }
@@ -170,6 +221,8 @@
         .date {
           width: 50%;
           text-align: left;
+          margin-top: 10px;
+          padding-top: 3px;
         }
       }
     }
@@ -179,6 +232,11 @@
       .right-section {
         flex-direction: column;
         align-items: left;
+
+        .date {
+          width: calc(100% - 19px);
+          text-align: left;
+        }
       }
     }
   }

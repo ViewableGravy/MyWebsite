@@ -75,9 +75,42 @@ export const Posts = () => {
   }
 
   useEffect(() => {
-    toggleState === 'Published' 
-      ? getPosts(setPosts) 
-      : getDrafts(setPosts);
+    if (toggleState === 'Published') {
+      getPosts(setPosts) 
+    } else {
+      // Probably should put a fully default one if the api request fails
+      axios.get(`${api}/blog/admin/post/drafts`)
+        .then((response) => {
+          const mapped = response.data.map((post) => {
+            const newPost = post;
+
+            if (!post.title) {
+              newPost.title = 'Enter a new title here'
+              newPost.titleIsDraft = true;
+            }
+
+            if (!post.summary) {
+              newPost.summary = 'Enter a new summary here'
+              newPost.summaryIsDraft = true;
+            }
+
+            if (!post.date) {
+              newPost.date = 'Jan 01 1800'
+              newPost.dateIsDraft = true;
+            }
+
+            newPost.dateIsDraft = true;
+            newPost.summaryIsDraft = true;
+            newPost.titleIsDraft = true;
+            
+            return newPost;
+          });
+          setPosts(mapped);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }, [toggleState])
 
   useEffect(() => {
@@ -104,12 +137,12 @@ export const Posts = () => {
               onMouseOver={() => moveBackgroundHighlight(index)} 
               onMouseLeave={hideBackgroundHightlight}
             >
-              <Link to={`/blog/${post.slug}`} className='title_container'>
-                <h2 className='title'>{post.title}</h2>
-                <p className={'summary'} dangerouslySetInnerHTML={{ __html: post.summary }}></p>
+              <Link to={`/blog/${post.slug}`} className={`title_container`}>
+                <h2 className={`title ${post.titleIsDraft ? 'draft' : ''}`}>{post.title}</h2>
+                <p className={`summary ${post.summaryIsDraft ? 'draft' : ''}`} dangerouslySetInnerHTML={{ __html: post.summary }}></p>
               </Link>
               <div className='right-section'>
-                <p className='date'>{post.date}</p>
+                <p className={`date ${post.dateIsDraft ? 'draft' : ''}`}>{post.date}</p>
                 <TagsWrapper tagDetails={post.tags} parentKey={post._id}/>
               </div>
             </li>

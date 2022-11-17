@@ -25,7 +25,7 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
   const isFrontTag    = (tag) => tag.index + 1 === tags.length;
   const indexesFromFrontTag = (tag) => getFrontTag().index - tag.index; 
   const resetTagsStyling = () => tags?.forEach(({tag}) => {
-    if (tag.current?.style?.width) {
+    if (tag.current?.style) {
       tag.current.style.width = null;
       tag.current.style.color = null;
       tag.current.style.zIndex = null;
