@@ -6,6 +6,7 @@ import FlipToggle from "../toggle/toggle";
 import { useWindowDimensions } from "../../../functionality/helper";
 import { TagsWrapper } from "../tags-wrapper/tagsWrapper";
 import './posts.scss'
+import { DraftSettings } from "../draftSettings/draftSettings";
 
 const server = process.env.REACT_APP_BACKEND_SERVER ?? 'localhost';
 const port = process.env.REACT_APP_BACKEND_PORT ?? '3000';
@@ -17,6 +18,7 @@ export const Posts = () => {
   const [toggleState, setToggleState] = useState('Published');
   const [state, dispatch] = useGlobalState();
   const [width,] = useWindowDimensions();
+  const [fetchingPosts, setFetchingPosts] = useState(false);
 
   let listItems = useRef([]);
 
@@ -52,7 +54,7 @@ export const Posts = () => {
       setPosts(response.data);
     } catch (error) {
       console.log(error);
-    }
+    } 
   }
   
   const getDrafts = async (setPosts) => {
@@ -74,6 +76,22 @@ export const Posts = () => {
     }
   }
 
+  const onMouseEnterDraft = (element, index) => {
+    setPosts((posts) => {
+      const newPosts = [...posts];
+      newPosts[index][`${element}ShowDraftSettings`] = true;
+      return newPosts;
+    });
+  }
+
+  const onMouseLeaveDraft = (element, index) => {
+    setPosts((posts) => {
+      const newPosts = [...posts];
+      newPosts[index][`${element}ShowDraftSettings`] = false;
+      return newPosts;
+    });
+  }
+
   useEffect(() => {
     if (toggleState === 'Published') {
       getPosts(setPosts) 
@@ -81,41 +99,21 @@ export const Posts = () => {
       // Probably should put a fully default one if the api request fails
       axios.get(`${api}/blog/admin/post/drafts`)
         .then((response) => {
-          const mapped = response.data.map((post) => {
-            const newPost = post;
-
-            if (!post.title) {
-              newPost.title = 'Enter a new title here'
-              newPost.titleIsDraft = true;
-            }
-
-            if (!post.summary) {
-              newPost.summary = 'Enter a new summary here'
-              newPost.summaryIsDraft = true;
-            }
-
-            if (!post.date) {
-              newPost.date = 'Jan 01 1800'
-              newPost.dateIsDraft = true;
-            }
-
-            newPost.dateIsDraft = true;
-            newPost.summaryIsDraft = true;
-            newPost.titleIsDraft = true;
-            
-            return newPost;
-          });
-          setPosts(mapped);
+          setPosts(response.data.map((post) => ({
+            ...post,
+            title: post.title ?? 'Enter a new title here',
+            summary: post.summary ?? 'Enter a new summary here',
+            date: post.date ?? 'Jan 01 1800',
+            dateIsDraft: true,
+            summaryIsDraft: true,
+            titleIsDraft: true
+          })));
         })
         .catch((error) => {
           console.log(error);
         });
     }
   }, [toggleState])
-
-  useEffect(() => {
-    getPosts(setPosts);
-  }, [])
 
   useEffect(() => {
     hideBackgroundHightlight();
@@ -128,9 +126,9 @@ export const Posts = () => {
         { state.token && <FlipToggle className="FlipToggle" onChange={changeToggle}/> }  
       </div>
 
-      <ul className="posts">
+      <div className="posts">
         { posts && posts.map((post, index) =>
-            <li 
+            <div 
               ref={(element) => listItems.current[index] = element} 
               className='blog-item' 
               key={post._id} 
@@ -138,17 +136,36 @@ export const Posts = () => {
               onMouseLeave={hideBackgroundHightlight}
             >
               <Link to={`/blog/${post.slug}`} className={`title_container`}>
-                <h2 className={`title ${post.titleIsDraft ? 'draft' : ''}`}>{post.title}</h2>
-                <p className={`summary ${post.summaryIsDraft ? 'draft' : ''}`} dangerouslySetInnerHTML={{ __html: post.summary }}></p>
+
+                <div 
+                  style={{position: 'relative'}} 
+                  onMouseEnter={() => onMouseEnterDraft('title', index)} 
+                  onMouseLeave={() => onMouseLeaveDraft('title', index)}
+                >
+                  <DraftSettings hidden={!state.draftMode || !posts[index].titleShowDraftSettings}/>
+                  <h2 className={`title ${post.titleIsDraft ? 'draft' : ''}`}>{post.title}</h2>
+                </div>
+                
+                <div 
+                  style={{position: 'relative', marginTop: '10px'}} 
+                  onMouseEnter={() => onMouseEnterDraft('summary', index)} 
+                  onMouseLeave={() => onMouseLeaveDraft('summary', index)}
+                >
+                  <DraftSettings hidden={!state.draftMode || !posts[index].summaryShowDraftSettings}/>
+                  <p style={{ marginTop: 0}} className={`summary ${post.summaryIsDraft ? 'draft' : ''}`} dangerouslySetInnerHTML={{ __html: post.summary }}></p>
+                </div>
+                
               </Link>
+
               <div className='right-section'>
                 <p className={`date ${post.dateIsDraft ? 'draft' : ''}`}>{post.date}</p>
                 <TagsWrapper tagDetails={post.tags} parentKey={post._id}/>
               </div>
-            </li>
+
+            </div>
           )
         }
-      </ul>
+      </div>
 
       <div className="background-hover"></div>
     </>

@@ -14,7 +14,7 @@ export const DraftSettings = ({ onSave, onCancel, onColorChange, hidden }) => {
     <div className={`draft-setting-container ${hidden ? 'hidden' : ''}`} contentEditable={false}>
       <i className={'circle-button tick fa fa-check'}></i>
       <i className={'circle-button cross fa-solid fa-x'}></i>
-      <input type="color" value="#00ffee" className={'circle-button color-palete'}></input>
+      <input type="color" value="#00ffee" className={'circle-button color-palete'} onChange={() => null}></input>
     </div>
   )
 }

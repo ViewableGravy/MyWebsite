@@ -104,12 +104,12 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
   }
 
   const mouseOver = () => {
-    tagHoverDesktop();
-    setIsHidden(false);
     if (timeout) {
       clearTimeout(timeout);
       timeout = null; 
     }
+    tagHoverDesktop();
+    setIsHidden(false);
   }
 
   const mouseLeave = () => {
@@ -117,7 +117,7 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
     if (wWidth >= 576) {
       timeout = setTimeout(() => {
         tagDefault();
-      }, 500);
+      }, 750);
     }
   }
 
@@ -180,22 +180,20 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
               )
             else
               return (
-                <div>
-                  <div 
-                    key={`${parentKey}-${index}`}
-                    ref={tag.tag} 
-                    className={`tag ${tag.draft ? 'draft' : ''}`} 
-                    onMouseEnter={mouseOver} 
-                    onMouseLeave={mouseLeave}
-                    onClick={tagClick}
-                    style={{ touchAction: 'pan-x' }}
-                    contentEditable="true"
-                    suppressContentEditableWarning={true}
-                    onBeforeInput={tagEdit}
-                  >
-                    <DraftSettings hidden={isHidden}/>
-                    <span>{tag.details}</span>
-                  </div>
+                <div 
+                  key={`${parentKey}-${index}`}
+                  ref={tag.tag} 
+                  className={`tag ${tag.draft ? 'draft' : ''}`} 
+                  onMouseEnter={mouseOver} 
+                  onMouseLeave={mouseLeave}
+                  onClick={tagClick}
+                  style={{ touchAction: 'pan-x' }}
+                  contentEditable="true"
+                  suppressContentEditableWarning={true}
+                  onBeforeInput={tagEdit}
+                >
+                  <DraftSettings hidden={isHidden}/>
+                  <span>{tag.details}</span>
                 </div>
               )
           })
