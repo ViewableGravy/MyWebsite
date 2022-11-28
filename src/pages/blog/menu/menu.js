@@ -40,15 +40,15 @@ export const Menu = ({ author }) => {
         <span id="Author">{author}</span>
       </div>
       <div id="right" className={menuItemsClasses}> 
+        <a href="https://status.gravy.cc/">Uptime</a>
+        <a href="https://github.com/ViewableGravy">Github</a>
+        <a onClick={() => navigate('/')}>Home</a>
+        <a onClick={() => navigate('/blog')}>Posts</a>
         {
           !state.token 
             ? <a onClick={() => navigate('/login')}>Login</a>
             : <a onClick={() => logout(dispatch)}>Logout</a> 
         }
-        <a href="https://status.gravy.cc/">Uptime</a>
-        <a href="https://github.com/ViewableGravy">github</a>
-        <a onClick={() => navigate('/')}>Home</a>
-        <a onClick={() => navigate('/blog')}>Posts</a>
         {mobileView && <div id="close" onClick={() => setMenuOpen(!menuOpen)}></div>}
       </div>
       {
