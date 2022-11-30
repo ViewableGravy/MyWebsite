@@ -49,6 +49,7 @@ export const Posts = () => {
   }
 
   const getPosts = async (setPosts) => {
+    setPosts(null);
     try {
       const response = await axios.get(`${api}/blog/posts`);
       setPosts(response.data);
@@ -58,6 +59,7 @@ export const Posts = () => {
   }
   
   const getDrafts = async (setPosts) => {
+    setPosts(null);
     try {
       const response = await axios.get(`${api}/blog/admin/post/drafts`);
       setPosts(response.data);
@@ -97,6 +99,7 @@ export const Posts = () => {
       getPosts(setPosts) 
     } else {
       // Probably should put a fully default one if the api request fails
+      setPosts(null);
       axios.get(`${api}/blog/admin/post/drafts`)
         .then((response) => {
           setPosts(response.data.map((post) => ({
