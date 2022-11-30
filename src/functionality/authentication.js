@@ -28,18 +28,18 @@ const createAllowedOrigin = (server) => {
 
 axios.interceptors.request.use(
   config => {
-    const { origin } = new URL(config.url);
-    console.log(origin)
-    const allowedOrigins = [
-      createAllowedOrigin(server), 
-      createAllowedOrigin('gravy.cc'), 
-      createAllowedOrigin('staging.gravy.cc'), 
-      createAllowedOrigin('auth.gravy.cc')
-    ];
+    // const { origin } = new URL(config.url);
+    // console.log(origin)
+    // const allowedOrigins = [
+    //   createAllowedOrigin(server), 
+    //   createAllowedOrigin('gravy.cc'), 
+    //   createAllowedOrigin('staging.gravy.cc'), 
+    //   createAllowedOrigin('auth.gravy.cc')
+    // ];
     const token = localStorage.getItem('token');
-    if (allowedOrigins.includes(origin) && token) {
-      config.headers.authorization = `Bearer ${token}`;
-    }
+    // if (allowedOrigins.includes(origin) && token) {
+    config.headers.authorization = `Bearer ${token}`;
+    // }
     return config;
   },
   error => {
