@@ -16,10 +16,26 @@ export const logout = (dispatch) => {
   localStorage.removeItem('username');
 }
 
+const createAllowedOrigin = (server) => {
+  if (!server) {
+    return null;
+  }
+
+  const protocol = process.env.REACT_APP_BACKEND_PROTOCOL ?? 'http';
+  const port = process.env.REACT_APP_BACKEND_PORT ?? '3000';
+  return `${protocol}://${server}:${port}`;
+}
+
 axios.interceptors.request.use(
   config => {
     const { origin } = new URL(config.url);
-    const allowedOrigins = [`${protocol}://${server}:${port}`];
+    console.log(origin)
+    const allowedOrigins = [
+      createAllowedOrigin(server), 
+      createAllowedOrigin('gravy.cc'), 
+      createAllowedOrigin('staging.gravy.cc'), 
+      createAllowedOrigin('auth.gravy.cc')
+    ];
     const token = localStorage.getItem('token');
     if (allowedOrigins.includes(origin) && token) {
       config.headers.authorization = `Bearer ${token}`;

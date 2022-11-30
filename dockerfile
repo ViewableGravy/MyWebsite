@@ -4,6 +4,7 @@ WORKDIR /usr/src/app
 
 #Move package.json and install npm packages
 COPY package*.json ./
+COPY .env.production ./
 COPY . .
 RUN npm install
 
