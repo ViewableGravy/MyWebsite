@@ -1,12 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useGlobalState } from "../../../functionality/globalState";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import FlipToggle from "../toggle/toggle";
-import { useWindowDimensions } from "../../../functionality/helper";
+import { useWindowDimensions, ConditionalRenderChildren } from "../../../functionality/helper";
 import { TagsWrapper } from "../tags-wrapper/tagsWrapper";
 import './posts.scss'
-import { DraftSettings } from "../draftSettings/draftSettings";
 
 const server = process.env.REACT_APP_BACKEND_SERVER ?? 'localhost';
 const port = process.env.REACT_APP_BACKEND_PORT ?? '3000';
@@ -14,13 +13,35 @@ const protocol = process.env.REACT_APP_BACKEND_PROTOCOL ?? 'http';
 const api = `${protocol}://${server}:${port}/api`
 
 export const Posts = () => {
-  const [posts, setPosts] = useState(null);
-  const [toggleState, setToggleState] = useState('Published');
-  const [state, dispatch] = useGlobalState();
-  const [width,] = useWindowDimensions();
-  const [fetchingPosts, setFetchingPosts] = useState(false);
-
   let listItems = useRef([]);
+
+  const [posts, setPosts] = useState(null);
+  const [hideBackgroundHightlight, moveBackgroundHighlight] = MovingBackgroundElement(listItems);
+
+  const postCardsProperties = (post, index) => ({
+    updateIndex: (element) => listItems.current[index] = element,
+    post: post,
+    index: index,
+    moveBackgroundHighlight: moveBackgroundHighlight,
+    hideBackgroundHightlight: hideBackgroundHightlight,
+    key: post._id
+  })
+
+  return (
+    <>
+      <PostsHead setPosts={setPosts}/>
+      <div className="posts">
+        <ConditionalRenderChildren condition={!!posts}>{ 
+          posts?.map((post, index) => <PostCard {...postCardsProperties(post, index)} />) 
+        }</ConditionalRenderChildren>
+      </div>
+      <div className="background-hover"/>
+    </>
+  )
+}
+
+const MovingBackgroundElement = (listItems) => {
+  const [width,] = useWindowDimensions();
 
   const hideBackgroundHightlight = () => {
     const highlight = document.querySelector('.background-hover');
@@ -48,6 +69,25 @@ export const Posts = () => {
     }
   }
 
+  useEffect(hideBackgroundHightlight, [width])
+
+  return [hideBackgroundHightlight, moveBackgroundHighlight];
+}
+
+const PostsHead = ({ setPosts }) => {
+  const [state, dispatch] = useGlobalState();
+  const [toggleState, setToggleState] = useState('Published');
+
+  const changeToggle = () => {
+    if (toggleState === 'Published') {
+      setToggleState('Drafts');
+      dispatch({draftMode: true});
+    } else {
+      setToggleState('Published');
+      dispatch({draftMode: false});
+    }
+  }
+
   const getPosts = async (setPosts) => {
     setPosts(null);
     try {
@@ -60,67 +100,24 @@ export const Posts = () => {
   
   const getDrafts = async (setPosts) => {
     setPosts(null);
-    try {
-      const response = await axios.get(`${api}/blog/admin/post/drafts`);
-      setPosts(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+    axios.get(`${api}/blog/admin/post/drafts`)
+      .then((response) => {
+        setPosts(response.data.map((post) => ({
+          ...post,
+          title: post.title ?? 'Enter a new title here',
+          summary: post.summary ?? 'Enter a new summary here',
+          date: post.date ?? 'Jan 01 1800',
+          dateIsDraft: true,
+          summaryIsDraft: true,
+          titleIsDraft: true
+        })));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
-  const changeToggle = () => {
-    if (toggleState === 'Published') {
-      setToggleState('Drafts');
-      dispatch({draftMode: true});
-    } else {
-      setToggleState('Published');
-      dispatch({draftMode: false});
-    }
-  }
-
-  const onMouseEnterDraft = (element, index) => {
-    setPosts((posts) => {
-      const newPosts = [...posts];
-      newPosts[index][`${element}ShowDraftSettings`] = true;
-      return newPosts;
-    });
-  }
-
-  const onMouseLeaveDraft = (element, index) => {
-    setPosts((posts) => {
-      const newPosts = [...posts];
-      newPosts[index][`${element}ShowDraftSettings`] = false;
-      return newPosts;
-    });
-  }
-
-  useEffect(() => {
-    if (toggleState === 'Published') {
-      getPosts(setPosts) 
-    } else {
-      // Probably should put a fully default one if the api request fails
-      setPosts(null);
-      axios.get(`${api}/blog/admin/post/drafts`)
-        .then((response) => {
-          setPosts(response.data.map((post) => ({
-            ...post,
-            title: post.title ?? 'Enter a new title here',
-            summary: post.summary ?? 'Enter a new summary here',
-            date: post.date ?? 'Jan 01 1800',
-            dateIsDraft: true,
-            summaryIsDraft: true,
-            titleIsDraft: true
-          })));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [toggleState])
-
-  useEffect(() => {
-    hideBackgroundHightlight();
-  }, [width])
+  useEffect(() => toggleState === 'Published' ? getPosts(setPosts) : getDrafts(setPosts), [toggleState])
 
   return (
     <>
@@ -128,49 +125,45 @@ export const Posts = () => {
         <h1 id="posts-title">Posts</h1>
         { state.token && <FlipToggle className="FlipToggle" onChange={changeToggle}/> }  
       </div>
+    </>
+  )
+}
 
-      <div className="posts">
-        { posts && posts.map((post, index) =>
-            <div 
-              ref={(element) => listItems.current[index] = element} 
-              className='blog-item' 
-              key={post._id} 
-              onMouseOver={() => moveBackgroundHighlight(index)} 
-              onMouseLeave={hideBackgroundHightlight}
-            >
-              <Link to={`/blog/${post.slug}`} className={`title_container`}>
+const PostCard = ({ post, index, moveBackgroundHighlight, hideBackgroundHightlight, updateIndex }) => {  
+  const [state,] = useGlobalState();
 
-                <div 
-                  style={{position: 'relative'}} 
-                  onMouseEnter={() => onMouseEnterDraft('title', index)} 
-                  onMouseLeave={() => onMouseLeaveDraft('title', index)}
-                >
-                  <DraftSettings hidden={!state.draftMode || !posts[index].titleShowDraftSettings}/>
-                  <h2 className={`title ${post.titleIsDraft ? 'draft' : ''}`}>{post.title}</h2>
-                </div>
-                
-                <div 
-                  style={{position: 'relative', marginTop: '10px'}} 
-                  onMouseEnter={() => onMouseEnterDraft('summary', index)} 
-                  onMouseLeave={() => onMouseLeaveDraft('summary', index)}
-                >
-                  <DraftSettings hidden={!state.draftMode || !posts[index].summaryShowDraftSettings}/>
-                  <p style={{ marginTop: 0}} className={`summary ${post.summaryIsDraft ? 'draft' : ''}`} dangerouslySetInnerHTML={{ __html: post.summary }}></p>
-                </div>
-                
-              </Link>
+  const conditionallyAddDraftClass = (classes) => `${classes} ${state.draftMode ? 'draft' : ''}`;
 
-              <div className='right-section'>
-                <p className={`date ${post.dateIsDraft ? 'draft' : ''}`}>{post.date}</p>
-                <TagsWrapper tagDetails={post.tags} parentKey={post._id}/>
-              </div>
+  const blogItemContainerProperties = (index) => {
+    return {
+      ref: updateIndex, 
+      className: 'blog-item',
+      onMouseOver: () => moveBackgroundHighlight(index),
+      onMouseLeave: hideBackgroundHightlight
+    }
+  }
 
-            </div>
-          )
-        }
+  return (
+    <>
+      <div {...blogItemContainerProperties(index, post._id)}>
+        <Link to={`/blog/${post.slug}`} className={`title_container`}>
+
+          <div>
+            <h2 className={conditionallyAddDraftClass(`title`)}>{post.title}</h2>
+          </div>
+
+          <div>
+            <p className={conditionallyAddDraftClass(`summary`)} dangerouslySetInnerHTML={{ __html: post.summary }}/>
+          </div>
+          
+        </Link>
+
+        <div className='right-section'>
+          <p className={conditionallyAddDraftClass(`date`)}>{post.date}</p>
+          <TagsWrapper tagDetails={post.tags} parentKey={post._id}/>
+        </div>
+
       </div>
-
-      <div className="background-hover"></div>
     </>
   )
 }

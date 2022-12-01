@@ -14,3 +14,5 @@ export const useWindowDimensions = () => {
 
   return windowDimensions;
 }
+
+export const ConditionalRenderChildren = ({ children, condition }) => condition ? children : null
