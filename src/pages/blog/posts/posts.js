@@ -19,20 +19,51 @@ export const Posts = () => {
   const [hideBackgroundHightlight, moveBackgroundHighlight] = MovingBackgroundElement(listItems);
 
   const postCardsProperties = (post, index) => ({
-    updateIndex: (element) => listItems.current[index] = element,
     post: post,
     index: index,
+    key: post._id,
+    updateIndex: (element) => listItems.current[index] = element,
     moveBackgroundHighlight: moveBackgroundHighlight,
-    hideBackgroundHightlight: hideBackgroundHightlight,
-    key: post._id
+    hideBackgroundHightlight: hideBackgroundHightlight
+  })
+
+  const PostsHeadProperties = () => ({
+    title: 'Posts',
+    draftFunction: async () => {
+      setPosts(null);
+      axios.get(`${api}/blog/admin/post/drafts`)
+        .then((response) => {
+          setPosts(response.data.map((post) => ({
+            ...post,
+            title: post.title ?? 'Enter a new title here',
+            summary: post.summary ?? 'Enter a new summary here',
+            date: post.date ?? 'Jan 01 1800',
+            dateIsDraft: true,
+            summaryIsDraft: true,
+            titleIsDraft: true
+          })));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    publishedFunction: async () => {
+      setPosts(null);
+      try {
+        const response = await axios.get(`${api}/blog/posts`);
+        setPosts(response.data);
+      } catch (error) {
+        console.log(error);
+      } 
+    }
   })
 
   return (
     <>
-      <PostsHead setPosts={setPosts}/>
+      <PostsHead {...PostsHeadProperties()}/>
       <div className="posts">
         <ConditionalRenderChildren condition={!!posts}>{ 
-          posts?.map((post, index) => <PostCard {...postCardsProperties(post, index)} />) 
+          posts?.map((post, index) => <PostsCard {...postCardsProperties(post, index)} />) 
         }</ConditionalRenderChildren>
       </div>
       <div className="background-hover"/>
@@ -74,62 +105,38 @@ const MovingBackgroundElement = (listItems) => {
   return [hideBackgroundHightlight, moveBackgroundHighlight];
 }
 
-const PostsHead = ({ setPosts }) => {
+export const PostsHead = ({ title, draftFunction, publishedFunction }) => {
   const [state, dispatch] = useGlobalState();
   const [toggleState, setToggleState] = useState('Published');
+
+  if (!draftFunction) draftFunction = () => {};
+  if (!publishedFunction) publishedFunction = () => {};
 
   const changeToggle = () => {
     if (toggleState === 'Published') {
       setToggleState('Drafts');
       dispatch({draftMode: true});
+      draftFunction();
     } else {
       setToggleState('Published');
       dispatch({draftMode: false});
+      publishedFunction();
     }
   }
 
-  const getPosts = async (setPosts) => {
-    setPosts(null);
-    try {
-      const response = await axios.get(`${api}/blog/posts`);
-      setPosts(response.data);
-    } catch (error) {
-      console.log(error);
-    } 
-  }
-  
-  const getDrafts = async (setPosts) => {
-    setPosts(null);
-    axios.get(`${api}/blog/admin/post/drafts`)
-      .then((response) => {
-        setPosts(response.data.map((post) => ({
-          ...post,
-          title: post.title ?? 'Enter a new title here',
-          summary: post.summary ?? 'Enter a new summary here',
-          date: post.date ?? 'Jan 01 1800',
-          dateIsDraft: true,
-          summaryIsDraft: true,
-          titleIsDraft: true
-        })));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  useEffect(() => toggleState === 'Published' ? getPosts(setPosts) : getDrafts(setPosts), [toggleState])
+  useEffect(() => toggleState === 'Published' ? publishedFunction() : draftFunction(), [toggleState])
 
   return (
     <>
       <div id="posts-head">
-        <h1 id="posts-title">Posts</h1>
+        <h1 id="posts-title">{title}</h1>
         { state.token && <FlipToggle className="FlipToggle" onChange={changeToggle}/> }  
       </div>
     </>
   )
 }
 
-const PostCard = ({ post, index, moveBackgroundHighlight, hideBackgroundHightlight, updateIndex }) => {  
+const PostsCard = ({ post, index, moveBackgroundHighlight, hideBackgroundHightlight, updateIndex }) => {  
   const [state,] = useGlobalState();
 
   const conditionallyAddDraftClass = (classes) => `${classes} ${state.draftMode ? 'draft' : ''}`;
@@ -145,7 +152,7 @@ const PostCard = ({ post, index, moveBackgroundHighlight, hideBackgroundHightlig
 
   return (
     <>
-      <div {...blogItemContainerProperties(index, post._id)}>
+      <div {...blogItemContainerProperties(index)}>
         <Link to={`/blog/${post.slug}`} className={`title_container`}>
 
           <div>

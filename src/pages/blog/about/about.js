@@ -8,7 +8,7 @@ export const About = () => {
       <div className="circle">
         <img alt={'ViewableGravy Portrait'} src={Portrait}></img>
       </div>
-      <p>
+      <p className={'about'}>
         Hi, my name is Lleyton but online you can call my Gravy. I'm passionate about making things; right now that's in NodeJS and React but have also dabbled with C# and Angular. 
         Recently I'm entertaining myself with WebSockets, Express API's and learning new SCSS skills but I also love Server Administration, automation and writing scripts. 
         I currently Work at <a href="https://ventraip.com.au/">VentraIP Australia</a> as a technical support Representative

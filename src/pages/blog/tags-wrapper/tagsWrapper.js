@@ -152,7 +152,8 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
     setTags(mappedTags);
   }, [tagDetails, state.draftMode]);
   
-  useEffect(() => tags?.forEach(({tag, draft}) => {
+  useEffect(() => tags?.forEach(({tag, draft, details}) => {
+    if (details.color) return tag.current.style.backgroundColor = details.color;
     const color = colors[Math.floor(Math.random() * colors.length)];
     if (!draft) {
       tag.current.style.backgroundColor = color;
@@ -160,47 +161,56 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
     }
   }), [colors])
 
+  const tagProperties = (tag, index) => {
+
+    const props = {
+      tag: tag,
+      index: index,
+      mouseOver: mouseOver,
+      mouseLeave: mouseLeave,
+      click: tagClick,
+      parentKey: parentKey,
+    };
+
+    return props;
+  };
+
   return (
     <>
-      <div {...swipeHandlers} className={'tags'}> 
-        {
-          tags.map((tag, index) => {
-            if (!tag.draft)
-              return (
-                <Link 
-                  key={`${parentKey}-${index}`}
-                  ref={tag.tag} 
-                  to={'/'} 
-                  className={`tag`} 
-                  onMouseEnter={mouseOver} 
-                  onMouseLeave={mouseLeave}
-                  onClick={tagClick}
-                  style={{ touchAction: 'pan-x' }}
-                >{tag.details}</Link>
-              )
-            else
-              return (
-                <div 
-                  key={`${parentKey}-${index}`}
-                  ref={tag.tag} 
-                  className={`tag ${tag.draft ? 'draft' : ''}`} 
-                  onMouseEnter={mouseOver} 
-                  onMouseLeave={mouseLeave}
-                  onClick={tagClick}
-                  style={{ touchAction: 'pan-x' }}
-                  contentEditable="true"
-                  suppressContentEditableWarning={true}
-                  onBeforeInput={tagEdit}
-                >
-                  <DraftSettings hidden={isHidden}/>
-                  <span>{tag.details}</span>
-                </div>
-              )
-          })
-        } 
-      </div>
+      <div {...swipeHandlers} className={'tags'}>{
+          tags.map((tag, index) => <GenerateTag className={'tag'} {...tagProperties(tag, index)}/>)
+      }</div>
     </>
   )
+}
+
+const GenerateTag = ({tag, index, mouseOver, mouseLeave, click, parentKey, className}) => {
+  if (!tag) return null;
+  
+  const properties = {
+    key: `${parentKey}-${index}`,
+    ref: tag.tag,
+    to: '/',
+    onMouseEnter: mouseOver,
+    onMouseLeave: mouseLeave,
+    onClick: click,
+    style: { touchAction: 'pan-x' }
+  }
+
+  if (tag.draft) properties.className += ' draft';
+  if (tag.details?.color) properties.style.backgroundColor = tag.details.color;
+
+  return (
+    <Link className={className} {...properties}>{tag.details.name || tag.details}</Link>
+  );
+  
+  //draft tag
+  // return (
+  //   <div {...properties}>
+  //     <DraftSettings hidden={isHidden}/>
+  //     <span>{tag.details}</span>
+  //   </div>
+  // )
 }
 
 export default TagsWrapper;

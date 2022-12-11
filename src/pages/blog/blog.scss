@@ -15,9 +15,11 @@
 
   a {
     color: var(--inline-link);
+    font-weight: bold;
+    font-variant: normal
   }
 
-  p {
+  .summary, .date {
     font-size: 17px;
     margin-top: 10px;
     color: var(--standard-text);
