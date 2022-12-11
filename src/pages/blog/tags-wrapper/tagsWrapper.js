@@ -185,20 +185,20 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
 }
 
 const GenerateTag = ({tag, index, mouseOver, mouseLeave, click, parentKey, className}) => {
-  if (!tag) return null;
+  if (!tag?.tag || !tag?.details) return null;
   
   const properties = {
     key: `${parentKey}-${index}`,
     ref: tag.tag,
     to: '/',
-    onMouseEnter: mouseOver,
-    onMouseLeave: mouseLeave,
-    onClick: click,
     style: { touchAction: 'pan-x' }
   }
 
+  if (mouseOver) properties.onMouseEnter = mouseOver;
+  if (mouseLeave) properties.onMouseLeave = mouseLeave;
+  if (click) properties.onClick = click;
   if (tag.draft) properties.className += ' draft';
-  if (tag.details?.color) properties.style.backgroundColor = tag.details.color;
+  if (tag.details.color) properties.style.backgroundColor = tag.details.color;
 
   return (
     <Link className={className} {...properties}>{tag.details.name || tag.details}</Link>
