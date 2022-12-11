@@ -185,12 +185,7 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
   )
 }
 
-<<<<<<< HEAD
 const isDarkColor = (color) => {
-=======
-const GenerateTag = ({tag, index, mouseOver, mouseLeave, click, parentKey, className}) => {
-  if (!tag?.tag || !tag?.details) return null;
->>>>>>> Updating checking in GenerateTag component
   
   if (color[0] === '#') {
     const c = color.substring(1);      // strip #
@@ -223,7 +218,6 @@ export const GenerateTag = ({ color, reference, text, identifier, className, cli
     style: { touchAction: 'pan-x' }
   }
 
-<<<<<<< HEAD
   const textProperties = {
     style: { color: '#000000' } //black
   }
@@ -235,13 +229,6 @@ export const GenerateTag = ({ color, reference, text, identifier, className, cli
   if (mouseLeave) properties.onMouseLeave = mouseLeave;
   if (click) properties.onClick = click;
   if (reference) properties.ref = reference;
-=======
-  if (mouseOver) properties.onMouseEnter = mouseOver;
-  if (mouseLeave) properties.onMouseLeave = mouseLeave;
-  if (click) properties.onClick = click;
-  if (tag.draft) properties.className += ' draft';
-  if (tag.details.color) properties.style.backgroundColor = tag.details.color;
->>>>>>> Updating checking in GenerateTag component
 
   return (
     <Link {...properties} className={`${className} tag`}>
