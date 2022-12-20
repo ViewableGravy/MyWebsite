@@ -2,9 +2,11 @@ import Portrait from '../../../assets/images/Lleyton.png'
 import './about.scss'
 
 //todo, get this from database based on currently signed in user
-export const About = () => {
+export const About = ({ style }) => {
+  if ( !style ) style = {}
+
   return (
-    <div className="AboutComponent">
+    <div style={style} className="AboutComponent">
       <div className="circle">
         <img alt={'ViewableGravy Portrait'} src={Portrait}></img>
       </div>
