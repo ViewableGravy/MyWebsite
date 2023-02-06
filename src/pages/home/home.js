@@ -9,29 +9,9 @@ import WeatheringWithYou from '../../assets/images/home/WeatheringWithYouVertica
 
 export const Home = () => {
   let navigate = useNavigate();
-  // let webSocket = null; 
 
   const [gState, dispatch] = useGlobalState();
-  
   const [ welcome, setWelcome ] = useState(true);
-
-  // const [ song, setSong ] = useState(null);
-  // const [ spotifyData, setSpotifyData ] = useState(null);
-
-  // useEffect(() => {
-  //   webSocket = new WebSocket('ws://localhost:3000/');
-
-  //   webSocket.onmessage = (message) => {
-  //     const data = JSON.parse(message.data);
-  //     setSpotifyData(data);      
-  //     setSong(data.item?.name || null);
-  //   }
-
-  //   return () => {
-  //     console.log("removed test")
-  //     webSocket.close();
-  //   }
-  // }, [])
 
   useEffect(() => {
     const state = localStorage.getItem('welcome');
@@ -64,22 +44,6 @@ export const Home = () => {
               <img src={WeatheringWithYou} alt="test"/>
               <h1 className='title'>Subdomains</h1>
             </li>
-            {/* <li className="ipod_outer">
-              <div className="ipod">
-                <div className="Screen" style={ { "backgroundImage" : `url(${spotifyData?.item?.album?.images[1]?.url})` } }>
-                  <h3 className='title'>{song}</h3>
-                </div>
-                <div className="Controls">
-                  <div className="Menu"></div>
-                  <div>
-                    <div className="Back"></div>
-                    <div className="Middle"></div>
-                    <div className="Forward"></div>
-                  </div>
-                  <div className="Pause"></div>
-                </div>
-              </div>
-            </li> */}
             <li onClick={() => console.log(gState)}>
               <img src={MadeInAbyss} alt="test"/>
               <h1 className='title'>In Progress</h1>
