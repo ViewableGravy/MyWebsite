@@ -12,19 +12,22 @@ import { DraftSettings } from '../draftSettings/draftSettings';
 export const TagsWrapper = ({ tagDetails, parentKey }) => {
   const [wWidth,] = useWindowDimensions();
   let [tags, setTags] = useState([]);
-  const [state, ] = useGlobalState();
+  const [state,] = useGlobalState();
   // const [colors, setColors] = useState(['#ce3175', '#4e3d42', '#000000', '#4fb477'])
   const [isHidden, setIsHidden] = useState(true);
 
-  let timeout = null; 
+  const outerContainer = createRef();
+  const innerContainer = createRef();
 
-  const incrementTags = () => tags = tags.map(({tag, index}) => ({ tag: tag, index: ++index >= tags.length ? 0 : index }));
-  const decrementTags = () => tags = tags.map(({tag, index}) => ({ tag: tag, index: --index < 0 ? tags.length - 1 : index }));
-  const getFrontTag   = () => tags.find(({index}) => index + 1 === tags.length);
-  const getTagFromEvent = (e) => tags.find(({tag}) => tag.current === e.target);
-  const isFrontTag    = (tag) => tag.index + 1 === tags.length;
-  const indexesFromFrontTag = (tag) => getFrontTag().index - tag.index; 
-  const resetTagsStyling = () => tags?.forEach(({tag}) => {
+  let timeout = null;
+
+  const incrementTags = () => tags = tags.map(({ tag, index }) => ({ tag: tag, index: ++index >= tags.length ? 0 : index }));
+  const decrementTags = () => tags = tags.map(({ tag, index }) => ({ tag: tag, index: --index < 0 ? tags.length - 1 : index }));
+  const getFrontTag = () => tags.find(({ index }) => index + 1 === tags.length);
+  const getTagFromEvent = (e) => tags.find(({ tag }) => tag.current === e.target);
+  const isFrontTag = (tag) => tag.index + 1 === tags.length;
+  const indexesFromFrontTag = (tag) => getFrontTag().index - tag.index;
+  const resetTagsStyling = () => tags?.forEach(({ tag }) => {
     if (tag.current?.style) {
       tag.current.style.width = null;
       tag.current.style.color = null;
@@ -35,11 +38,11 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
 
   const mapTagDetailsToTags = (tags) => tags ? tags.map((_, index) => ({ tag: createRef(), index, details: tagDetails[index] })) : [];
   // must also change the index of the tag in the array (TODO)
-  const sortTags = (tags) => tags ? tags.sort((a,b) => a.details.length - b.details.length) : [];
-  const addDraftTag = (ts) => [...ts, { tag: createRef(), index: tags.length, details: 'New Tag', draft: true }] 
-  const removeDraftTag = (ts) => ts.filter(({draft}) => !draft);
-  const getDraftTag = () => tags.find(({draft}) => draft);
-  
+  const sortTags = (tags) => tags ? tags.sort((a, b) => a.details.length - b.details.length) : [];
+  const addDraftTag = (ts) => [...ts, { tag: createRef(), index: tags.length, details: 'New Tag', draft: true }]
+  const removeDraftTag = (ts) => ts.filter(({ draft }) => !draft);
+  const getDraftTag = () => tags.find(({ draft }) => draft);
+
 
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => rotateTags(-1),
@@ -52,8 +55,8 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
 
   const tagHoverDesktop = () => {
     if (wWidth > 576) {
-      const widths = tags.map(({tag}) => tag.current.offsetWidth);
-      tags.forEach(({tag}, index) => {
+      const widths = tags.map(({ tag }) => tag.current.offsetWidth);
+      tags.forEach(({ tag }, index) => {
         //culmination of widths before this one
         const totalWidth = widths.slice(0, index).reduce((a, b) => a + b + 10, 0);
 
@@ -63,11 +66,35 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
     }
   }
 
+  //new
+  const innerContainerHoverDesktop = () => {
+    if (wWidth > 576) {
+      const widths = tags.map(({ tag }) => tag.current.offsetWidth);
+
+      tags.forEach(({ tag }, index) => {
+        //culmination of widths before this one
+        const totalWidth = widths.slice(0, index).reduce((a, b) => a + b + 10, 0);
+
+        //how far to the right
+        tag.current.style.right = `${totalWidth}px`;
+      });
+
+      innerContainer.current.style.width = `${widths.reduce((a, b) => a + b + 10, 0)}px`;
+    }
+  }
+
+  const resetInnerContainerWidth = () => {
+    document.querySelectorAll('.tags-inner').forEach((tag) => {
+      tag.style.width = null;
+    });
+  }
+
+
   const rotateTags = (increment) => {
     if (wWidth < 576 && wWidth > 380) {
-      if (!increment) 
+      if (!increment)
         incrementTags()
-      else 
+      else
         for (let i = 0; i < Math.abs(increment); i++)
           increment < 0 ? decrementTags(tags) : incrementTags(tags);
 
@@ -76,8 +103,8 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
       front.tag.current.style.width = null;
       front.tag.current.style.color = null;
 
-      tags?.forEach(({tag, index}) => {
-      
+      tags?.forEach(({ tag, index }) => {
+
         tag.current.style.right = `${index * 10}px`
         tag.current.style.zIndex = index;
 
@@ -94,7 +121,7 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
   const tagDefault = () => {
     resetTagsStyling();
 
-    tags?.forEach(({tag, index}) => {
+    tags?.forEach(({ tag, index }) => {
       // only apply this styling on normal mobile and desktop (not tiny mobile)
       if (tag.current && wWidth > 380) {
         tag.current.style.right = `${index * 10}px`;
@@ -106,9 +133,9 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
   const mouseOver = () => {
     if (timeout) {
       clearTimeout(timeout);
-      timeout = null; 
+      timeout = null;
     }
-    tagHoverDesktop();
+    innerContainerHoverDesktop();
     setIsHidden(false);
   }
 
@@ -117,6 +144,7 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
     if (wWidth >= 576) {
       timeout = setTimeout(() => {
         tagDefault();
+        resetInnerContainerWidth();
       }, 750);
     }
   }
@@ -141,25 +169,26 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(tagDefault, [wWidth, tags]);
-  // useEffect(() => setColors(['#ce3175', '#4e3d42', '#000000', '#4fb477']), [])
+  useEffect(() => {
+    if (wWidth > 380) {
+      outerContainer.current.style.height = `41px`;
+      return;
+    }
+
+    const heightInner = innerContainer.current?.offsetHeight;
+    if (heightInner) {
+      outerContainer.current.style.height = `${heightInner}px`;
+    }
+  }, [wWidth, tags]);
 
   useEffect(() => {
     let mappedTags = mapTagDetailsToTags(tagDetails);
-    mappedTags = state.draftMode 
+    mappedTags = state.draftMode
       ? addDraftTag(mappedTags)
       : [...mappedTags]
 
     setTags(mappedTags);
   }, [tagDetails, state.draftMode]);
-  
-  // useEffect(() => tags?.forEach(({tag, draft, details}) => {
-  //   if (details.color) return tag.current.style.backgroundColor = details.color;
-  //   const color = colors[Math.floor(Math.random() * colors.length)];
-  //   if (!draft) {
-  //     tag.current.style.backgroundColor = color;
-  //     colors.splice(colors.indexOf(color), 1);
-  //   }
-  // }), [colors])
 
   const tagProperties = (tag, index) => {
 
@@ -168,8 +197,8 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
       text: tag.details.name || tag.details,
       identifier: `${parentKey}-${index}`,
       reference: tag.tag,
-      mouseOver: mouseOver,
-      mouseLeave: mouseLeave,
+      //mouseOver: mouseOver,
+      //mouseLeave: mouseLeave,
       click: tagClick
     };
 
@@ -178,21 +207,23 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
 
   return (
     <>
-      <div {...swipeHandlers} className={'tags'}>{
-          tags.map((tag, index) => <GenerateTag {...tagProperties(tag, index)}/>)
-      }</div>
+      <div {...swipeHandlers} className={'tags'} ref={outerContainer}>
+        <div className={'tags-inner'} ref={innerContainer} onMouseEnter={mouseOver} onMouseLeave={mouseLeave}>{
+          tags.map((tag, index) => <GenerateTag {...tagProperties(tag, index)} />)
+        }</div>
+      </div>
     </>
   )
 }
 
 const isDarkColor = (color) => {
-  
+
   if (color[0] === '#') {
     const c = color.substring(1);      // strip #
     const rgb = parseInt(c, 16);   // convert rrggbb to decimal
     const r = (rgb >> 16) & 0xff;  // extract red
-    const g = (rgb >>  8) & 0xff;  // extract green
-    const b = (rgb >>  0) & 0xff;  // extract blue
+    const g = (rgb >> 8) & 0xff;  // extract green
+    const b = (rgb >> 0) & 0xff;  // extract blue
 
     const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
     return luma < 80;
