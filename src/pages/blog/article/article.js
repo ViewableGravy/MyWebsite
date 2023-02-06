@@ -18,8 +18,9 @@ export const BlogArticle = () => {
     <BlogContainer>
       <Menu author={'ViewableGravy'}/>
       <Meta post={data} />
-      <Fieldsets legend={'🔥Pro Tip'} content={'Making things is fun but if you aren\'t good at design then it\'s time to start scrolling the internet for ideas. Check <a href="https://devtrium.com/posts/async-functions-useeffect">This one</a> out'} color={'#d6a21a'}/>
-      <Fieldsets legend={'ℹ️ Info'} content={'Sometimes I just like copying things without putting my own flare on it. Somethings don\'t need any more engineering than has already been put into it'} color={'#1db9d8'}/>
+      <Fieldsets legend={'ℹ️ Info'} content={'Please be aware that this page is currently a work in progress and is not an accurate representation of any final products or blogs. If you have any feedback or suggestions for the design of this page, please let me know!'} color={'#1db9d8'}/>
+      <Fieldsets legend={'🔥Pro Tip'} content={'Tips are great - but cool websites are better. Check out <a href="https://summer-afternoon.vlucendo.com/">This one</a> that I found recently'} color={'#d6a21a'}/>
+      
       <Content post={data} />
       <Footer/>
     </BlogContainer>
