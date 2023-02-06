@@ -12,6 +12,31 @@
     margin-left: 20px;
   }
 
+  .meta-tags {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap: 10px;
+    margin-left: 20px;
+    flex-wrap: wrap;
+
+    .tag {
+      word-break: keep-all;
+      white-space: nowrap;
+    }
+
+    span {
+      padding: 4px 4px 4px 4px;
+    }
+
+    a {
+      padding: 4px 4px 4px 4px;
+    }
+  }
+
 }
 
 .blog-article.fieldset {

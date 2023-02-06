@@ -6,6 +6,7 @@ import Menu from '../menu/menu'
 import useAxios from "axios-hooks";
 import './article.scss'
 import About from '../about/about';
+import { GenerateTag } from '../tags-wrapper/tagsWrapper';
 
 export const BlogArticle = () => {
   const { article } = useParams();
@@ -38,7 +39,7 @@ const Meta = ({ post }) => {
       <span className={'blog-article meta separator'}> • </span>
       <ReadTime className={'blog-article read-time'} post={post} />
       
-      {/* <MetaTags className={'blog-article tags'} post={post} /> */}
+      <MetaTags className={'blog-article tags'} post={post} />
     </div>
   )
 }
@@ -66,7 +67,8 @@ const MetaTags = ({ post }) => {
   return (
     <div className={"blog-article meta-tags"}>
       {post?.tags.map((tag) => {
-        return <div className={'blog-article meta-tag'}>{tag.name || tag}</div>
+        // return <div className={'blog-article meta-tag'}>{tag.name || tag}</div>
+        return <GenerateTag text={tag.name || tag} color={tag.color}/>
       })}
     </div>
   )

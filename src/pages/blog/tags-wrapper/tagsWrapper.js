@@ -2,7 +2,7 @@
 import { useEffect, createRef, useState } from 'react';
 import { useSwipeable } from "react-swipeable";
 import { Link } from 'react-router-dom';
-import './tagsWrapper.scss';
+import './tagsWrapper.scoped.scss';
 import { useWindowDimensions } from '../../../functionality/helper';
 import { useGlobalState } from '../../../functionality/globalState';
 import { DraftSettings } from '../draftSettings/draftSettings';
@@ -13,7 +13,7 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
   const [wWidth,] = useWindowDimensions();
   let [tags, setTags] = useState([]);
   const [state, ] = useGlobalState();
-  const [colors, setColors] = useState(['#ce3175', '#4e3d42', '#000000', '#4fb477'])
+  // const [colors, setColors] = useState(['#ce3175', '#4e3d42', '#000000', '#4fb477'])
   const [isHidden, setIsHidden] = useState(true);
 
   let timeout = null; 
@@ -141,7 +141,7 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(tagDefault, [wWidth, tags]);
-  useEffect(() => setColors(['#ce3175', '#4e3d42', '#000000', '#4fb477']), [])
+  // useEffect(() => setColors(['#ce3175', '#4e3d42', '#000000', '#4fb477']), [])
 
   useEffect(() => {
     let mappedTags = mapTagDetailsToTags(tagDetails);
@@ -152,24 +152,25 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
     setTags(mappedTags);
   }, [tagDetails, state.draftMode]);
   
-  useEffect(() => tags?.forEach(({tag, draft, details}) => {
-    if (details.color) return tag.current.style.backgroundColor = details.color;
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    if (!draft) {
-      tag.current.style.backgroundColor = color;
-      colors.splice(colors.indexOf(color), 1);
-    }
-  }), [colors])
+  // useEffect(() => tags?.forEach(({tag, draft, details}) => {
+  //   if (details.color) return tag.current.style.backgroundColor = details.color;
+  //   const color = colors[Math.floor(Math.random() * colors.length)];
+  //   if (!draft) {
+  //     tag.current.style.backgroundColor = color;
+  //     colors.splice(colors.indexOf(color), 1);
+  //   }
+  // }), [colors])
 
   const tagProperties = (tag, index) => {
 
     const props = {
-      tag: tag,
-      index: index,
+      color: tag.details.color,
+      text: tag.details.name || tag.details,
+      identifier: `${parentKey}-${index}`,
+      reference: tag.tag,
       mouseOver: mouseOver,
       mouseLeave: mouseLeave,
-      click: tagClick,
-      parentKey: parentKey,
+      click: tagClick
     };
 
     return props;
@@ -178,34 +179,62 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
   return (
     <>
       <div {...swipeHandlers} className={'tags'}>{
-          tags.map((tag, index) => <GenerateTag className={'tag'} {...tagProperties(tag, index)}/>)
+          tags.map((tag, index) => <GenerateTag {...tagProperties(tag, index)}/>)
       }</div>
     </>
   )
 }
 
-// tag: {tag: ref, draft: bool, details: {name: string, color: string}}
-const GenerateTag = ({tag, index, mouseOver, mouseLeave, click, parentKey, className}) => {
-  if (!tag) return null;
-  if (!tag.details) return null;
-  if (!parentKey) return null;
+const isDarkColor = (color) => {
   
+  if (color[0] === '#') {
+    const c = color.substring(1);      // strip #
+    const rgb = parseInt(c, 16);   // convert rrggbb to decimal
+    const r = (rgb >> 16) & 0xff;  // extract red
+    const g = (rgb >>  8) & 0xff;  // extract green
+    const b = (rgb >>  0) & 0xff;  // extract blue
+
+    const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+    return luma < 80;
+  }
+
+  if (color[0] === 'r') {
+    const [r, g, b] = color.substring(4, color.length - 1).replace(/ /g, '').split(',');
+    const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+
+    return luma < 80;
+  }
+
+  return true;
+}
+
+export const GenerateTag = ({ color, reference, text, identifier, className, click, mouseOver, mouseLeave }) => {
+  if (!identifier) identifier = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  if (!color) color = '#000000'; //black
+
   const properties = {
-    key: `${parentKey}-${index}`,
+    key: identifier,
     to: '/',
     style: { touchAction: 'pan-x' }
   }
 
-  if (tag.draft) properties.className += ' draft';
-  if (tag.details?.color) properties.style.backgroundColor = tag.details.color;
+  const textProperties = {
+    style: { color: '#000000' } //black
+  }
+
+  properties.style.backgroundColor = color ? color : '#000000'; //black
+
+  if (isDarkColor(color)) textProperties.style.color = '#f1f1f1'; //white
   if (mouseOver) properties.onMouseEnter = mouseOver;
   if (mouseLeave) properties.onMouseLeave = mouseLeave;
   if (click) properties.onClick = click;
-  if (tag.tag) properties.ref = tag.tag;
+  if (reference) properties.ref = reference;
 
   return (
-    <Link className={className} {...properties}>{tag.details.name || tag.details}</Link>
-  );
+    <Link {...properties} className={`${className} tag`}>
+      <span {...textProperties}>{text}</span>
+    </Link>
+  )
 }
 
 export default TagsWrapper;
