@@ -1,25 +1,40 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, createRef, useState } from 'react';
+import { useEffect, createRef, useState, useRef } from 'react';
 import { useSwipeable } from "react-swipeable";
 import { Link } from 'react-router-dom';
 import './tagsWrapper.scoped.scss';
 import { useWindowDimensions } from '../../../functionality/helper';
 import { useGlobalState } from '../../../functionality/globalState';
-import { DraftSettings } from '../draftSettings/draftSettings';
 
 //todo - add toggle (+) on left to toggle between on and off rather than just clicking the text
 //on mobile this can be hidden and just clicking on an option while closed will toggle the state on (and show a minus to close)
 export const TagsWrapper = ({ tagDetails, parentKey }) => {
   const [wWidth,] = useWindowDimensions();
-  let [tags, setTags] = useState([]);
+  let   [tags, setTags] = useState([]);
   const [state,] = useGlobalState();
-  // const [colors, setColors] = useState(['#ce3175', '#4e3d42', '#000000', '#4fb477'])
-  const [isHidden, setIsHidden] = useState(true);
+  const [, setIsHidden] = useState(true);
 
   const outerContainer = createRef();
   const innerContainer = createRef();
+  const clearTimer = useRef();
+  
+  const mouseOver = () => {
+    if (clearTimer.current)
+      clearTimeout(clearTimer.current);
 
-  let timeout = null;
+    innerContainerHoverDesktop();
+    setIsHidden(false);
+  }
+
+  const mouseLeave = () => {
+    setIsHidden(true);
+    if (wWidth >= 576) {
+      clearTimer.current = setTimeout(() => {
+        tagDefault();
+        resetInnerContainerWidth();
+      }, 750);
+    }
+  }
 
   const incrementTags = () => tags = tags.map(({ tag, index }) => ({ tag: tag, index: ++index >= tags.length ? 0 : index }));
   const decrementTags = () => tags = tags.map(({ tag, index }) => ({ tag: tag, index: --index < 0 ? tags.length - 1 : index }));
@@ -128,25 +143,6 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
         tag.current.style.zIndex = index;
       }
     })
-  }
-
-  const mouseOver = () => {
-    if (timeout) {
-      clearTimeout(timeout);
-      timeout = null;
-    }
-    innerContainerHoverDesktop();
-    setIsHidden(false);
-  }
-
-  const mouseLeave = () => {
-    setIsHidden(true);
-    if (wWidth >= 576) {
-      timeout = setTimeout(() => {
-        tagDefault();
-        resetInnerContainerWidth();
-      }, 750);
-    }
   }
 
   //only runs at mobile resolutions
