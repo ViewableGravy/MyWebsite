@@ -71,6 +71,27 @@ export const Posts = () => {
   )
 }
 
+/*
+For this one (other than moving it to it's own file and component) I have an idea for how to implement this in a more reuseable way
+
+1. Change it to a component that accepts children
+2. append a class to each child that is the top level child
+3. use this class as the basis instead of a hard coded one
+
+e.g.
+
+<MovingBackgroundElement>
+  <PostsHead>
+  <div className="posts">
+    <ConditionalRenderChildren condition={!!posts}>{ 
+      posts?.map((post, index) => <PostsCard {...postCardsProperties(post, index)} />) 
+    }</ConditionalRenderChildren>
+  </div>
+</MovingBackgroundElement>
+
+This way, this component can apply to literally anything that is inside it and it will work (Excited to change this)
+*/
+
 const MovingBackgroundElement = (listItems) => {
   const [width,] = useWindowDimensions();
 
@@ -105,7 +126,7 @@ const MovingBackgroundElement = (listItems) => {
   return [hideBackgroundHightlight, moveBackgroundHighlight];
 }
 
-export const PostsHead = ({ title, draftFunction, publishedFunction }) => {
+const PostsHead = ({ title, draftFunction, publishedFunction }) => {
   const [state, dispatch] = useGlobalState();
   const [toggleState, setToggleState] = useState('Published');
 
@@ -136,6 +157,14 @@ export const PostsHead = ({ title, draftFunction, publishedFunction }) => {
   )
 }
 
+/*
+ToDO:
+I need a loading animation, What I envision is instead of rendering the posts, I can an outline of each post area (just a white rectangle with the same size)
+From here, this can be animated to fade in and out top to bottom with a slight offset.
+Once the data is loaded, as each one fades out, the actual post can fade in.
+
+This may look odd if the posts are not the same size, but I can fix that by making the posts the same size (I think)
+*/
 const PostsCard = ({ post, index, moveBackgroundHighlight, hideBackgroundHightlight, updateIndex }) => {  
   const [state,] = useGlobalState();
 
