@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "Inter", sans-serif;
+  src: url('../../../assets/fonts/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
+}
+
+
 #posts-head {
   position: relative;
   display: flex;
@@ -71,6 +77,17 @@
     z-index: 1;
   }
 
+  //parent div of the blog items (used for background hover since it's a forward ref)
+  //didn't know what to call this so we will just refer to it this way
+  &>div:has(.blog-item) {
+    width: 100%;
+  }
+
+  //override the zindex for the background hover
+  .background-hover {
+    z-index: 0;
+  }
+
   .title {
     color: white;
   }
@@ -83,6 +100,32 @@
     align-items: stretch;
     transition: all 0.2s ease-in-out;
     width: calc(100% - 20px);
+    min-height: 130px;
+
+    
+    &.loading {
+      border-radius: 10px;
+      border-bottom: 0;
+      margin-bottom: 10px;
+
+      //make the background fade in and out slowely
+      background-color: white;;
+      opacity: 0;
+      animation: fade 2s;
+
+      animation-iteration-count: infinite;
+
+      @for $i from 1 through 10 {
+        &:nth-child(#{$i}n) {
+            animation-delay: #{$i * 0.3}s;
+        }
+      }
+    }
+
+    @keyframes fade {
+      0%,100% { opacity: 0 }
+      50% { opacity: 0.3 }
+    }
 
     * {
       transition: all 0.2s ease-in-out;

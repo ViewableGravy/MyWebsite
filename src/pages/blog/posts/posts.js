@@ -16,15 +16,12 @@ export const Posts = () => {
   let listItems = useRef([]);
 
   const [posts, setPosts] = useState(null);
-  const [hideBackgroundHightlight, moveBackgroundHighlight] = MovingBackgroundElement(listItems);
 
   const postCardsProperties = (post, index) => ({
     post: post,
     index: index,
     key: post._id,
-    updateIndex: (element) => listItems.current[index] = element,
-    moveBackgroundHighlight: moveBackgroundHighlight,
-    hideBackgroundHightlight: hideBackgroundHightlight
+    updateIndex: (element) => listItems.current[index] = element
   })
 
   const PostsHeadProperties = () => ({
@@ -58,75 +55,61 @@ export const Posts = () => {
     }
   })
 
+  //if your screen is longer than 5 posts then I am sorry
   return (
     <>
       <PostsHead {...PostsHeadProperties()}/>
       <div className="posts">
-        <ConditionalRenderChildren condition={!!posts}>{ 
-          posts?.map((post, index) => <PostsCard {...postCardsProperties(post, index)} />) 
-        }</ConditionalRenderChildren>
+        <BackgroundHoverMoveEffect>{
+          posts 
+            ? posts?.map((post, index) => <PostsCard {...postCardsProperties(post, index)} />) //once data has loaded
+            : [...Array(5).keys()].map(() => <PostsCard/>) //loading animation
+        }</BackgroundHoverMoveEffect>
       </div>
-      <div className="background-hover"/>
     </>
   )
 }
 
-/*
-For this one (other than moving it to it's own file and component) I have an idea for how to implement this in a more reuseable way
-
-1. Change it to a component that accepts children
-2. append a class to each child that is the top level child
-3. use this class as the basis instead of a hard coded one
-
-e.g.
-
-<MovingBackgroundElement>
-  <PostsHead>
-  <div className="posts">
-    <ConditionalRenderChildren condition={!!posts}>{ 
-      posts?.map((post, index) => <PostsCard {...postCardsProperties(post, index)} />) 
-    }</ConditionalRenderChildren>
-  </div>
-</MovingBackgroundElement>
-
-This way, this component can apply to literally anything that is inside it and it will work (Excited to change this)
-*/
-
-const MovingBackgroundElement = (listItems) => {
+const BackgroundHoverMoveEffect = ({ children }) => {
   const [width,] = useWindowDimensions();
+  const childrenRef = useRef([]);
+  const backgroundRef = useRef(null);
 
-  const hideBackgroundHightlight = () => {
-    const highlight = document.querySelector('.background-hover');
-    highlight.style.backgroundColor = 'transparent';
-  }
+  const hideBackgroundHightlight = () => backgroundRef.current.style.backgroundColor = 'transparent';
+  const showBackgroundHightlight = () => backgroundRef.current.style.backgroundColor = 'white';
 
-  const showBackgroundHightlight = () => {
-    const highlight = document.querySelector('.background-hover');
-    highlight.style.backgroundColor = 'white';
-  }
-
-  const moveBackgroundHighlight = (index) => {
-    if (width > 576) {
-      const ref = listItems.current[index];
-
-      const width = ref?.offsetWidth;
-      const distanceFromTop = ref?.offsetTop;
-      const height = ref?.offsetHeight;
-      const highlight = document.querySelector('.background-hover');
-
-      highlight.style.top = `${distanceFromTop}px`;
-      highlight.style.width = `${width}px`;
-      highlight.style.height = `${height - 20}px`
-      showBackgroundHightlight();
-    }
-  }
+  const Children = () => React.Children.map(children, (child, index) =>
+    React.cloneElement(child, {
+      ref: (ref) => (childrenRef.current[index] = ref),
+      onMouseOver: () => {
+        if (width > 576) {
+          const ref = childrenRef.current[index];
+          const width = ref?.offsetWidth;
+          const distanceFromTop = ref?.offsetTop;
+          const height = ref?.offsetHeight;
+          const highlight = backgroundRef.current;
+          highlight.style.top = `${distanceFromTop}px`;
+          highlight.style.width = `${width}px`;
+          highlight.style.height = `${height - 20}px`
+          showBackgroundHightlight();
+        }
+      },
+      onMouseLeave: hideBackgroundHightlight
+    })
+  );
+  console.log(childrenRef.current)
 
   useEffect(hideBackgroundHightlight, [width])
 
-  return [hideBackgroundHightlight, moveBackgroundHighlight];
+  return (
+    <>
+      <Children/>
+      <div className="background-hover" ref={backgroundRef}/>
+    </>
+  );
 }
 
-const PostsHead = ({ title, draftFunction, publishedFunction }) => {
+export const PostsHead = ({ title, draftFunction, publishedFunction }) => {
   const [state, dispatch] = useGlobalState();
   const [toggleState, setToggleState] = useState('Published');
 
@@ -157,51 +140,42 @@ const PostsHead = ({ title, draftFunction, publishedFunction }) => {
   )
 }
 
-/*
-ToDO:
-I need a loading animation, What I envision is instead of rendering the posts, I can an outline of each post area (just a white rectangle with the same size)
-From here, this can be animated to fade in and out top to bottom with a slight offset.
-Once the data is loaded, as each one fades out, the actual post can fade in.
-
-This may look odd if the posts are not the same size, but I can fix that by making the posts the same size (I think)
-*/
-const PostsCard = ({ post, index, moveBackgroundHighlight, hideBackgroundHightlight, updateIndex }) => {  
+//new postcard
+//{ post, index, updateIndex, ref }
+const PostsCard = React.forwardRef((props, ref) => {
   const [state,] = useGlobalState();
 
-  const conditionallyAddDraftClass = (classes) => `${classes} ${state.draftMode ? 'draft' : ''}`;
+  if (!props.post) return <div className={'blog-item loading'}/>
 
-  const blogItemContainerProperties = (index) => {
-    return {
-      ref: updateIndex, 
-      className: 'blog-item',
-      onMouseOver: () => moveBackgroundHighlight(index),
-      onMouseLeave: hideBackgroundHightlight
-    }
+  const AddDraftClass = (classes) => `${classes} ${state.draftMode ? 'draft' : ''}`;
+  
+  const blogItemContainerProperties = {
+    ref: props.updateIndex,
+    className: 'blog-item'
+  }
+
+  const properties = {
+    ref: ref,
+    onMouseOver: props.onMouseOver,
+    onMouseLeave: props.onMouseLeave
   }
 
   return (
     <>
-      <div {...blogItemContainerProperties(index)}>
-        <Link to={`/blog/${post.slug}`} className={`title_container`}>
-
-          <div>
-            <h2 className={conditionallyAddDraftClass(`title`)}>{post.title}</h2>
+      <div {...properties}>
+        <div {...blogItemContainerProperties}>
+          <Link to={`/blog/${props.post.slug}`} className={`title_container`}>
+            <h2 className={AddDraftClass(`title`)}>{props.post.title}</h2>
+            <p className={AddDraftClass(`summary`)} dangerouslySetInnerHTML={{ __html: props.post.summary }}/>
+          </Link>
+          <div className='right-section'>
+            <p className={AddDraftClass(`date`)}>{props.post.date}</p>
+            <TagsWrapper tagDetails={props.post.tags} parentKey={props.post._id}/>
           </div>
-
-          <div>
-            <p className={conditionallyAddDraftClass(`summary`)} dangerouslySetInnerHTML={{ __html: post.summary }}/>
-          </div>
-          
-        </Link>
-
-        <div className='right-section'>
-          <p className={conditionallyAddDraftClass(`date`)}>{post.date}</p>
-          <TagsWrapper tagDetails={post.tags} parentKey={post._id}/>
         </div>
-
       </div>
     </>
   )
-}
+});
 
 export default Posts;
