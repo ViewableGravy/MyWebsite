@@ -64,25 +64,9 @@ export const Home = () => {
               <img src={WeatheringWithYou} alt="test"/>
               <h1 className='title'>Subdomains</h1>
             </li>
-            {/* <li className="ipod_outer">
-              <div className="ipod">
-                <div className="Screen" style={ { "backgroundImage" : `url(${spotifyData?.item?.album?.images[1]?.url})` } }>
-                  <h3 className='title'>{song}</h3>
-                </div>
-                <div className="Controls">
-                  <div className="Menu"></div>
-                  <div>
-                    <div className="Back"></div>
-                    <div className="Middle"></div>
-                    <div className="Forward"></div>
-                  </div>
-                  <div className="Pause"></div>
-                </div>
-              </div>
-            </li> */}
-            <li onClick={() => console.log(gState)}>
+            <li className={'active'} onClick={() => navigate('/contact')}>
               <img src={MadeInAbyss} alt="test"/>
-              <h1 className='title'>In Progress</h1>
+              <h1 className='title'>Contact Me</h1>
             </li>
             <li className='active' onClick={() => navigate('/blog')}>
               <img src={SpiceAndWolf} alt="test"/>

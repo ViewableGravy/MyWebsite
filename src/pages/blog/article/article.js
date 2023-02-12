@@ -1,16 +1,22 @@
 import { useParams } from 'react-router-dom'
 import { BlogContainer } from '../blog';
 import { PostsHead } from '../posts/posts';
+import { GenerateTag } from '../tags-wrapper/tagsWrapper';
 import React from 'react';
 import Menu from '../menu/menu'
 import useAxios from "axios-hooks";
-import './article.scss'
 import About from '../about/about';
-import { GenerateTag } from '../tags-wrapper/tagsWrapper';
+import './article.scss'
+
+const server = process.env.REACT_APP_BACKEND_SERVER;
+const port = process.env.REACT_APP_BACKEND_PORT;
+const protocol = process.env.REACT_APP_BACKEND_PROTOCOL;
+const url = `${protocol}://${server}:${port}`;
+
 
 export const BlogArticle = () => {
   const { article } = useParams();
-  const [{ data }] = useAxios( `https://gravy.cc/api/blog/posts/${article}`);
+  const [{ data }] = useAxios( `${url}/api/blog/posts/${article}`);
 
   console.log(data)
   
