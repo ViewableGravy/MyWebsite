@@ -10,6 +10,11 @@ import axios from 'axios';
 const useStyles = createUseStyles(styles);
 
 export const Contact = () => {
+  console.log(process.env.REACT_APP_SITE_KEY)
+  console.log(process.env.REACT_APP_BACKEND_SERVER)
+  console.log(process.env.REACT_APP_BACKEND_PORT)
+  console.log(process.env.REACT_APP_BACKEND_PROTOCOL)
+
   const classes = useStyles();
 
   const [name,setName] = useState("");
