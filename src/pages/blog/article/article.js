@@ -25,7 +25,7 @@ export const BlogArticle = () => {
       <Menu author={'ViewableGravy'}/>
       <Meta post={data} />
       <Fieldsets legend={'ℹ️ Info'} content={'Please be aware that this page is currently a work in progress and is not an accurate representation of any final products or blogs. If you have any feedback or suggestions for the design of this page, please let me know!'} color={'#1db9d8'}/>
-      <Fieldsets legend={'🔥Pro Tip'} content={'Tips are great - but cool websites are better. Check out <a href="https://summer-afternoon.vlucendo.com/">This one</a> that I found recently'} color={'#d6a21a'}/>
+      <Fieldsets legend={'🔥Pro Tip'} content={'Tips are great - but cool websites are better. Check out <a href="https://summer-afternoon.vlucendo.com/" class="magic-link">This one</a> that I found recently'} color={'#d6a21a'}/>
       
       <Content post={data} />
       <Footer/>

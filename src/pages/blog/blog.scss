@@ -13,10 +13,46 @@
   min-width: 100%;
   background-color: var(--background);
 
+  .magic-link {
+    --purple: #8e2de2;
+    --violet: #4a00e0;
+    --pink: #ff00cc;
+    
+    background: linear-gradient(
+      to right,
+      var(--purple),
+      var(--violet),
+      var(--pink),
+      var(--purple)
+    );
+
+    text-decoration: underline;
+
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: rgba(255, 255, 255, 0);
+    text-decoration-color: var(--pink);
+    text-decoration-thickness: 2px;
+
+    background-size: 200%;
+
+    animation: gradient 3s linear infinite;
+  }
+
+  @keyframes gradient {
+    from {
+      background-position: 0% center;
+    }
+
+    to {
+      background-position: -200% center;
+    }
+  }
+
   a {
     color: var(--inline-link);
-    font-weight: bold;
-    font-variant: normal
+    font-weight: 800;
+    font-variant: normal;
   }
 
   .summary, .date {

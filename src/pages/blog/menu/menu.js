@@ -44,8 +44,8 @@ export const Menu = (props) => {
       <div id="right" className={menuItemsClasses}> 
         <a href="https://status.gravy.cc/">Uptime</a>
         <a href="https://github.com/ViewableGravy">Github</a>
-        <a onClick={() => navigate('/')}>Home</a>
-        <a onClick={() => navigate('/blog')}>Blog</a>
+        <button onClick={() => navigate('/')}>Home</button>
+        <button onClick={() => navigate('/blog')}>Blog</button>
         {
           !state.token 
             ? <a onClick={() => navigate('/login')}>Login</a>

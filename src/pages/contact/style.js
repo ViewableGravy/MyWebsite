@@ -30,7 +30,9 @@ export const styles = {
     fontSize: '4rem',
     fontWeight: 'bold',
     color: '#ffffff',
-    marginLeft: '40px',
+    marginLeft: '60px',
+    position: 'relative',
+    zIndex: 2,
     [media({maxWidth: 475})]: {
       textAlign: 'center',
       fontSize: '2.5rem',
@@ -38,6 +40,9 @@ export const styles = {
     },
     [media({minWidth: 475, maxWidth: 900})]: {
       fontSize: '3rem',
+    },
+    [media({minWidth: 900, maxWidth: 1200})]: {
+      marginLeft: '5vw',
     }
   },
   blurb: {
@@ -50,13 +55,36 @@ export const styles = {
     fontSize: '1.5rem',
     fontWeight: 'bold',
     color: 'white',
-    marginLeft: '40px',
+    marginLeft: '60px',
+    position: 'relative',
+    zIndex: 2,
     [media({maxWidth: 475})]: {
       textAlign: 'center',
       fontSize: '1.2rem',
+      marginBottom: '0',
     },
     [media({minWidth: 475, maxWidth: 900})]: {
       fontSize: '1.3rem',
+    },
+    [media({minWidth: 900, maxWidth: 1200})]: {
+      marginLeft: '5vw',
+    }
+  },
+  contactBackground: {
+    opacity: '50%',
+    maxWidth: '100%',
+    pointerEvents: 'none',
+    [media({maxWidth: 475})]: {
+      position: 'static',
+    },
+    [media({minWidth: 475})]: {
+      position: 'absolute',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      'z-index': 1,
+    },
+    [media({minWidth: 475, maxWidth: 900})]: {
+      top: '35%',
     }
   },
   contact: {
