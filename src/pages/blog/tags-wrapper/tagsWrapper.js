@@ -224,19 +224,23 @@ const isDarkColor = (color) => {
 
 export const GenerateTag = ({ color, reference, text, identifier, className, click, mouseOver, mouseLeave }) => {
   if (!identifier) identifier = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-  if (!color) color = '#000000'; //black
+  if (!color) color = '#e008ce'; //black
 
   const properties = {
     key: identifier,
     to: '/',
-    style: { touchAction: 'pan-x' }
+    style: { 
+      touchAction: 'pan-x',
+      backgroundColor: color,
+    },
   }
 
   const textProperties = {
-    style: { color: '#000000' } //black
+    style: { 
+      color: '#000000',
+      backgroundColor: color,
+    }
   }
-
-  properties.style.backgroundColor = color ? color : '#000000'; //black
 
   if (isDarkColor(color)) textProperties.style.color = '#f1f1f1'; //white
   if (mouseOver) properties.onMouseEnter = mouseOver;

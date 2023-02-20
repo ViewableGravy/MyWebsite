@@ -48,8 +48,8 @@ export const Menu = (props) => {
         <button onClick={() => navigate('/blog')}>Blog</button>
         {
           !state.token 
-            ? <a onClick={() => navigate('/login')}>Login</a>
-            : <a onClick={() => logout(dispatch)}>Logout</a> 
+            ? <button onClick={() => navigate('/login')}>Login</button>
+            : <button onClick={() => logout(dispatch)}>Logout</button> 
         }
         {mobileView && <div id="close" onClick={() => setMenuOpen(!menuOpen)}></div>}
       </div>

@@ -99,6 +99,16 @@
     &::placeholder {
       color: rgba(255, 255, 255, 0.664);
     }
+
+    /*Change text in autofill textbox*/
+    &:-webkit-autofill,
+    &:-webkit-autofill::first-line,
+    &:-webkit-autofill:hover, 
+    &:-webkit-autofill:focus {
+      -webkit-text-fill-color: black !important;
+      -webkit-background-clip: text !important;
+      font-weight: bold !important;
+    }
   }
 
   .username {
@@ -171,6 +181,6 @@
       background-color: #a10194;
       cursor: pointer;
     }
-  }
-    
+  }    
 }
+

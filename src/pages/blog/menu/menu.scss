@@ -21,6 +21,8 @@
       transition: color 0.2s ease-in-out;
       &:hover {
         color: #6f3bff;
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
       }
       font-weight: 800;
     }

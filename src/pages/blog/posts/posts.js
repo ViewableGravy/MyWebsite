@@ -123,7 +123,6 @@ const BackgroundHoverMoveEffect = ({ children }) => {
       onMouseLeave: hideBackgroundHightlight
     })
   );
-  console.log(childrenRef.current)
 
   useEffect(hideBackgroundHightlight, [width])
 
