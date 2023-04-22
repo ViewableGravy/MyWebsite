@@ -170,7 +170,21 @@ export const PostsHead = ({ title, draftFunction, publishedFunction }) => {
 const PostsCard = React.forwardRef((props, ref) => {
   const [state,] = useGlobalState();
 
-  if (!props.post) return <div className={'blog-item loading'}/>
+  if (!props.post) return (
+    <div className={'blog-item loading'}>
+      <div className={"left"}>
+        <div className={"loading__item"}/>
+        <div className={"loading__description"}>
+          {/* Render 20 divs to style up the loading animation */}
+          { [...Array(20).keys()].map((_, i) => <div/>) }
+        </div>
+      </div>
+      <div className={"right"}>
+        <div className={"loading__date"}/>
+        <div className={"loading__cards"}/>
+      </div>
+    </div>
+  )
 
   const AddDraftClass = (classes) => `${classes} ${state.draftMode ? 'draft' : ''}`;
   
@@ -186,20 +200,18 @@ const PostsCard = React.forwardRef((props, ref) => {
   }
 
   return (
-    <>
-      <div {...properties}>
-        <div {...blogItemContainerProperties}>
-          <Link to={`/blog/${props.post.slug}`} className={`title_container`}>
-            <h2 className={AddDraftClass(`title`)}>{props.post.title}</h2>
-            <p className={AddDraftClass(`summary`)} dangerouslySetInnerHTML={{ __html: props.post.summary }}/>
-          </Link>
-          <div className='right-section'>
-            <p className={AddDraftClass(`date`)}>{props.post.date}</p>
-            <TagsWrapper tagDetails={props.post.tags} parentKey={props.post._id}/>
-          </div>
+    <Link to={`/blog/${props.post.slug}`} className={"post-card-link"} {...properties}>
+      <div {...blogItemContainerProperties}>
+        <div className={`title_container`}>
+          <h2 className={AddDraftClass(`title`)}>{props.post.title}</h2>
+          <p className={AddDraftClass(`summary`)} dangerouslySetInnerHTML={{ __html: props.post.summary }}/>
+        </div>
+        <div className='right-section'>
+          <p className={AddDraftClass(`date`)}>{props.post.date}</p>
+          <TagsWrapper tagDetails={props.post.tags} parentKey={props.post._id}/>
         </div>
       </div>
-    </>
+    </Link>
   )
 });
 

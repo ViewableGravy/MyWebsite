@@ -8,98 +8,97 @@ const media = ({minWidth, maxWidth}) => {
 }
 
 const nthChild = (n) => `&:nth-child(${n})`
+const px = (...args) => args.map(arg => typeof(arg) === 'number' ? `${arg}px` : arg).join(' ');
+const vw = (...args) => args.map(arg => typeof(arg) === 'number' ? `${arg}vw` : arg).join(' ');
+const vh = (...args) => args.map(arg => typeof(arg) === 'number' ? `${arg}vh` : arg).join(' ');
+const rem = (...args) => args.map(arg => typeof(arg) === 'number' ? `${arg}rem` : arg).join(' ');
+const percent = (...args) => args.map(arg => typeof(arg) === 'number' ? `${arg}%` : arg).join(' ');
 
 export const styles = {
   header: {
-    paddingRight: '20px',
-    paddingLeft: '20px',
-    maxWidth: '1400px',
+    padding: px(20, 20, 0, 20),
+    maxWidth: px(1400),
     margin: 'auto',
-    paddingTop: '20px',
   },
   container: {
-    maxWidth: '1200px',
+    maxWidth: px(1200),
     margin: 'auto'
   },
   title: {
-    paddingTop: '50px',
-    paddingRight: '40px',
-    maxWidth: '1400px',
-    marginBottom: '5px',
+    padding: px(50, 40, 0, 0),
+    margin: px(40, 0, 5, 60),
+    maxWidth: px(1400),
+    fontSize: rem(4),
     textAlign: 'left',
-    fontSize: '4rem',
     fontWeight: 'bold',
     color: '#ffffff',
-    marginLeft: '60px',
     position: 'relative',
     zIndex: 2,
     [media({maxWidth: 475})]: {
+      fontSize: rem(2.5),
+      paddingTop: px(10),
       textAlign: 'center',
-      fontSize: '2.5rem',
-      paddingTop: '10px',
     },
     [media({minWidth: 475, maxWidth: 900})]: {
-      fontSize: '3rem',
+      fontSize: rem(3),
     },
     [media({minWidth: 900, maxWidth: 1200})]: {
-      marginLeft: '5vw',
+      marginLeft: vw(5),
     }
   },
   blurb: {
-    paddingRight: '40px',
-    marginBottom: '40px',
-    maxWidth: '475px',
-    margin: '0 0 0 20px',
-    paddingTop: '10px',
+    margin: px(0, 0, 40, 60),
+    padding: px(10, 40, 0, 0),
+    maxWidth: px(475),
+    fontSize: rem(1.5),
     textAlign: 'left',
-    fontSize: '1.5rem',
     fontWeight: 'bold',
     color: 'white',
-    marginLeft: '60px',
     position: 'relative',
     zIndex: 2,
     [media({maxWidth: 475})]: {
       textAlign: 'center',
-      fontSize: '1.2rem',
-      marginBottom: '0',
+      fontSize: rem(1.2),
+      marginBottom: 0,
     },
     [media({minWidth: 475, maxWidth: 900})]: {
-      fontSize: '1.3rem',
+      fontSize: rem(1.3),
     },
     [media({minWidth: 900, maxWidth: 1200})]: {
-      marginLeft: '5vw',
+      marginLeft: vw(5),
     }
   },
   contactBackground: {
-    opacity: '50%',
-    maxWidth: '100%',
+    opacity: percent(50),
+    maxWidth: percent(100),
     pointerEvents: 'none',
     [media({maxWidth: 475})]: {
       position: 'static',
     },
     [media({minWidth: 475})]: {
       position: 'absolute',
-      top: '50%',
+      top: percent(50),
       transform: 'translateY(-50%)',
       'z-index': 1,
     },
     [media({minWidth: 475, maxWidth: 900})]: {
-      top: '35%',
+      top: percent(35),
     }
   },
   contact: {
+    padding: px(20, 0, 0, 0),
     display: 'flex',
     flexDirection: 'column',
-    paddingTop: '20px',
     [media({maxWidth: 900})]: {}
   },
   fieldContainer: {
-    width: '90%',
-    marginBottom: '20px',
-    minHeight: '60px',
-    borderRadius: '10px',
+    margin: px(0, 0, 20, 0),
+    width: percent(90),
+    minHeight: px(60),
+    borderRadius: px(10),
     overflow: 'hidden',
     color: 'white',
+    transition: 'all 1s cubic-bezier(0.91, 0, 1, 1)',
     [nthChild(1)]: {
       border: '1px solid rgba(0, 0, 255, 0.5)',
       background: 'rgba(0, 0, 255, 0.3)',
@@ -118,11 +117,11 @@ export const styles = {
     },
     [media({maxWidth: 900})]: {
       [nthChild('odd')]: {
-        borderRadius: '10px 0 0 10px',
-        marginLeft: '10%'
+        borderRadius: px(10, 0, 0, 10),
+        marginLeft: percent(10),
       },
       [nthChild('even')]: {
-        borderRadius: '0 10px 10px 0',
+        borderRadius: px(0, 10, 10, 0),
       },
       [nthChild(1)]: {
         borderRight: 'none',
@@ -139,29 +138,27 @@ export const styles = {
     },
     [media({minWidth: 900})]: {
       [nthChild('odd')]: {
-        marginLeft: '5%',
-        width: '85%'
+        marginLeft: percent(5),
+        width: percent(85)
       },
       [nthChild('even')]: {
-        marginLeft: '10%',
-        width: '85%'
+        marginLeft: percent(10),
+        width: percent(85)
       },
     }
   },
   field: {
+    padding: px(0, 20, 0, 20),
     all: 'unset',
     width: 'calc(100% - 40px)',
-    // background: 'blue',
-    minHeight: '60px',
-    paddingLeft: '20px',
-    paddingRight: '20px',
+    minHeight: px(60),
     wordBreak: 'break-word',
     display: 'block',
-    fontSize: '1.2rem',
-    fontWeight: 'bold'
+    fontSize: rem(1.2),
+    fontWeight: 'bold',
   },
   textarea: {
-    paddingTop: '15px',
-    fontSize: '1.2rem',
+    paddingTop: px(15),
+    fontSize: rem(1.2),
   }
 }
