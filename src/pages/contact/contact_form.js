@@ -14,7 +14,7 @@ const styles = {
     '@media screen and (max-width: 1280px)': {
       paddingLeft: '40px',
       maxWidth: '100%',
-      width: 'clamp(390px, 700px, 100%)'
+      width: 'clamp(390px, 700px, 100%)',
     },
   },
   form: {
@@ -27,7 +27,8 @@ const styles = {
     marginLeft: 'auto',
     marginRight: 'auto',
     '@media screen and (max-width: 1280px)': {
-      height: 'fit-content'
+      height: 'fit-content',
+      padding: '25px'
     },
     display: 'flex',
     flexDirection: 'column',
