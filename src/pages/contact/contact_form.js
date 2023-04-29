@@ -4,6 +4,9 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+
 
 const styles = {
   outer: {
@@ -164,7 +167,7 @@ const styles = {
     color: 'white',
     fontSize: '1.1rem',
     cursor: 'pointer',
-    '& > i': {
+    '& > i, & > svg': {
       marginRight: '10px',
     },
     '&:focus': {
@@ -184,9 +187,6 @@ export const ContactForm = () => {
   const classes = useStyle();
   const captchaRef = React.useRef();
   const [sliderValue, setSliderValue] = useState(50);
-  const handleSubmitWithCaptcha = async (values, { setSubmitting }) => {
-    return handleSubmit(values, captchaRef, setSubmitting);
-  }
 
   return (
     <div className={classes.outer}>
@@ -242,7 +242,11 @@ export const ContactForm = () => {
             </div>
 
             <button type="submit" className={classes.submit} disabled={isSubmitting} >
-              <i className="fa-solid fa-paper-plane"></i>
+              {
+                isSubmitting
+                  ? <FontAwesomeIcon icon={faSpinner} spin />
+                  : <i className="fa-solid fa-paper-plane"></i>
+              }
               <span>Send Message</span>
             </button>
           </Form>
