@@ -2,6 +2,7 @@ import React from "react";
 import { createUseStyles } from "react-jss";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
 
 const styles = {
@@ -75,9 +76,6 @@ const styles = {
       backgroundColor: 'var(--secondary-50)',
       border: '3px solid var(--secondary-50)',
       color: 'white',
-    },
-    '&:has(> input:focus)': {
-      border: '3px solid var(--primary)',
     },
     '&:has(> input:checked)': {
       backgroundColor: 'var(--secondary)',
@@ -177,9 +175,18 @@ const styles = {
 
 const useStyle = createUseStyles(styles);
 
+const server = process.env.REACT_APP_BACKEND_SERVER;
+const port = process.env.REACT_APP_BACKEND_PORT;
+const protocol = process.env.REACT_APP_BACKEND_PROTOCOL;
+const url = `${protocol}://${server}:${port}/api/contact`;
+
 export const ContactForm = () => {
   const classes = useStyle();
+  const captchaRef = React.useRef();
   const [sliderValue, setSliderValue] = useState(50);
+  const handleSubmitWithCaptcha = async (values, { setSubmitting }) => {
+    return handleSubmit(values, captchaRef, setSubmitting);
+  }
 
   return (
     <div className={classes.outer}>
@@ -191,14 +198,7 @@ export const ContactForm = () => {
           interests: [], 
         }}
         validate={validateForm}
-        onSubmit={async (values, { setSubmitting }) => {
-          // setup reCaptcha: https://stackoverflow.com/questions/65901771/how-to-make-invisible-react-google-recaptcha-formik-and-yup-work-together
-          
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false)
-          }, 400)
-        }}
+        onSubmit={(values, { setSubmitting }) => handleSubmit({ ...values, sliderValue }, captchaRef, setSubmitting)}
       >
         {({ isSubmitting, values, handleChange }) => (
           <Form className={classes.form}>
@@ -237,6 +237,8 @@ export const ContactForm = () => {
                 value={values.message}
                 onChange={handleChange}
               ></textarea>
+
+              <ReCAPTCHA ref={captchaRef} sitekey={process.env.REACT_APP_SITE_KEY} size={'invisible'} />
             </div>
 
             <button type="submit" className={classes.submit} disabled={isSubmitting} >
@@ -261,4 +263,29 @@ function validateForm(values) {
   }
 
   return errors;
+}
+
+
+
+async function handleSubmit(values, captchaRef, setSubmitting) {
+  try {
+    const token = await captchaRef.current.executeAsync();
+    captchaRef.current.reset();
+
+    const result = await axios.post(url, {
+      name: values.name,
+      email: values.email,
+      message: values.message,
+      interests: values.interests,
+      technical: values.sliderValue,
+      captchaToken: token,
+    });
+
+    console.log(result);
+
+  } catch (error) {
+    console.log('An error has occured, information below:\n' + error)
+  } finally {
+    setSubmitting(false);
+  }
 }
