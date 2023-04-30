@@ -43,7 +43,7 @@ export const Home = () => {
               <img src={WeatheringWithYou} alt="test"/>
               <h1 className='title'>Subdomains</h1>
             </Link>
-            <Link className={'active'} to={'/contacts'}>
+            <Link className={'active'} to={'/contact'}>
               <img src={MadeInAbyss} alt="test"/>
               <h1 className='title'>Contact Me</h1>
             </Link>
