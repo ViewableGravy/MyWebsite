@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './home.scss'
 import { useNavigate } from 'react-router-dom'
-import { useGlobalState } from '../../functionality/globalState';
 
 import MadeInAbyss from '../../assets/images/home/MadeInAbyss.jpg'
 import SpiceAndWolf from '../../assets/images/home/SpiceAndWolf_444.webp'
@@ -9,29 +8,8 @@ import WeatheringWithYou from '../../assets/images/home/WeatheringWithYouVertica
 
 export const Home = () => {
   let navigate = useNavigate();
-  // let webSocket = null; 
-
-  const [gState, dispatch] = useGlobalState();
   
   const [ welcome, setWelcome ] = useState(true);
-
-  // const [ song, setSong ] = useState(null);
-  // const [ spotifyData, setSpotifyData ] = useState(null);
-
-  // useEffect(() => {
-  //   webSocket = new WebSocket('ws://localhost:3000/');
-
-  //   webSocket.onmessage = (message) => {
-  //     const data = JSON.parse(message.data);
-  //     setSpotifyData(data);      
-  //     setSong(data.item?.name || null);
-  //   }
-
-  //   return () => {
-  //     console.log("removed test")
-  //     webSocket.close();
-  //   }
-  // }, [])
 
   useEffect(() => {
     const state = localStorage.getItem('welcome');
