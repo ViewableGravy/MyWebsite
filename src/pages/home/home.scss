@@ -46,7 +46,7 @@
         animation-direction: alternate;
     }
     
-    ol {
+    .background > div {
         padding: 0;
         align-items: center;
         flex-wrap: wrap;
@@ -56,7 +56,7 @@
         display: flex;
     }
     
-    li {
+    .active {
         min-width: 300px;
         height: 500px;
         transition: height .2s;
@@ -71,18 +71,15 @@
     }
     
     @media (width > 658px) {
-        li.active:hover {
+        .active:hover {
             height: 650px;
             cursor: pointer;
         }
 
-        li.active:hover > h1 {
+        .active:hover > h1 {
             font-size: 40px;
         }
-    }
-    
-    
-    
+    }    
     
     img {
         position:relative;
@@ -104,7 +101,7 @@
     }
 
     @media (width < 658px) {
-        li {
+        .active {
             height: 200px;
         }
     }

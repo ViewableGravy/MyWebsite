@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './home.scss'
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import MadeInAbyss from '../../assets/images/home/MadeInAbyss.jpg'
 import SpiceAndWolf from '../../assets/images/home/SpiceAndWolf_444.webp'
@@ -37,20 +38,20 @@ export const Home = () => {
     return (
       <div className='home_outer'>
         <div className='background'>
-          <ol>
-            <li className='active' onClick={() => navigate('/subdomains')}>
+          <div>
+            <Link className='active' to={'/subdomains'}>
               <img src={WeatheringWithYou} alt="test"/>
               <h1 className='title'>Subdomains</h1>
-            </li>
-            <li className={'active'} onClick={() => navigate('/contact')}>
+            </Link>
+            <Link className={'active'} to={'/contacts'}>
               <img src={MadeInAbyss} alt="test"/>
               <h1 className='title'>Contact Me</h1>
-            </li>
-            <li className='active' onClick={() => navigate('/blog')}>
+            </Link>
+            <Link className='active' to={'/blog'}>
               <img src={SpiceAndWolf} alt="test"/>
               <h1 className='title'>Blog</h1>
-            </li>
-          </ol>
+            </Link>
+          </div>
         </div>
       </div>
     )
