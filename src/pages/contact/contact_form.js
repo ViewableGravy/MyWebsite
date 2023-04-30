@@ -92,7 +92,7 @@ const styles = {
       height: 0,
       width: 0,
     },
-    '&:has(> input:focus)': {
+    '&:has(> input:focus):not(:has(> input:checked))': {
       backgroundColor: 'var(--secondary-50)',
       border: '3px solid var(--primary)',
       color: 'white',

@@ -95,11 +95,34 @@
     border: 1px solid var(--clr);
   }
 
-  .padlock_icon {
+  .padlock_icon_container {
     color: var(--clr);
     position: absolute;
     top: -13px;
     right: 13px;
+  }
+
+  .padlock_icon {
+    //
+  }
+
+  .padlock_hover_information {
+    background-color: rgb(73, 73, 73);
+    position: absolute;
+    padding: 5px 10px 5px 10px;
+    min-width: 125px;
+    bottom: 25px;
+    right: 50%;
+    transform: translateX(50%);
+    display: none;
+    border-radius: 10px;
+
+    & > p {
+      all: unset;
+      font-weight: 700;
+      color: rgb(194, 194, 194);
+      position: relative;
+    }
   }
   
   .outer_list li a {
