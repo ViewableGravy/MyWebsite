@@ -1,16 +1,22 @@
 import { useParams } from 'react-router-dom'
 import { BlogContainer } from '../blog';
 import { PostsHead } from '../posts/posts';
+import { GenerateTag } from '../tags-wrapper/tagsWrapper';
 import React from 'react';
 import Menu from '../menu/menu'
 import useAxios from "axios-hooks";
-import './article.scss'
 import About from '../about/about';
-import { GenerateTag } from '../tags-wrapper/tagsWrapper';
+import './article.scss'
+
+const server = process.env.REACT_APP_BACKEND_SERVER;
+const port = process.env.REACT_APP_BACKEND_PORT;
+const protocol = process.env.REACT_APP_BACKEND_PROTOCOL;
+const url = `${protocol}://${server}:${port}`;
+
 
 export const BlogArticle = () => {
   const { article } = useParams();
-  const [{ data }] = useAxios( `https://gravy.cc/api/blog/posts/${article}`);
+  const [{ data }] = useAxios( `${url}/api/blog/posts/${article}`);
 
   console.log(data)
   
@@ -19,7 +25,7 @@ export const BlogArticle = () => {
       <Menu author={'ViewableGravy'}/>
       <Meta post={data} />
       <Fieldsets legend={'ℹ️ Info'} content={'Please be aware that this page is currently a work in progress and is not an accurate representation of any final products or blogs. If you have any feedback or suggestions for the design of this page, please let me know!'} color={'#1db9d8'}/>
-      <Fieldsets legend={'🔥Pro Tip'} content={'Tips are great - but cool websites are better. Check out <a href="https://summer-afternoon.vlucendo.com/">This one</a> that I found recently'} color={'#d6a21a'}/>
+      <Fieldsets legend={'🔥Pro Tip'} content={'Tips are great - but cool websites are better. Check out <a href="https://summer-afternoon.vlucendo.com/" class="magic-link">This one</a> that I found recently'} color={'#d6a21a'}/>
       
       <Content post={data} />
       <Footer/>

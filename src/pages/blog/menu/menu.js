@@ -6,7 +6,9 @@ import { useGlobalState } from '../../../functionality/globalState';
 import { logout } from '../../../functionality/authentication';
 
 // author: string
-export const Menu = ({ author }) => {
+export const Menu = (props) => {
+  const {author, style} = props
+
   const navigate = useNavigate();
   const initMenuItems = classNames({
     desktop: true,
@@ -35,19 +37,19 @@ export const Menu = ({ author }) => {
   }, [])
 
   return (
-    <div id="menu" className={menuItemsClasses}>
+    <div id="menu" className={menuItemsClasses} style={style}>
       <div id="left" >
         <span id="Author">{author}</span>
       </div>
       <div id="right" className={menuItemsClasses}> 
         <a href="https://status.gravy.cc/">Uptime</a>
         <a href="https://github.com/ViewableGravy">Github</a>
-        <a onClick={() => navigate('/')}>Home</a>
-        <a onClick={() => navigate('/blog')}>Posts</a>
+        <button onClick={() => navigate('/')}>Home</button>
+        <button onClick={() => navigate('/blog')}>Blog</button>
         {
           !state.token 
-            ? <a onClick={() => navigate('/login')}>Login</a>
-            : <a onClick={() => logout(dispatch)}>Logout</a> 
+            ? <button onClick={() => navigate('/login')}>Login</button>
+            : <button onClick={() => logout(dispatch)}>Logout</button> 
         }
         {mobileView && <div id="close" onClick={() => setMenuOpen(!menuOpen)}></div>}
       </div>

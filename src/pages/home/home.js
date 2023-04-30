@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './home.scss'
 import { useNavigate } from 'react-router-dom'
-import { useGlobalState } from '../../functionality/globalState';
 
 import MadeInAbyss from '../../assets/images/home/MadeInAbyss.jpg'
 import SpiceAndWolf from '../../assets/images/home/SpiceAndWolf_444.webp'
@@ -9,8 +8,7 @@ import WeatheringWithYou from '../../assets/images/home/WeatheringWithYouVertica
 
 export const Home = () => {
   let navigate = useNavigate();
-
-  const [gState, dispatch] = useGlobalState();
+  
   const [ welcome, setWelcome ] = useState(true);
 
   useEffect(() => {
@@ -44,9 +42,9 @@ export const Home = () => {
               <img src={WeatheringWithYou} alt="test"/>
               <h1 className='title'>Subdomains</h1>
             </li>
-            <li onClick={() => console.log(gState)}>
+            <li className={'active'} onClick={() => navigate('/contact')}>
               <img src={MadeInAbyss} alt="test"/>
-              <h1 className='title'>In Progress</h1>
+              <h1 className='title'>Contact Me</h1>
             </li>
             <li className='active' onClick={() => navigate('/blog')}>
               <img src={SpiceAndWolf} alt="test"/>

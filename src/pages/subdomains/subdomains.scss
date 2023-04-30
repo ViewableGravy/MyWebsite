@@ -1,8 +1,11 @@
 .subdomains_wrapper {
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
     
-/* devanagari */
-@font-face {
+  /* devanagari */
+  @font-face {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 700;
@@ -71,21 +74,55 @@
   .outer_list {
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #252839;
-    flex-direction: column;
+    align-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 30px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    min-height: 80vh;
+    max-width: 1920px;
   }
   
   .outer_list li {
     border: none;
     position: relative;
     list-style: none;
-    height: auto;
-    width: auto;
     text-align: center;
     overflow: visible;
+    border-radius: 10px;
+    padding: 10px 20px 10px 20px;
+    border: 1px solid var(--clr);
+  }
+
+  .padlock_icon_container {
+    color: var(--clr);
+    position: absolute;
+    top: -13px;
+    right: 13px;
+  }
+
+  .padlock_icon {
+    //
+  }
+
+  .padlock_hover_information {
+    background-color: rgb(73, 73, 73);
+    position: absolute;
+    padding: 5px 10px 5px 10px;
+    min-width: 125px;
+    bottom: 25px;
+    right: 50%;
+    transform: translateX(50%);
+    display: none;
+    border-radius: 10px;
+
+    & > p {
+      all: unset;
+      font-weight: 700;
+      color: rgb(194, 194, 194);
+      position: relative;
+    }
   }
   
   .outer_list li a {
@@ -99,6 +136,15 @@
     -webkit-text-stroke: 1px rgba(255,255,255,0.5);
     width: 100%;
     font-weight: bold;
+  }
+
+  .outer_list li a:focus {
+    outline: none;
+  }
+
+  li:has(>  *:focus) {
+    outline: 1px solid white;
+    border: 1px solid white;
   }
   
   .outer_list li a::before {
@@ -125,8 +171,8 @@
   .outer_list li sub {
     position: absolute;
     color: rgb(0, 255, 234);
-    right: 0;
-    bottom: 2px;
+    right: 20px;
+    bottom: 12px;
     pointer-events: none;
     font-weight: bold;
     font-size: 1.3em;
@@ -138,6 +184,16 @@
     bottom: 1px;
     left: 5px;
     color:#35395180;
+  }
+
+  @media (width < 576px) {
+    .outer_list li a {
+      font-size: 3rem;
+    }
+
+    .outer_list li sub {
+      font-size: 1.1rem;
+    }
   }
   
 }

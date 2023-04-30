@@ -68,20 +68,7 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
     trackMouse: false,                    // track mouse input
   })
 
-  const tagHoverDesktop = () => {
-    if (wWidth > 576) {
-      const widths = tags.map(({ tag }) => tag.current.offsetWidth);
-      tags.forEach(({ tag }, index) => {
-        //culmination of widths before this one
-        const totalWidth = widths.slice(0, index).reduce((a, b) => a + b + 10, 0);
-
-        //how far to the right
-        tag.current.style.right = `${totalWidth}px`;
-      });
-    }
-  }
-
-  //new
+  //Used to handle hovering over tags on desktop (Should resize and reposition them approriately)
   const innerContainerHoverDesktop = () => {
     if (wWidth > 576) {
       const widths = tags.map(({ tag }) => tag.current.offsetWidth);
@@ -237,19 +224,23 @@ const isDarkColor = (color) => {
 
 export const GenerateTag = ({ color, reference, text, identifier, className, click, mouseOver, mouseLeave }) => {
   if (!identifier) identifier = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-  if (!color) color = '#000000'; //black
+  if (!color) color = '#e008ce'; //black
 
   const properties = {
     key: identifier,
     to: '/',
-    style: { touchAction: 'pan-x' }
+    style: { 
+      touchAction: 'pan-x',
+      backgroundColor: color,
+    },
   }
 
   const textProperties = {
-    style: { color: '#000000' } //black
+    style: { 
+      color: '#000000',
+      backgroundColor: color,
+    }
   }
-
-  properties.style.backgroundColor = color ? color : '#000000'; //black
 
   if (isDarkColor(color)) textProperties.style.color = '#f1f1f1'; //white
   if (mouseOver) properties.onMouseEnter = mouseOver;

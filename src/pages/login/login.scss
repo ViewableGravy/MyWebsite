@@ -11,14 +11,28 @@
   width: 100vw;
   position: relative;
 
+  @media (width < 600px) {
+    height: 100dvh;
+  }
+
   .login-page-inner {
     background: linear-gradient(90deg, rgba(0,159,253,1) 0%, rgb(48, 48, 151) 100%);
-    min-height: calc(var(--width) / 2);
+    // min-height: calc(var(--width) / 2);
     max-width: var(--width);
     position: relative;
     border-radius: 10px;
     margin: 0 20px 0 20px;
     width: calc(100vw - 40px);
+    padding: 20px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+
+    // @media (width < 600px) {
+    //   margin-top: 60px;
+    // }
   }
 
   .title {
@@ -32,6 +46,7 @@
     margin-top: 50px;
 
     @media screen and (max-width: 600px) {
+      margin-top: 0;
       margin-bottom: calc(150px - ((600px - 100vw) / 4));
     }
   }
@@ -80,9 +95,8 @@
     --padding-sides: 10px;
     --margin-sides: 20px;
 
-    width: calc(100% - var(--padding-sides) - var(--padding-sides) - 40px);
-    padding: 10px 10px 20px 10px;
-    margin: 0 var(--margin-sides) 0 var(--margin-sides);
+    padding: 10px 10px 15px 10px;
+    margin: 0;
     background-color: transparent;
     border: none;
     font-size: 20px;
@@ -96,14 +110,30 @@
     letter-spacing: 1px;
     transition: color 0.2s ease-in-out;
 
+    flex: 1;
+
     &::placeholder {
       color: rgba(255, 255, 255, 0.664);
+    }
+
+    /*Change text in autofill textbox*/
+    &:-webkit-autofill,
+    &:-webkit-autofill::first-line,
+    &:-webkit-autofill:hover, 
+    &:-webkit-autofill:focus {
+      -webkit-text-fill-color: black !important;
+      -webkit-background-clip: text !important;
+      font-weight: bold !important;
     }
   }
 
   .username {
     border-bottom: 2px solid white;
     margin-top: calc((var(--image-height) / 2) + var(--margin-sides) + 20px);
+
+    @media (width < 600px) {
+      margin-top: 60px;
+    }
   }
 
   .password {
@@ -171,6 +201,6 @@
       background-color: #a10194;
       cursor: pointer;
     }
-  }
-    
+  }    
 }
+

@@ -11,12 +11,20 @@
     display: flex;
 
     * {
+      all: unset;
       cursor: pointer;
       color: var(--menu-text);
       word-break: keep-all;
       white-space: nowrap;
       text-decoration: none;
       font-family: Montserrat, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      transition: color 0.2s ease-in-out;
+      &:hover {
+        color: #6f3bff;
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+      }
+      font-weight: 800;
     }
   }
 
