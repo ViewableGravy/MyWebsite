@@ -70,14 +70,19 @@
         align-items: center;
     }
     
-    li.active:hover {
-        height: 650px;
-        cursor: pointer;
+    @media (width > 658px) {
+        li.active:hover {
+            height: 650px;
+            cursor: pointer;
+        }
+
+        li.active:hover > h1 {
+            font-size: 40px;
+        }
     }
     
-    li.active:hover > h1 {
-        font-size: 40px;
-    }
+    
+    
     
     img {
         position:relative;
