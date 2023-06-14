@@ -8,7 +8,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-    
     }
     
     .InitDiv {
@@ -51,15 +50,15 @@
         align-items: center;
         flex-wrap: wrap;
         gap: 50px;
-        height: min-content;
         justify-content: center;
         display: flex;
+        min-height: 700px;
     }
     
     .active {
         min-width: 300px;
         height: 500px;
-        transition: height .2s;
+        transition: height .2s, opacity .2s;
         overflow: hidden;
         border: 2px solid hsla(0,0%,100%,.26);
         position: relative;
@@ -68,26 +67,34 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-    
-    @media (width > 658px) {
-        .active:hover {
-            height: 650px;
-            cursor: pointer;
+
+        opacity: 90%;
+
+        @media (width > 658px) {
+            &:hover {
+                height: 650px;
+                cursor: pointer;
+                opacity: 100%;
+
+                & img {
+                    transform: scale(1.1);
+                }
+
+                & h1 {
+                    font-size: 40px;
+                }
+            }
         }
 
-        .active:hover > h1 {
-            font-size: 40px;
+        img {
+            transition: transform .2s;
+            position:relative;
+            object-fit: cover;
+            pointer-events: none;
+            width: 300px;
+            height: 650px;
         }
-    }    
-    
-    img {
-        position:relative;
-        object-fit: cover;
-        pointer-events: none;
-        width: 300px;
-        height: 650px;
-    }
+    }   
 
     .title {
         position: absolute;
@@ -95,14 +102,43 @@
         text-align: center;
         margin: auto;
         width: 100%;
-        color: white;
-        -webkit-text-stroke: 1px black;
         transition: font-size 0.2s;
+
+        &.first {
+            color: rgb(33, 80, 235);
+            -webkit-text-stroke: 1px black;
+        }
+
+        &.second {
+            color: #39f7ff;
+        }
+
+        &.third {
+            color: #f600fd;
+        }
     }
 
     @media (width < 658px) {
         .active {
             height: 200px;
+        }
+
+        .active h1 {
+            // background-color: rgba(0, 0, 0, 0.582);
+            box-sizing: border-box;
+            bottom: 0;
+            height: 60px;
+            padding-top: 10px;
+            // box-shadow: 0px -1px 9px 14px rgba(0, 0, 0, 0.41);
+            // background: hsla(0, 0%, 0%, 1);
+
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.884) 70%, rgba(255, 255, 255, 0) 100%);
+
+            // background: -moz-linear-gradient(0deg, hsla(0, 0%, 0%, 1) 75%, hsla(0, 0%, 100%, 1) 100%);
+
+            // background: -webkit-linear-gradient(0deg, hsla(0, 0%, 0%, 1) 75%, hsla(0, 0%, 100%, 1) 100%);
+
+            // filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#000000", endColorstr="#ffffff", GradientType=1 );
         }
     }
 

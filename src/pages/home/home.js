@@ -3,13 +3,11 @@ import './home.scss'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
-import MadeInAbyss from '../../assets/images/home/MadeInAbyss.jpg'
-import SpiceAndWolf from '../../assets/images/home/SpiceAndWolf_444.webp'
-import WeatheringWithYou from '../../assets/images/home/WeatheringWithYouVertical_720.webp'
+import BlogImage from '../../assets/images/home/blog_test_2.webp'
+import ContactImage from '../../assets/images/home/contact_me.webp'
+import SubdomainsImage from '../../assets/images/home/subdomains.webp'
 
 export const Home = () => {
-  let navigate = useNavigate();
-  
   const [ welcome, setWelcome ] = useState(true);
 
   useEffect(() => {
@@ -40,16 +38,16 @@ export const Home = () => {
         <div className='background'>
           <div>
             <Link className='active' to={'/subdomains'}>
-              <img src={WeatheringWithYou} alt="test"/>
-              <h1 className='title'>Subdomains</h1>
+              <img src={SubdomainsImage} alt="test"/>
+              <h1 className='title first'>Services</h1>
             </Link>
             <Link className={'active'} to={'/contact'}>
-              <img src={MadeInAbyss} alt="test"/>
-              <h1 className='title'>Contact Me</h1>
+              <img src={ContactImage} alt="test"/>
+              <h1 className='title second'>Contact</h1>
             </Link>
             <Link className='active' to={'/blog'}>
-              <img src={SpiceAndWolf} alt="test"/>
-              <h1 className='title'>Blog</h1>
+              <img src={BlogImage} alt="test"/>
+              <h1 className='title third'>Blog</h1>
             </Link>
           </div>
         </div>

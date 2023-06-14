@@ -5,6 +5,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate
 } from "react-router-dom";
 import './index.css';
 
@@ -30,6 +31,7 @@ ReactDOM.render(
             <Route path='/subdomains' element={<Subdomains/>} />
             <Route path='/login' element={<Login/>} />
             <Route path='/contact' element={<Contact/>} />
+            <Route path='*' element={<Navigate to="/" />} />
           </Routes>
         </Router>
       </React.StrictMode>
