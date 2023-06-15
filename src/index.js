@@ -28,14 +28,8 @@ const Overlay = ({ children }) => {
   const [transition, setTransition] = React.useState(false);
   const [hidden, setHidden] = React.useState(true);
 
-  React.useEffect (() => {
-    console.log(state)
-  }, [state])
-
   const unHide = () => {
-    setTimeout(() => {
-      setHidden(false);
-    }, 100);
+    setHidden(false);
   };
 
   const hide = () => {
@@ -52,13 +46,13 @@ const Overlay = ({ children }) => {
   };
 
   const changePage = (location) => {
-    setTransition(true);
-    dispatch({ startTransition: {state: "transitioning"}});
+      setTransition(true);
+      dispatch({ startTransition: {state: "transitioning"}});
 
-    setTimeout(() => {
-      navigate(location);
-      stopTransition();
-    }, 400);
+      setTimeout(() => {
+        navigate(location);
+        stopTransition();
+      }, 400);
   };
 
   React.useEffect(() => {
@@ -72,7 +66,9 @@ const Overlay = ({ children }) => {
   React.useEffect(() => {
     if (hidden) return;
 
-    changePage(state?.transition?.location);
+    setTimeout(() => {
+      changePage(state?.transition?.location);
+    }, 100);
   }, [hidden]);
 
   return (
