@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import './menu.scss'
 import { useGlobalState } from '../../../functionality/globalState';
 import { logout } from '../../../functionality/authentication';
+import TLink from '../../../components/TLink';
 
 // author: string
 export const Menu = (props) => {
@@ -44,11 +45,11 @@ export const Menu = (props) => {
       <div id="right" className={menuItemsClasses}> 
         <a href="https://status.gravy.cc/">Uptime</a>
         <a href="https://github.com/ViewableGravy">Github</a>
-        <button onClick={() => navigate('/')}>Home</button>
-        <button onClick={() => navigate('/blog')}>Blog</button>
+        <TLink to="/">Home</TLink>
+        <TLink to="/blog">Blog</TLink>
         {
           !state.token 
-            ? <button onClick={() => navigate('/login')}>Login</button>
+            ? <TLink to="/login">Login</TLink>
             : <button onClick={() => logout(dispatch)}>Logout</button> 
         }
         {mobileView && <div id="close" onClick={() => setMenuOpen(!menuOpen)}></div>}

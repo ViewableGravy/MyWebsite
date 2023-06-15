@@ -56,6 +56,9 @@
     }
     
     .active {
+        all: unset;
+        margin: 0;
+        padding: 0;
         min-width: 300px;
         height: 500px;
         transition: height .2s, opacity .2s;
@@ -63,7 +66,6 @@
         border: 2px solid hsla(0,0%,100%,.26);
         position: relative;
         outline: none;
-
         display: flex;
         justify-content: center;
         align-items: center;
@@ -124,21 +126,11 @@
         }
 
         .active h1 {
-            // background-color: rgba(0, 0, 0, 0.582);
             box-sizing: border-box;
             bottom: 0;
             height: 60px;
             padding-top: 10px;
-            // box-shadow: 0px -1px 9px 14px rgba(0, 0, 0, 0.41);
-            // background: hsla(0, 0%, 0%, 1);
-
             background: linear-gradient(0deg, rgba(0, 0, 0, 0.884) 70%, rgba(255, 255, 255, 0) 100%);
-
-            // background: -moz-linear-gradient(0deg, hsla(0, 0%, 0%, 1) 75%, hsla(0, 0%, 100%, 1) 100%);
-
-            // background: -webkit-linear-gradient(0deg, hsla(0, 0%, 0%, 1) 75%, hsla(0, 0%, 100%, 1) 100%);
-
-            // filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#000000", endColorstr="#ffffff", GradientType=1 );
         }
     }
 
@@ -173,5 +165,21 @@
 }
 
 
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    background: #191731;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.4s ease-in-out;
 
+    z-index: 10;
+
+    &.active {
+        opacity: 100%;
+    }
+}
 
