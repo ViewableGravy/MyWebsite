@@ -35,6 +35,7 @@ const Overlay = ({ children }) => {
   const hide = () => {
     setTimeout(() => {
       setHidden(true);
+      dispatch({ transition: {state: "end"}});
     }, 400);
   };
 
@@ -47,7 +48,7 @@ const Overlay = ({ children }) => {
 
   const changePage = (location) => {
       setTransition(true);
-      dispatch({ startTransition: {state: "transitioning"}});
+      dispatch({ transition: {state: "transitioning"}});
 
       setTimeout(() => {
         navigate(location);

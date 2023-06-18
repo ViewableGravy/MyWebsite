@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './toggle.scss'
 
-export const FlipToggle = ({ onChange }) => {
-  const [stateBoolean, setStateBoolean] = useState(false);
+export const FlipToggle = ({ onChange, className }) => {
+  const [state, setStateBoolean] = useState(false);
 
   const toggleState = () => {
     onChange();
-    setStateBoolean(!stateBoolean);
+    setStateBoolean(!state);
   }
 
   return (
     <div id="toggle_container">
       <input 
         type="checkbox"
-        checked={stateBoolean}
+        checked={state}
         onChange={toggleState}
         id="cb1" 
         className="tgl tgl-flip"

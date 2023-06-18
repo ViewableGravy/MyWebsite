@@ -52,11 +52,7 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
   });
 
   const mapTagDetailsToTags = (tags) => tags ? tags.map((_, index) => ({ tag: createRef(), index, details: tagDetails[index] })) : [];
-  // must also change the index of the tag in the array (TODO)
-  const sortTags = (tags) => tags ? tags.sort((a, b) => a.details.length - b.details.length) : [];
   const addDraftTag = (ts) => [...ts, { tag: createRef(), index: tags.length, details: 'New Tag', draft: true }]
-  const removeDraftTag = (ts) => ts.filter(({ draft }) => !draft);
-  const getDraftTag = () => tags.find(({ draft }) => draft);
 
 
   const swipeHandlers = useSwipeable({
@@ -182,7 +178,8 @@ export const TagsWrapper = ({ tagDetails, parentKey }) => {
       reference: tag.tag,
       //mouseOver: mouseOver,
       //mouseLeave: mouseLeave,
-      click: tagClick
+      click: tagClick,
+      key: `${parentKey}-${index}`,
     };
 
     return props;
