@@ -1,7 +1,7 @@
 import React from 'react';
-import { Menu } from './menu/menu.js'
-import { About } from './about/about'
-import Posts from './posts/posts';
+import { Menu } from './menu/menu'
+import { About } from './menu/about/about'
+import Posts from './menu/posts/posts';
 import './blog.scss'
 
 export const Blog = () => {

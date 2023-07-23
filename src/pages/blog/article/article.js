@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom'
 import { BlogContainer } from '../blog';
-import { PostsHead } from '../posts/posts';
-import { GenerateTag } from '../tags-wrapper/tagsWrapper';
+import { PostsHead } from '../menu/posts/head';
+import { GenerateTag } from '../menu/tags-wrapper/tagsWrapper';
 import React from 'react';
 import Menu from '../menu/menu'
 import useAxios from "axios-hooks";
-import About from '../about/about';
+import About from '../menu/about/about';
 import './article.scss'
 
 const server = process.env.REACT_APP_BACKEND_SERVER;

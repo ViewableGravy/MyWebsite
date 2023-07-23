@@ -2,22 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import './menu.scss'
-import { useGlobalState } from '../../../functionality/globalState';
-import { logout } from '../../../functionality/authentication';
+import { useGlobalState, useStore } from '../../../functionality/globalState';
+import { logout } from '../../../functionality/authentication/authentication';
 import TLink from '../../../components/TLink';
 
 // author: string
 export const Menu = (props) => {
   const {author, style} = props
 
-  const navigate = useNavigate();
   const initMenuItems = classNames({
     desktop: true,
     mobile: false,
     open: false
   });
 
-  const [state, dispatch] = useGlobalState();
+  const [{token}, dispatch] = useStore((store) => ({
+    token: store.token
+  }));
 
   const [mobileView, setMatches] = useState(window.matchMedia("(max-width: 576px)").matches)
   const [menuOpen, setMenuOpen] = useState(false); //mobile menu open/close state
@@ -48,7 +49,7 @@ export const Menu = (props) => {
         <TLink to="/">Home</TLink>
         <TLink to="/blog">Blog</TLink>
         {
-          !state.token 
+          !token 
             ? <TLink to="/login">Login</TLink>
             : <button onClick={() => logout(dispatch)}>Logout</button> 
         }

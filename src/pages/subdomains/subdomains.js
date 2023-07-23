@@ -1,9 +1,8 @@
 import React from 'react';
 import { domains } from './subdomain-list';
-import { Link } from 'react-router-dom'
 import { Menu } from '../blog/menu/menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLock, faServer, faHome, faGlobe, faQuestionCircle, faQuestion } from '@fortawesome/free-solid-svg-icons'
+import { faLock, faServer, faHome, faGlobe, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import './subdomains.scss'
 
 export const Subdomains = () => (
@@ -82,10 +81,10 @@ const IconWithHover = ({children, icon, id, index}) => {
         size='lg' 
         color={"--clr"} 
         className={"padlock_icon"} 
-        onMouseLeave={(e) => {
+        onMouseLeave={() => {
           document.querySelector(`.${id}-${index}`).style.display = 'none';
         }}
-        onMouseEnter={(e) => {
+        onMouseEnter={() => {
           document.querySelector(`.${id}-${index}`).style.display = 'block';
         }}
         onClick={(e) => {

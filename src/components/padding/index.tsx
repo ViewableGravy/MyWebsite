@@ -1,26 +1,29 @@
 import classNames from "classnames";
 import React from "react";
 import './_padding.scss';
+import ChildInjector from "../childInjector/childInjector";
 
 type TPaddingProps = {
-  'x-xs': boolean | undefined,
-  'x-sm': boolean | undefined,
-  'x-md': boolean | undefined,
-  'x-lg': boolean | undefined,
-  'x-xl': boolean | undefined,
-  'x-xxl': boolean | undefined,
-  'y-xs': boolean | undefined,
-  'y-sm': boolean | undefined,
-  'y-md': boolean | undefined,
-  'y-lg': boolean | undefined,
-  'y-xl': boolean | undefined,
-  'y-xxl': boolean | undefined,
-  children: React.ReactNode
+  'x-xs'?: boolean,
+  'x-sm'?: boolean,
+  'x-md'?: boolean,
+  'x-lg'?: boolean,
+  'x-xl'?: boolean,
+  'x-xxl'?: boolean,
+  'y-xs'?: boolean,
+  'y-sm'?: boolean,
+  'y-md'?: boolean,
+  'y-lg'?: boolean,
+  'y-xl'?: boolean,
+  'y-xxl'?: boolean,
+  children: JSX.Element,
+  className?: string,
+  inject?: boolean
 }
 
 type TPadding = React.FC<TPaddingProps>
 
-const Padding: TPadding = ({ children, ...props }) => {
+const Padding: TPadding = ({ children, className, inject, ...props }) => {
   const {x, y} = Object.keys(props).reduce((acc, key) => {
     if (key.includes('x-')) {
       acc.x = key;
@@ -30,9 +33,20 @@ const Padding: TPadding = ({ children, ...props }) => {
     return acc;
   }, {x: '', y: ''});
 
-  if (!x || !y) throw new Error('Padding component requires x and y props');
+  const classes = classNames({
+    'Padding': true,
+    [`Padding--${x}`]: !!x,
+    [`Padding--${y}`]: !!y,
+    [`${className}`]: !!className
+  });
 
-  return <div className={classNames(`Padding--${x}`, `Padding--${y}`)}>
+  return (
+    <ChildInjector classes={classes} inject={inject}>
+      {children}
+    </ChildInjector>
+  )
+
+  return <div className={classes}>
     {children}
   </div>
 };

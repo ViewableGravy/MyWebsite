@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './toggle.scss'
 
-export const FlipToggle = ({ onChange, className }) => {
-  const [state, setStateBoolean] = useState(false);
+export const FlipToggle = ({ onChange, initialState, titleEnabled, titleDisabled }) => {
+  const [state, setStateBoolean] = useState(initialState);
 
   const toggleState = () => {
     onChange();
@@ -18,7 +18,7 @@ export const FlipToggle = ({ onChange, className }) => {
         id="cb1" 
         className="tgl tgl-flip"
       />
-      <label className="tgl-btn" data-tg-off="Published" data-tg-on="Drafts" htmlFor="cb1"></label>
+      <label className="tgl-btn" data-tg-off={titleEnabled} data-tg-on={titleDisabled} htmlFor="cb1"></label>
     </div>
   )
 };

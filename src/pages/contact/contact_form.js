@@ -204,7 +204,7 @@ export const ContactForm = () => {
           <Form className={classes.form}>
             <div>
               <fieldset className={classes.interests}>
-                <legend className={classes.legend}>I'm interested In...</legend>
+                <legend className={classes.legend}>{"I'm interested In..."}</legend>
 
                 <label className={classes.container}>Frontend
                   <Field type="checkbox" name="interests" value="Frontend" />

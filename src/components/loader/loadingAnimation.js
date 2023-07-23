@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './loader.scss';
 
-export const LoadingAnimation = (props) => {
+export const LoadingAnimation = ({ diameter }) => {
   const [loadingText, setLoadingText] = useState('Loading');
-
-  const { diameter } = props;
   
   const style = {
     width: '100px',

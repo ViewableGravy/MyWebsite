@@ -1,10 +1,4 @@
-
-$padding-xs: 0.5rem;
-$padding-sm: 1rem;
-$padding-md: 1.5rem;
-$padding-lg: 2rem;
-$padding-xl: 2.5rem;
-$padding-xxl: 3rem;
+@import '../../_global.scss';
 
 .Padding {
   &--x {

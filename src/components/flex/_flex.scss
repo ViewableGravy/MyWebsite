@@ -1,0 +1,122 @@
+@import '../../_global.scss';
+
+.Flex {
+  display: flex;
+
+  &--justify {
+    &-start {
+      justify-content: flex-start;
+    }
+    &-end {
+      justify-content: flex-end;
+    }
+    &-center {
+      justify-content: center;
+    }
+    &-between {
+      justify-content: space-between;
+    }
+    &-around {
+      justify-content: space-around;
+    }
+    &-evenly {
+      justify-content: space-evenly;
+    }
+  }
+
+  &--align {
+    &-start {
+      align-items: flex-start;
+    }
+    &-end {
+      align-items: flex-end;
+    }
+    &-center {
+      align-items: center;
+    }
+    &-baseline {
+      align-items: baseline;
+    }
+    &-stretch {
+      align-items: stretch;
+    }
+  }
+
+  &--direction {
+    &-row {
+      flex-direction: row;
+    }
+    &-row-reverse {
+      flex-direction: row-reverse;
+    }
+    &-col {
+      flex-direction: column;
+    }
+    &-col-reverse {
+      flex-direction: column-reverse;
+    }
+  }
+
+  &--wrap {
+    &-wrap {
+      flex-wrap: wrap;
+    }
+    &-reverse {
+      flex-wrap: wrap-reverse;
+    }
+  }
+
+  &--gap {
+    &-row {
+      &-xs {
+        row-gap: $padding-xs;
+      }
+
+      &-sm {
+        row-gap: $padding-sm;
+      }
+
+      &-md {
+        row-gap: $padding-md;
+      }
+
+      &-lg {
+        row-gap: $padding-lg;
+      }
+
+      &-xl {
+        row-gap: $padding-xl;
+      }
+
+      &-xxl {
+        row-gap: $padding-xxl;
+      }
+    }
+
+    &-col {
+      &-xs {
+        column-gap: $padding-xs;
+      }
+
+      &-sm {
+        column-gap: $padding-sm;
+      }
+
+      &-md {
+        column-gap: $padding-md;
+      }
+
+      &-lg {
+        column-gap: $padding-lg;
+      }
+
+      &-xl {
+        column-gap: $padding-xl;
+      }
+
+      &-xxl {
+        column-gap: $padding-xxl;
+      }
+    }
+  }
+}

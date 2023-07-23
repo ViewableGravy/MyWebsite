@@ -1,27 +1,19 @@
-export type TAPIGetPosts = {
-  _id: string,
-  title?: string,
-  summary?: string,
-  date?: string,
-  slug: string,
-  tags: string[]
-}[]
+export type TAPITag = string | undefined | {
+  name: string,
+  color: string,
+};
 
-export type TAPIGetDrafts = {
-  _id: string,
-  title?: string,
-  summary?: string,
-  date?: string,
-  slug: string,
-  tags: string[]
-}[]
+export type TTag = {
+  name: string,
+  color: string,
+}
 
 export type TPost = {
   _id: string,
   title: string,
   summary: string,
   date: string,
-  tags: string[],
+  tags: TTag[],
   slug: string,
   dateIsDraft: boolean,
   summaryIsDraft: boolean,
@@ -33,7 +25,7 @@ export type TDraft = {
   title: string,
   summary: string,
   date: string,
-  tags: string[],
+  tags: TTag[],
   slug: string,
   dateIsDraft: boolean,
   summaryIsDraft: boolean,
@@ -45,8 +37,8 @@ export type TPostCardProps = {
   index?: number,
   updateIndex?: any,
   ref?: any
-  onMouseOver?: () => void,
-  onMouseLeave?: () => void
+  onMouseOver?: (e: any) => void,
+  onMouseLeave?: (e: any) => void
 };
 
 export type TPostsHead = (props: { title: string }) => JSX.Element;

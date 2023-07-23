@@ -1,4 +1,3 @@
-
 import ReactDOM from 'react-dom';
 import React from "react";
 import {
@@ -15,79 +14,84 @@ import { BlogArticle } from "./pages/blog/article/article"
 import { Subdomains } from "./pages/subdomains/subdomains";
 import { Login } from './pages/login/login';
 import { Contact } from './pages/contact/contact';
-
-import { GlobalStateProvider } from './functionality/globalState';
+import { GlobalStateProvider, StoreProvider } from './functionality/globalState';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-import { useGlobalState } from './functionality/globalState';
-import { useNavigate } from 'react-router-dom';
+import Overlay from './components/TransitionOverlay';
+import Text from './components/text';
 
-const Overlay = ({ children }) => {
-  const [state, dispatch] = useGlobalState();
-  const navigate = useNavigate();
-
-  const [transition, setTransition] = React.useState(false);
-  const [hidden, setHidden] = React.useState(true);
-
-  const unHide = () => {
-    setHidden(false);
-  };
-
-  const hide = () => {
-    setTimeout(() => {
-      setHidden(true);
-      dispatch({ transition: {state: "end"}});
-    }, 400);
-  };
-
-  const stopTransition = () => {
-    setTimeout(() => {
-      setTransition(false);
-      hide();
-    }, 100);
-  };
-
-  const changePage = (location) => {
-      setTransition(true);
-      dispatch({ transition: {state: "transitioning"}});
-
-      setTimeout(() => {
-        navigate(location);
-        stopTransition();
-      }, 400);
-  };
+const useSocket = (path) => {
+  const [socket, setSocket] = React.useState(null);
 
   React.useEffect(() => {
-    const transitionState = state?.transition?.state;
+    const newSocket = new WebSocket(`ws://localhost:3002${path}`);
 
-    if (transitionState !== "start") return;
+    setSocket(newSocket);
 
-    unHide();
-  }, [state]);
+    return () => {
+      newSocket.close();
+    };
+  }, [path]);
 
-  React.useEffect(() => {
-    if (hidden) return;
-
-    setTimeout(() => {
-      changePage(state?.transition?.location);
-    }, 100);
-  }, [hidden]);
-
-  return (
-    <>
-      {children}
-      <div className={`overlay ${transition ? 'active' : ''}`} style={{ display: hidden ? 'none' : '' }} />
-    </>
-  )
+  return socket;
 };
+
+const useSocketEvent = (path) => {
+  const [results, setResults] = React.useState(null);
+  const socket = useSocket(path);
+
+  React.useEffect(() => {
+    if (!socket) return;
+
+    socket.addEventListener('message', (event) => {
+      setResults(event.data);
+    });
+
+    socket.onclose = () => {
+      setResults(null);
+    }
+
+    return () => {
+      socket.removeEventListener('message', (event) => {
+        setResults(event.data);
+      });
+    }
+  }, [socket]);
+
+  return [results];
+}
+
+const useStatus = () => {
+  const [status] = useSocketEvent('/api/status');
+  
+  return JSON.parse(status);
+}
+
+const MyStatus = () => {
+  const status = useStatus();
+
+  return status && (
+      <div style={{ height: '700px' }}>{status.map((monitor, index) => (
+        <p key={index}>
+          <Text white span>{monitor.monitor_name} :</Text>
+          <Text white span> {monitor.type},</Text>
+          <Text white span> {monitor.status}</Text>
+        </p>
+      ))}</div>
+  )
+
+}
 
 ReactDOM.render(
   <GlobalStateProvider>
-    <GoogleReCaptchaProvider reCaptchaKey={process.env.REACT_APP_SITE_KEY}>
-      <React.StrictMode>
+    <StoreProvider>
+      {/* eslint-disable-next-line no-undef */}
+      <GoogleReCaptchaProvider reCaptchaKey={process.env.REACT_APP_SITE_KEY}>
+        <React.StrictMode>
+          <MyStatus />
           <Router>
             <Overlay>
               <Routes>
-                <Route path='/' element={<Home/>} />
+                <Route path='/' element={<Home />} />
                 <Route path='/blog' element={<Blog/>} />
                 <Route path='/blog/:article' element={<BlogArticle/>} />
                 <Route path='/subdomains' element={<Subdomains/>} />
@@ -97,8 +101,9 @@ ReactDOM.render(
               </Routes>
             </Overlay>
           </Router>
-      </React.StrictMode>
-    </GoogleReCaptchaProvider>
+        </React.StrictMode>
+      </GoogleReCaptchaProvider>
+    </StoreProvider>
   </GlobalStateProvider>,
   document.getElementById('root')
 );

@@ -1,17 +1,26 @@
+import React from "react";
 import { useGlobalState } from "../functionality/globalState";
 
-const TLink = ({ children, to, ...props }: any) => {
+type TTLinkProps = {
+  to: string;
+  children: JSX.Element | JSX.Element[] | string;
+  className?: string;
+}
+
+const TLink = ({ children, to, ...props }: TTLinkProps) => {
   const [, dispatch] = useGlobalState();
 
   return (
     <a 
       {...props} 
-      onClick={() => dispatch({ 
-        transition: { 
-          state: "start", 
-          location: to 
-        }
-      })}
+      onClick={() => {
+        dispatch({ 
+          transition: { 
+            state: "start", 
+            location: to 
+          }
+        })
+      }}
     >
       {children}
     </a>
