@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import './login.scss'
 import { useStore } from '../../functionality/globalState';
 import API from '../../api/global';
+import './login.scss'
 
 import loginImage from '../../assets/images/Lleyton.png';
-
-const server = process.env.REACT_APP_BACKEND_SERVER ?? 'localhost';
-const port = process.env.REACT_APP_BACKEND_PORT ?? '3000';
-const protocol = process.env.REACT_APP_BACKEND_PROTOCOL ?? 'http';
-const apiUrl = `${protocol}://${server}:${port}/api`;
 
 //on load should check if in cookies and then skip this page
 export const Login = () => {

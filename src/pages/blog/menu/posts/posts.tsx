@@ -20,7 +20,7 @@ export const Posts = () => {
     <>
       <PostsHead title={title} />
       <div className="posts">
-        <Hover>
+        <Hover onSize={['md', 'lg', 'xl', 'dual-lg', 'dual-xl']}>
           {({ onMouseOver, onMouseLeave }) => (
             <ConditionalRender
               condition={!isLoading || !error}

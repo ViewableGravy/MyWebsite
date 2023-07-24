@@ -1,11 +1,8 @@
-import React from 'react';
-import { useEffect, createRef, useState, useRef } from 'react';
-import { useSwipeable } from "react-swipeable";
+import React, { useState, useRef }from 'react';
 import { Link } from 'react-router-dom';
-import './tagsWrapper.scoped.scss';
-import { useWindowDimensions } from '../../../../functionality/helper';
-// import { useGlobalState } from '../../../../functionality/globalState';
+import { useMedia } from '../../../../functionality/helper';
 import { TTag } from '../posts/types';
+import './tagsWrapper.scoped.scss';
 
 //todo - add toggle (+) on left to toggle between on and off rather than just clicking the text
 //on mobile this can be hidden and just clicking on an option while closed will toggle the state on (and show a minus to close)
@@ -15,11 +12,11 @@ type props = {
 }
 
 export const TagMenu = ({ data }: props): JSX.Element => {
-  const [windowWidth,] = useWindowDimensions();
   const [clearTimer, setClearTimer] = useState<NodeJS.Timeout | null>(null);
   const tags = useRef<HTMLElement[]>([]); //dunno why I made this a ref instead of state
-  const outerContainer = useRef<HTMLDivElement>(null);
   const innerContainer = useRef<HTMLDivElement>(null);
+
+  const media = useMedia();
 
   const onReset = () => {
     if (!tags?.current) return;
@@ -27,7 +24,7 @@ export const TagMenu = ({ data }: props): JSX.Element => {
     if (tags.current.length === 0) return;
 
     //reset innerContainer width
-    if (windowWidth <= 576) innerContainer.current.style.position = 'relative';
+    if (['xs', 'sm'].includes(media)) innerContainer.current.style.position = 'relative';
     innerContainer.current.style.width = 'null';
 
     //reset front tag to default width
@@ -36,11 +33,11 @@ export const TagMenu = ({ data }: props): JSX.Element => {
 
     //reset all tags to default position and widths based on front
     tags.current.forEach((tag, index) => {
-      tag.style.right = windowWidth <= 576 ? '' : `${index * 10}px`;
+      tag.style.right = ['xs', 'sm'].includes(media) ? '' : `${index * 10}px`;
       tag.style.zIndex = `${index}`;
       tag.style.color = tag.dataset.color || 'white';
       if (tag.style.width) tag.style.width = front.getBoundingClientRect().width + 'px';
-      if (tag !== front && windowWidth > 576) tag.style.color = 'transparent';
+      if (tag !== front && !['xs', 'sm'].includes(media)) tag.style.color = 'transparent';
     });
   };
 
@@ -59,7 +56,7 @@ export const TagMenu = ({ data }: props): JSX.Element => {
   const mouseOver = () => {
     if (clearTimer) clearTimeout(clearTimer);
 
-    if (windowWidth <= 576) return;
+    if (['xs', 'sm'].includes(media)) return;
     if (!tags.current) return;
     if (!innerContainer.current) return;
 
@@ -94,10 +91,10 @@ export const TagMenu = ({ data }: props): JSX.Element => {
     return null;
   }
 
-  React.useEffect(onReset, [tags.current])
+  React.useEffect(onReset, [tags.current, media])
 
   return (
-    <div className={'tags'} ref={outerContainer}>
+    <div className={'tags'}>
       <div 
         className={'tags-inner'} 
         ref={innerContainer} 
@@ -329,9 +326,7 @@ type TGenerateTag = {
   color: string,
   text: string,
   className: string,
-  onClick: any,
-  // mouseOver: any,
-  // mouseLeave: any,
+  onClick: any
 }
 
 export const GenerateTag = React.forwardRef(({ color, text, className, onClick }: TGenerateTag, ref: any) => {
@@ -355,10 +350,7 @@ export const GenerateTag = React.forwardRef(({ color, text, className, onClick }
     //   backgroundColor: color,
     // }
   }
-
-  // if (isDarkColor(color)) textProperties.style.color = '#f1f1f1'; //white
-  // if (mouseOver) properties.onMouseEnter = mouseOver;
-  // if (mouseLeave) properties.onMouseLeave = mouseLeave;
+  
   if (onClick) properties.onClick = onClick;
 
   return (
