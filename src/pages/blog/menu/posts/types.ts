@@ -1,3 +1,5 @@
+import { UseQueryResult } from "react-query";
+
 export type TAPITag = string | undefined | {
   name: string,
   color: string,
@@ -37,8 +39,12 @@ export type TPostCardProps = {
   index?: number,
   updateIndex?: any,
   ref?: any
-  onMouseOver?: (e: any) => void,
-  onMouseLeave?: (e: any) => void
+  onMouseOver?: (e: React.MouseEvent<HTMLElement>) => void,
+  onMouseLeave?: (e: React.MouseEvent<HTMLElement>) => void
 };
+
+export type TUseGetPostsQuery = (options?: object, dependencies?: string[]) => UseQueryResult<TPost[], unknown>;
+export type TUseGetDraftsQuery = (options?: object, dependencies?: string[]) => UseQueryResult<TDraft[], unknown>;
+export type TUseGetPostsAndDraftsQuery = (isDraft: boolean, options?: object, dependencies?: string[]) => UseQueryResult<TPost[] | TDraft[], unknown>;
 
 export type TPostsHead = (props: { title: string }) => JSX.Element;

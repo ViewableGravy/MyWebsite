@@ -18,6 +18,7 @@ import { GlobalStateProvider, StoreProvider } from './functionality/globalState'
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import Overlay from './components/TransitionOverlay';
 import Text from './components/text';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const useSocket = (path) => {
   const [socket, setSocket] = React.useState(null);
@@ -81,28 +82,33 @@ const MyStatus = () => {
 
 }
 
+const queryClient = new QueryClient()
+
+
 ReactDOM.render(
   <GlobalStateProvider>
     <StoreProvider>
-      {/* eslint-disable-next-line no-undef */}
-      <GoogleReCaptchaProvider reCaptchaKey={process.env.REACT_APP_SITE_KEY}>
-        <React.StrictMode>
-          <MyStatus />
-          <Router>
-            <Overlay>
-              <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='/blog' element={<Blog/>} />
-                <Route path='/blog/:article' element={<BlogArticle/>} />
-                <Route path='/subdomains' element={<Subdomains/>} />
-                <Route path='/login' element={<Login/>} />
-                <Route path='/contact' element={<Contact/>} />
-                <Route path='*' element={<Navigate to="/" />} />
-              </Routes>
-            </Overlay>
-          </Router>
-        </React.StrictMode>
-      </GoogleReCaptchaProvider>
+      <QueryClientProvider client={queryClient}>
+        {/* eslint-disable-next-line no-undef */}
+        <GoogleReCaptchaProvider reCaptchaKey={process.env.REACT_APP_SITE_KEY}>
+          <React.StrictMode>
+            <MyStatus />
+            <Router>
+              <Overlay>
+                <Routes>
+                  <Route path='/' element={<Home />} />
+                  <Route path='/blog' element={<Blog/>} />
+                  <Route path='/blog/:article' element={<BlogArticle/>} />
+                  <Route path='/subdomains' element={<Subdomains/>} />
+                  <Route path='/login' element={<Login/>} />
+                  <Route path='/contact' element={<Contact/>} />
+                  <Route path='*' element={<Navigate to="/" />} />
+                </Routes>
+              </Overlay>
+            </Router>
+          </React.StrictMode>
+        </GoogleReCaptchaProvider>
+      </QueryClientProvider>
     </StoreProvider>
   </GlobalStateProvider>,
   document.getElementById('root')

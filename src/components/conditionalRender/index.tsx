@@ -1,12 +1,10 @@
-import React, { Children } from "react";
+import React from "react";
 
 type TConditionalRenderProps = {
   condition: boolean,
   onTrue?: JSX.Element | JSX.Element[] | (() => JSX.Element),
   onFalse?: JSX.Element | JSX.Element[] | (() => JSX.Element) 
 }
-
-type TConditionalRender = React.FC<TConditionalRenderProps>;
 
 export const ConditionalRender = ({ condition, onTrue, onFalse }: TConditionalRenderProps) => {
   const renderTrue = () => {
