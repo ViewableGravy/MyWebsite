@@ -28,24 +28,17 @@ const mediaResolutions = {
 export type TMediaKeys = keyof typeof mediaResolutions;
 
 const mapResolutionToMedia = (resolution: number): TMediaKeys => {
-  const keys = Object.keys(mediaResolutions) as TMediaKeys[];
 
-  const first = mediaResolutions[keys[0]];
-  const last = mediaResolutions[keys[keys.length - 1]];
+  if (resolution < mediaResolutions['xs']) return 'xs';
+  if (resolution > mediaResolutions['dual-xl']) return 'dual-xl';
+  
+  if (resolution > mediaResolutions['xs'] && resolution < mediaResolutions['sm']) return 'sm';
+  if (resolution > mediaResolutions['sm'] && resolution < mediaResolutions['md']) return 'md';
+  if (resolution > mediaResolutions['md'] && resolution < mediaResolutions['lg']) return 'lg';
+  if (resolution > mediaResolutions['lg'] && resolution < mediaResolutions['xl']) return 'xl';
+  if (resolution > mediaResolutions['xl']) return 'dual-lg';
 
-  if (resolution < first) return keys[0];
-  if (resolution > last) return keys[keys.length - 1];
-
-  for (let i = 1; i < keys.length - 1; i++) {
-    const key = keys[i];
-    const next = keys[i + 1];
-
-    if (resolution < mediaResolutions[next] && resolution > mediaResolutions[key])
-      return next;
-      
-  }
-
-  return keys[0];
+  return 'xs';
 };
 
 export const useMedia = () => {
@@ -54,6 +47,8 @@ export const useMedia = () => {
 
   React.useEffect(() => {
     const newMedia = mapResolutionToMedia(width);
+
+    console.log(newMedia);
 
     if (newMedia !== media) setMedia(newMedia);
   }, [width]);

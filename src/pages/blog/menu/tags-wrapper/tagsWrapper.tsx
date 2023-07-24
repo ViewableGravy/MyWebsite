@@ -12,19 +12,24 @@ type props = {
 }
 
 export const TagMenu = ({ data }: props): JSX.Element => {
+  /****** hooks ******/
+  const media = useMedia();
+
+  /****** state ******/
   const [clearTimer, setClearTimer] = useState<NodeJS.Timeout | null>(null);
   const tags = useRef<HTMLElement[]>([]); //dunno why I made this a ref instead of state
   const innerContainer = useRef<HTMLDivElement>(null);
 
-  const media = useMedia();
-
+  /****** functions ******/
   const onReset = () => {
     if (!tags?.current) return;
     if (!innerContainer.current) return;
     if (tags.current.length === 0) return;
 
     //reset innerContainer width
-    if (['xs', 'sm'].includes(media)) innerContainer.current.style.position = 'relative';
+    innerContainer.current.style.position = ['xs'].includes(media)
+      ? 'relative'
+      : 'absolute';
     innerContainer.current.style.width = 'null';
 
     //reset front tag to default width
@@ -91,8 +96,10 @@ export const TagMenu = ({ data }: props): JSX.Element => {
     return null;
   }
 
+  /****** effects ******/
   React.useEffect(onReset, [tags.current, media])
 
+  /****** render ******/
   return (
     <div className={'tags'}>
       <div 
