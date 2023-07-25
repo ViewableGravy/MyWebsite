@@ -31,6 +31,8 @@ const useStyles = createUseStyles(styles)
 
 /**
  * TODO, take in an offset that will be used to offset the background highlight
+ * 
+ * Ensure that left/right aligns with the child as it does not currently (if they have different widths)
  */
 export const Hover: Hover = ({ children, onSize }) => {
   const isMatchMedia = useMedia(onSize);
