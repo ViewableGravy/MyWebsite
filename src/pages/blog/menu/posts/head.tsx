@@ -1,5 +1,6 @@
 import React from "react";
-import { TStore, useStore } from "../../../../functionality/globalState";
+import { useStore } from 'functionality/state/state';
+import { TStore } from "functionality/state/types";
 import { TPostsHead } from "./types";
 import FlipToggle from "../toggle/toggle";
 

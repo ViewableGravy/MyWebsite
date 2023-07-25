@@ -1,5 +1,5 @@
 import React from "react";
-import { useStore } from "../../functionality/globalState";
+import { useStore } from 'functionality/state/state';
 
 type TThemerProps = {
   children: React.ReactNode

@@ -1,5 +1,5 @@
 import React from "react";
-import { useGlobalState } from "../functionality/globalState";
+import { useGlobalState } from "../functionality/state/[LEGACY]state";
 
 type TTLinkProps = {
   to: string;

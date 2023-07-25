@@ -1,5 +1,6 @@
 import axios from "axios";
-import { TDispatch } from "../functionality/globalState";
+// import { TDispatch } from "../functionality/state/[LEGACY]state";
+import { TDispatch } from "../functionality/state/types";
 
 const server = process.env.REACT_APP_BACKEND_SERVER ?? 'localhost';
 const port = process.env.REACT_APP_BACKEND_PORT ?? '3000';

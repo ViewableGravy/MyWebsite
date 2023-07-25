@@ -14,7 +14,8 @@ import { BlogArticle } from "./pages/blog/article/article"
 import { Subdomains } from "./pages/subdomains/subdomains";
 import { Login } from './pages/login/login';
 import { Contact } from './pages/contact/contact';
-import { GlobalStateProvider, StoreProvider } from './functionality/globalState';
+import { GlobalStateProvider } from './functionality/state/[LEGACY]state';
+import { StoreProvider } from './functionality/state/state';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import Overlay from './components/TransitionOverlay';
 import Text from './components/text';

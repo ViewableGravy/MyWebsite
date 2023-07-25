@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Hover } from "../../../../components/hover";
-import { useStore } from "../../../../functionality/globalState";
+import { useStore } from 'functionality/state/state';
 import { PostsHead } from "./head";
 import { PostsCard } from "./postcard";
 import { ConditionalRender } from "../../../../components/conditionalRender";

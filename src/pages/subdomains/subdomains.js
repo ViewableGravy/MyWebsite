@@ -4,65 +4,76 @@ import { Menu } from '../blog/menu/menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock, faServer, faHome, faGlobe, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import './subdomains.scss'
+import { createUseStyles } from 'react-jss';
 
-export const Subdomains = () => (
-  <div>
-    <Menu author="ViewableGravy" style={{
-      maxWidth: 'min(80vw, 1800px)',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      fontSize: '5rem',
-    }}/>
-    <div className='subdomains_wrapper'>
-      <ul className='outer_list'> 
-        {
-          domains.map((el, subdomainIndex) => 
-            <li 
-              style={{ "--clr": el.color, opacity: el?.information?.disabled ? '50%' : "100%"}}
-              key={subdomainIndex}
-            >
-              <a href={`https://${el.domain}${el.path}`} data-text={`${el.name}`}>
-                {el.name}
-              </a>
-              {
-                Object.keys(el.information).length > 0 &&
-                  Object.keys(el.information).map((key, iconIndex) => {
-                    iconIndex = iconIndex + 1;
-                    if (key === "locked" && el.information[key] === true) {
-                      return (
-                        <IconWithHover icon={faLock} id={`lock-${subdomainIndex}`} index={iconIndex} key={iconIndex}>
-                          <h2>MFA Enabled</h2>
-                          <p>This domain is protected by 2FA and is not publicly accessible</p>
-                        </IconWithHover>
-                      )
-                    } else if (key === "server") {
-                      return (
-                        <IconWithHover icon={getServerIcon(el.information[key])} id={`server-${subdomainIndex}`} index={iconIndex} key={iconIndex}>
-                          <h2>{ mapServerToTitle(el.information[key]) }</h2>
-                          <p>{ mapServerToDescription(el.information[key]) }</p>
-                        </IconWithHover>
-                      )
-                    } else if (key === "shortDescription") {
-                      return (
-                        <IconWithHover icon={faQuestionCircle} id={`description-${subdomainIndex}`} index={iconIndex} key={iconIndex}>
-                          <h2>About</h2>
-                          <p>{ el.information[key] }</p>
-                        </IconWithHover>
-                      )
-                    }
-                    
-                    return null;
-                  })
-              }
-              <sub>{el.domain}</sub>
-            </li>
-          )
-        }
-      </ul>
-      <p>Design from https://www.youtube.com/watch?v=I90no1eQ45E&t=93s</p>
+const styles = {
+  menu: {
+    maxWidth: 'min(80vw, 1800px)',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    fontSize: '5rem',
+  },
+}
+
+const useStyles = createUseStyles(styles);
+
+export const Subdomains = () => {
+  const classes = useStyles();
+  
+  return (
+    <div>
+      <Menu author="ViewableGravy" className={classes.menu} />
+      <div className='subdomains_wrapper'>
+        <ul className='outer_list'> 
+          {
+            domains.map((el, subdomainIndex) => 
+              <li 
+                style={{ "--clr": el.color, opacity: el?.information?.disabled ? '50%' : "100%"}}
+                key={subdomainIndex}
+              >
+                <a href={`https://${el.domain}${el.path}`} data-text={`${el.name}`}>
+                  {el.name}
+                </a>
+                {
+                  Object.keys(el.information).length > 0 &&
+                    Object.keys(el.information).map((key, iconIndex) => {
+                      iconIndex = iconIndex + 1;
+                      if (key === "locked" && el.information[key] === true) {
+                        return (
+                          <IconWithHover icon={faLock} id={`lock-${subdomainIndex}`} index={iconIndex} key={iconIndex}>
+                            <h2>MFA Enabled</h2>
+                            <p>This domain is protected by 2FA and is not publicly accessible</p>
+                          </IconWithHover>
+                        )
+                      } else if (key === "server") {
+                        return (
+                          <IconWithHover icon={getServerIcon(el.information[key])} id={`server-${subdomainIndex}`} index={iconIndex} key={iconIndex}>
+                            <h2>{ mapServerToTitle(el.information[key]) }</h2>
+                            <p>{ mapServerToDescription(el.information[key]) }</p>
+                          </IconWithHover>
+                        )
+                      } else if (key === "shortDescription") {
+                        return (
+                          <IconWithHover icon={faQuestionCircle} id={`description-${subdomainIndex}`} index={iconIndex} key={iconIndex}>
+                            <h2>About</h2>
+                            <p>{ el.information[key] }</p>
+                          </IconWithHover>
+                        )
+                      }
+                      
+                      return null;
+                    })
+                }
+                <sub>{el.domain}</sub>
+              </li>
+            )
+          }
+        </ul>
+        <p>Design from https://www.youtube.com/watch?v=I90no1eQ45E&t=93s</p>
+      </div>
     </div>
-  </div>
-);
+  )
+};
 
 /**
  * 

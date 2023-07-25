@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStore } from '../globalState';
+import { useStore } from 'functionality/state/state';
 import './_ThemedStyles.scss'
 
 type TUseThemedStyles = () => {

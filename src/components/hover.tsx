@@ -1,5 +1,5 @@
 import React from "react";
-import { TMediaKeys, useMedia } from "../functionality/helper";
+import { TMediaKey, useMedia } from "../hooks/useMedia/index";
 import { createUseStyles } from "react-jss";
 
 type HoverProps = {
@@ -7,7 +7,7 @@ type HoverProps = {
     onMouseOver: (event: React.MouseEvent<HTMLElement>) => void;
     onMouseLeave: () => void;
   }) => JSX.Element | JSX.Element[];
-  onSize?: TMediaKeys[];
+  onSize?: TMediaKey[];
 }
 
 type Hover = React.FC<HoverProps>;
@@ -27,23 +27,23 @@ const styles = {
   }
 }
 
-const useStyle = createUseStyles(styles)
+const useStyles = createUseStyles(styles)
 
 /**
  * TODO, take in an offset that will be used to offset the background highlight
  */
 export const Hover: Hover = ({ children, onSize }) => {
-  const media = useMedia();
-  const classes = useStyle();
+  const isMatchMedia = useMedia(onSize);
+  const classes = useStyles();
   const ref = React.useRef<HTMLDivElement | null>(null);
 
   const onMouseLeave = React.useCallback(() => {
     if (!ref?.current) return;
     ref.current.style.backgroundColor = 'transparent';
-  }, [media]);
+  }, [isMatchMedia]);
 
   const onMouseOver = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
-    if (onSize && !onSize.includes(media))
+    if (onSize && !isMatchMedia)
       return onMouseLeave();
 
     const width = event.currentTarget.offsetWidth,
@@ -57,7 +57,7 @@ export const Hover: Hover = ({ children, onSize }) => {
     highlight.style.width = `${width}px`;
     highlight.style.height = `${height - 20}px`
     highlight.style.backgroundColor = 'white';
-  }, [media]);
+  }, [isMatchMedia]);
 
   return (
     <div className={classes.stackContext}>

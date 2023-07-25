@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './home.scss'
 import TLink from '../../components/TLink';
 
-import BlogImage from '../../assets/images/home/blog_test_2.webp';
+import BlogImage from 'assets/images/home/blog_test_2.webp';
 import ContactImage from '../../assets/images/home/contact_me.webp';
 import SubdomainsImage from '../../assets/images/home/subdomains.webp';
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
-import { useStore } from '../../functionality/globalState';
+import { useStore } from 'functionality/state/state';
 import API from '../../api/global';
 import './login.scss'
 

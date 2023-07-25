@@ -1,5 +1,6 @@
 import React from "react";
-import { TStore, useStore } from "../../../../functionality/globalState";
+import { useStore } from 'functionality/state/state';
+import { TStore } from "functionality/state/types";
 import { TPostCardProps } from "./types";
 import { Link } from "react-router-dom";
 import TagMenu from "../tags-wrapper/tagsWrapper";

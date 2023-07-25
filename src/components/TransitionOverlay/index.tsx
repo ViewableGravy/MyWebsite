@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useGlobalState } from "../../functionality/globalState";
+import { useGlobalState } from "../../functionality/state/[LEGACY]state";
 import { useNavigate } from "react-router-dom";
 import createTimeline from "../../helpers/functions/createTimeline";
 

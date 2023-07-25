@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { TStore } from '../globalState';
-// import { getRefreshToken } from './api';
+import { TStore } from 'functionality/state/types';
 
 import API from '../../api/global';
 
