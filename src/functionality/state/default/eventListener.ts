@@ -1,5 +1,5 @@
-import { TMediaKey, keys, mediaResolutions } from "hooks/useMedia";
 import React from "react";
+import { TMediaKey, keys, mediaResolutions } from "hooks/useMedia";
 import { useStore } from "../state";
 
 export const useMediaListener = () => {

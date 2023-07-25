@@ -38,7 +38,8 @@ export const Hover: Hover = ({ children, onSize }) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
 
   const onMouseLeave = React.useCallback(() => {
-    if (!ref?.current) return;
+    if (!ref.current) 
+      return;
     ref.current.style.backgroundColor = 'transparent';
   }, [isMatchMedia]);
 
@@ -52,11 +53,11 @@ export const Hover: Hover = ({ children, onSize }) => {
 
     if (!width || !distanceFromTop || !height || !ref?.current) return;
 
-    const highlight = ref.current;
-    highlight.style.top = `${distanceFromTop + 4}px`;
-    highlight.style.width = `${width}px`;
-    highlight.style.height = `${height - 20}px`
-    highlight.style.backgroundColor = 'white';
+    const highlight = ref.current.style;
+    highlight.top = `${distanceFromTop + 4}px`;
+    highlight.width = `${width}px`;
+    highlight.height = `${height - 20}px`
+    highlight.backgroundColor = 'white';
   }, [isMatchMedia]);
 
   return (

@@ -4,7 +4,7 @@ import { refreshOrExpireExistingtoken } from "../authentication/authentication";
 import { TDispatch, TStore } from "./types";
 import { StartupHooks, defaultStore } from "./default/initial";
 
-export const useStoreData = () => {
+const useStoreData = () => {
   const store = React.useRef<TStore>(defaultStore);
 
   const get = React.useCallback(() => {
