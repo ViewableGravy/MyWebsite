@@ -6,7 +6,7 @@ type TConditionalRenderProps = {
   onFalse?: JSX.Element | JSX.Element[] | (() => JSX.Element) 
 }
 
-export const ConditionalRender = ({ condition, onTrue, onFalse }: TConditionalRenderProps) => {
+export const TurneryRender = ({ condition, onTrue, onFalse }: TConditionalRenderProps) => {
   const renderTrue = () => {
     if (typeof onTrue === 'function') {
       return onTrue();
@@ -33,3 +33,4 @@ export const ConditionalRender = ({ condition, onTrue, onFalse }: TConditionalRe
 
   return condition ? renderTrue() : renderFalse();
 }
+
