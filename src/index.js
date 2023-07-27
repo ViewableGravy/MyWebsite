@@ -50,7 +50,6 @@ ReactDOM.render(
         {/* eslint-disable-next-line no-undef */}
         <GoogleReCaptchaProvider reCaptchaKey={process.env.REACT_APP_SITE_KEY}>
           <React.StrictMode>
-            <MyStatus />
             <Router>
               <Overlay>
                 <Routes>
@@ -60,6 +59,7 @@ ReactDOM.render(
                   <Route path='/subdomains' element={<Subdomains/>} />
                   <Route path='/login' element={<Login/>} />
                   <Route path='/contact' element={<Contact/>} />
+                  <Route path='/test/status' element={<MyStatus/>} />
                   <Route path='*' element={<Navigate to="/" />} />
                 </Routes>
               </Overlay>
