@@ -40,7 +40,7 @@ export const TagMenu: TTagMenu = ({ data }) => {
 
     //reset all tags to default position and widths based on front
     tags.current.forEach((tag, index) => {
-      tag.style.right = ['xs', 'sm'].includes(media) ? '' : `${index * 10}px`;
+      tag.style.right = ['xs'].includes(media) ? '' : `${index * 10}px`;
       tag.style.zIndex = `${index}`;
       tag.style.color = tag.dataset.color || 'white';
       if (tag.style.width) tag.style.width = front.getBoundingClientRect().width + 'px';
