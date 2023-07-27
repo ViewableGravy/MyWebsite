@@ -1,21 +1,18 @@
-import React, { useRef } from "react";
 import { Hover } from "../../../../components/hover";
 import { useStore } from 'functionality/state/state';
 import { PostsHead } from "./head";
 import { PostsCard } from "./postcard";
-import { TurneryRender } from "../../../../components/conditionalRender/turneryRender";
+import { ConditionalRender } from "../../../../components/conditionalRender/turneryRender";
 import { useGetPostsOrDraftsQuery } from "./queries";
 import Footer from "./_footer";
 import useConditional from "../../../../hooks/useConditional";
+import React from "react";
 import './posts.scss'
-import { ConditionalRender } from "components/conditionalRender/conditionalRender";
 
 export const Posts = () => {
   const [{ draftMode }] = useStore((store) => ({ draftMode: store.draftMode }));
   const { isLoading, data, error } = useGetPostsOrDraftsQuery(draftMode)
   const title = useConditional(draftMode, 'Drafts', 'Posts');
-
-  const listItems = useRef<Element[]>([]);
   
   return (
     <>
@@ -23,15 +20,14 @@ export const Posts = () => {
       <div className="posts">
         <Hover onSize={['md', 'lg', 'xl', 'dual-lg', 'dual-xl']}>
           {({ onMouseOver, onMouseLeave }) => (
-            <TurneryRender
+            <ConditionalRender
               condition={!isLoading && !error}
-              onTrue={data?.map((post, index) => (
+              onTrue={data?.map((post) => (
                 <PostsCard
                   key={post._id}
                   post={post}
                   onMouseOver={onMouseOver}
                   onMouseLeave={onMouseLeave}
-                  updateIndex={(element: HTMLElement) => listItems.current[index] = element}
                 />
               ))}
               onFalse={[...Array(5).keys()].map((_, i) => <PostsCard key={i}/>)}

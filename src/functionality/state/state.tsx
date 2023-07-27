@@ -50,6 +50,7 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 }
 
 export const useStore = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   selector: (store: TStore) => any
 ): [TStore, TDispatch] => {
   const store = React.useContext(storeContext);

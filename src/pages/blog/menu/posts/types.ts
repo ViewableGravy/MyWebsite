@@ -37,11 +37,22 @@ export type TDraft = {
 export type TPostCardProps = {
   post?: TPost,
   index?: number,
-  updateIndex?: any,
-  ref?: any
   onMouseOver?: (e: React.MouseEvent<HTMLElement>) => void,
   onMouseLeave?: (e: React.MouseEvent<HTMLElement>) => void
 };
+
+export type TDraftCardProps = {
+  title: string,
+  summary: string,
+  date: string,
+}
+
+export type TPublishedCardProps = {
+  title: string,
+  summary: string,
+  date: string,
+  tags: TTag[],
+}
 
 export type TUseGetPostsQuery = (options?: object, dependencies?: string[]) => UseQueryResult<TPost[], unknown>;
 export type TUseGetDraftsQuery = (options?: object, dependencies?: string[]) => UseQueryResult<TDraft[], unknown>;

@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 
 import './_Banner.scss';
-import { TurneryRender } from "../conditionalRender/turneryRender";
+import { ConditionalRender } from "../conditionalRender/turneryRender";
 
 type TBannerProps = {
   children?: JSX.Element | ((props: object) => JSX.Element),
@@ -65,7 +65,7 @@ const Banner = ({ children, src, alt, brightness = 1, ...props }: TBannerProps) 
         style={style} 
         className={imageClasses} 
       />
-      <TurneryRender
+      <ConditionalRender
         condition={!!children}
         onTrue={
           renderOrInvokeChildren({ isMouseOver })
