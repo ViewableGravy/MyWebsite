@@ -2,9 +2,11 @@ import React from 'react';
 import { domains } from './subdomain-list';
 import { Menu } from '../blog/menu/menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLock, faServer, faHome, faGlobe, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
-import './subdomains.scss'
+import { faLock, faServer, faHome, faGlobe, faQuestionCircle, faCircleCheck, faCross } from '@fortawesome/free-solid-svg-icons'
 import { createUseStyles } from 'react-jss';
+import Text from 'components/text';
+import './subdomains.scss'
+import { useStatus } from 'hooks/useStatus';
 
 const styles = {
   menu: {
@@ -25,54 +27,105 @@ export const Subdomains = () => {
       <Menu author="ViewableGravy" className={classes.menu} />
       <div className='subdomains_wrapper'>
         <ul className='outer_list'> 
-          {
-            domains.map((el, subdomainIndex) => 
-              <li 
-                style={{ "--clr": el.color, opacity: el?.information?.disabled ? '50%' : "100%"}}
-                key={subdomainIndex}
-              >
-                <a href={`https://${el.domain}${el.path}`} data-text={`${el.name}`}>
-                  {el.name}
-                </a>
-                {
-                  Object.keys(el.information).length > 0 &&
-                    Object.keys(el.information).map((key, iconIndex) => {
-                      iconIndex = iconIndex + 1;
-                      if (key === "locked" && el.information[key] === true) {
-                        return (
-                          <IconWithHover icon={faLock} id={`lock-${subdomainIndex}`} index={iconIndex} key={iconIndex}>
-                            <h2>MFA Enabled</h2>
-                            <p>This domain is protected by 2FA and is not publicly accessible</p>
-                          </IconWithHover>
-                        )
-                      } else if (key === "server") {
-                        return (
-                          <IconWithHover icon={getServerIcon(el.information[key])} id={`server-${subdomainIndex}`} index={iconIndex} key={iconIndex}>
-                            <h2>{ mapServerToTitle(el.information[key]) }</h2>
-                            <p>{ mapServerToDescription(el.information[key]) }</p>
-                          </IconWithHover>
-                        )
-                      } else if (key === "shortDescription") {
-                        return (
-                          <IconWithHover icon={faQuestionCircle} id={`description-${subdomainIndex}`} index={iconIndex} key={iconIndex}>
-                            <h2>About</h2>
-                            <p>{ el.information[key] }</p>
-                          </IconWithHover>
-                        )
-                      }
-                      
-                      return null;
-                    })
-                }
-                <sub>{el.domain}</sub>
-              </li>
-            )
-          }
+          {domains.map((subdomain, index) => <Subdomain {...subdomain} key={index} index={index}/>)}
         </ul>
-        <p>Design from https://www.youtube.com/watch?v=I90no1eQ45E&t=93s</p>
       </div>
     </div>
   )
+};
+
+const Subdomain = ({name, domain, path, color, information, index: SubdomainIndex}) => {
+  const {
+    data: status,
+    isLoading
+  } = useStatus(); 
+
+  const relative = isLoading ? null : status.find(({ monitor_name }) => {
+    return monitor_name.toLowerCase() === name.toLowerCase() || 
+    monitor_name.toLowerCase() === domain.toLowerCase()
+  });
+
+  const style = { 
+    "--clr": color, 
+    opacity: information?.disabled ? '50%' : "100%"
+  };
+
+  const informationKeys = Object.keys(information);
+
+  return (
+    <li style={style} >
+      <a href={`https://${domain}${path}`} data-text={name}>{name}</a>
+      <sub>{domain}</sub>
+      {
+        informationKeys.map((key, iconIndex) => (
+          <SubdomainIcon 
+            value={information[key]}
+            key={iconIndex}
+            subindex={SubdomainIndex}
+            iconIndex={iconIndex + 1}
+            type={key}
+          />
+        ))
+      }
+      <SubdomainIcon
+        value={relative ? relative.status : "unknown" }
+        subindex={SubdomainIndex}
+        iconIndex={informationKeys.length + 1}
+        type={"status"}
+      />
+    </li>
+    )
+}
+
+const SubdomainIcon = ({type, subindex, iconIndex, value}) => {
+  if (type === "locked" && value) {
+    return (
+      <IconWithHover icon={faLock} id={`lock-${subindex}`} index={iconIndex}>
+        <h2>MFA Enabled</h2>
+        <p>This domain is protected by 2FA and is not publicly accessible</p>
+      </IconWithHover>
+    )
+  }
+
+  if (type === "server") {
+    return (
+      <IconWithHover icon={getServerIcon(value)} id={`server-${subindex}`} index={iconIndex}>
+        <h2>{ mapServerToTitle(value) }</h2>
+        <p>{ mapServerToDescription(value) }</p>
+      </IconWithHover>
+    )
+  }
+
+  if (type === "shortDescription") {
+    return (
+      <IconWithHover icon={faQuestionCircle} id={`description-${subindex}`} index={iconIndex}>
+        <h2>About</h2>
+        <p>{ value }</p>
+      </IconWithHover>
+    )
+  }
+
+  if (type === "status") {
+      const getIcon = (status) => {
+        switch(status) {
+          case "up":
+            return faCircleCheck;
+          case "down":
+            return faCross;
+          default:
+            return faQuestionCircle;
+        }
+      }
+
+      return (
+        <IconWithHover icon={getIcon(value)} id={`status-${subindex}`} index={iconIndex}>
+          <h2>Status</h2>
+          <p>This service is currently <Text white bold size-xl><span>{value}</span></Text></p>
+        </IconWithHover>
+      )
+  }
+  
+  return null;
 };
 
 /**
@@ -86,7 +139,7 @@ export const Subdomains = () => {
 const IconWithHover = ({children, icon, id, index}) => {
 
   return (
-    <div className={"padlock_icon_container"} style={{ right: `${index > 1 ? ((20 + 5) * index) - 13 : 10}px` }}>
+    <div className={"padlock_icon_container"} style={{ right: `${index > 1 ? (28 * index) - 20 : 10}px`, width: '25px' }}>
       <FontAwesomeIcon
         icon={icon} 
         size='lg' 

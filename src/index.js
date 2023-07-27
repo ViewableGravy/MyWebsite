@@ -20,58 +20,16 @@ import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import Overlay from './components/TransitionOverlay';
 import Text from './components/text';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { useStatus } from 'hooks/useStatus';
 
-const useSocket = (path) => {
-  const [socket, setSocket] = React.useState(null);
-
-  React.useEffect(() => {
-    const newSocket = new WebSocket(`ws://localhost:3002${path}`);
-
-    setSocket(newSocket);
-
-    return () => {
-      newSocket.close();
-    };
-  }, [path]);
-
-  return socket;
-};
-
-const useSocketEvent = (path) => {
-  const [results, setResults] = React.useState(null);
-  const socket = useSocket(path);
-
-  React.useEffect(() => {
-    if (!socket) return;
-
-    socket.addEventListener('message', (event) => {
-      setResults(event.data);
-    });
-
-    socket.onclose = () => {
-      setResults(null);
-    }
-
-    return () => {
-      socket.removeEventListener('message', (event) => {
-        setResults(event.data);
-      });
-    }
-  }, [socket]);
-
-  return [results];
-}
-
-const useStatus = () => {
-  const [status] = useSocketEvent('/api/status');
-  
-  return JSON.parse(status);
-}
 
 const MyStatus = () => {
-  const status = useStatus();
+  const {
+    data: status,
+    isLoading
+  } = useStatus();
 
-  return status && (
+  return !isLoading && (
       <div style={{ height: '700px' }}>{status.map((monitor, index) => (
         <p key={index}>
           <Text white span>{monitor.monitor_name} :</Text>
@@ -80,7 +38,6 @@ const MyStatus = () => {
         </p>
       ))}</div>
   )
-
 }
 
 const queryClient = new QueryClient()
