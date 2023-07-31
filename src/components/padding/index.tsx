@@ -47,10 +47,6 @@ const Padding: TPadding = ({ children, className, inject, ...props }) => {
       {children}
     </ClassInjector>
   )
-
-  return <div className={classes}>
-    {children}
-  </div>
 };
 
 export default Padding;
