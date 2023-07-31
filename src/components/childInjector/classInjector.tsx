@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import ChildInjector from ".";
 
 type TStyleInjectorProps = {
   classes?: string;
@@ -9,7 +10,7 @@ type TStyleInjectorProps = {
 
 type TStyleInjector = React.FC<TStyleInjectorProps>
 
-const ChildInjector: TStyleInjector = ({ classes, children, inject }) =>  {
+const ClassInjector: TStyleInjector = ({ classes, children, inject }) =>  {
   const isString = typeof children === 'string' ;
   const isBoolean = typeof children === 'boolean' ;
   const isNumber = typeof children === 'number';
@@ -27,7 +28,7 @@ const ChildInjector: TStyleInjector = ({ classes, children, inject }) =>  {
   if (Array.isArray(children))
     return (
       <>
-        {React.Children.map(children, (child) => ChildInjector({ classes, children: child, inject }))}
+        {React.Children.map(children, (child) => ClassInjector({ classes, children: child, inject }))}
       </>
     )
 
@@ -52,4 +53,25 @@ const ChildInjector: TStyleInjector = ({ classes, children, inject }) =>  {
   )
 };
 
-export default ChildInjector;
+export default ClassInjector;
+
+//TODO - Confirm this is functioning correctly and replace original Injector instances with this one
+export const ClassInjector2 = ({ classes, children, inject }: TStyleInjectorProps): JSX.Element =>  {
+  const onInject = ({ className }: any) => {
+    return {
+      className: classNames({
+        [className]: !!className,
+        [`${classes}`]: !!classes
+      })
+    }
+  }
+
+  return ChildInjector({ 
+    children, 
+    inject, 
+    onInject,
+    injectableProps: { 
+      className: classes 
+    } 
+  });
+}

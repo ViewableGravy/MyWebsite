@@ -2,7 +2,7 @@
 import classNames from "classnames";
 import React from "react";
 import './_flex.scss';
-import ChildInjector from "../childInjector/childInjector";
+import ClassInjector from "../childInjector/classInjector";
 
 type TFlexProps = {
   children: JSX.Element,
@@ -78,9 +78,9 @@ const Flex: TFlex = ({ children, inject, className, ...props }) => {
   });
 
   return (
-    <ChildInjector classes={classes} inject={inject}>
+    <ClassInjector classes={classes} inject={inject}>
       {children}
-    </ChildInjector>
+    </ClassInjector>
   )
 }
 

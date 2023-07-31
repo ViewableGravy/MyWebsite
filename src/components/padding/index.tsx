@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 import './_padding.scss';
-import ChildInjector from "../childInjector/childInjector";
+import ClassInjector, { ClassInjector2 } from "../childInjector/classInjector";
 
 type TPaddingProps = {
   'x-xs'?: boolean,
@@ -39,11 +39,13 @@ const Padding: TPadding = ({ children, className, inject, ...props }) => {
     [`Padding--${y}`]: !!y,
     [`${className}`]: !!className
   });
+  
+  return ( <ClassInjector2 inject classes={classes}>{children}</ClassInjector2> )
 
   return (
-    <ChildInjector classes={classes} inject={inject}>
+    <ClassInjector classes={classes} inject={inject}>
       {children}
-    </ChildInjector>
+    </ClassInjector>
   )
 
   return <div className={classes}>

@@ -21,6 +21,7 @@ import Overlay from './components/TransitionOverlay';
 import Text from './components/text';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { useStatus } from 'hooks/useStatus';
+import Padding from 'components/padding';
 
 
 const MyStatus = () => {
