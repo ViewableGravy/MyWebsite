@@ -83,11 +83,11 @@ type TClassCustom = ({
 type Override<T, U> = Omit<T, keyof U> & U;
 
 type TClassName = Override<TRuntimeInjectableProps,{
-  [INJECTOR_ACTIONS.INJECT]?: TClassInject
-  [INJECTOR_ACTIONS.WRAP]?: TClassWrap
-  [INJECTOR_ACTIONS.OVERRIDE]?: TClassOverride
-  [INJECTOR_ACTIONS.CUSTOM]?: TClassCustom
-  [INJECTOR_ACTIONS.FALLBACK]?: boolean;
+  [INJECTOR_ACTIONS.INJECT]: TClassInject
+  [INJECTOR_ACTIONS.WRAP]: TClassWrap
+  [INJECTOR_ACTIONS.OVERRIDE]: TClassOverride
+  [INJECTOR_ACTIONS.CUSTOM]: TClassCustom
+  [INJECTOR_ACTIONS.FALLBACK]: boolean;
 }>;
 
 /**
