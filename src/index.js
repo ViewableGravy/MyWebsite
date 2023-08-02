@@ -1,4 +1,7 @@
 import ReactDOM from 'react-dom';
+
+import { createRoot } from 'react-dom/client';
+
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -42,11 +45,19 @@ const MyStatus = () => {
 }
 
 const queryClient = new QueryClient()
+const container = document.getElementById('root');
+const root = createRoot(container);
 
-
-ReactDOM.render(
+root.render(
   <GlobalStateProvider>
     <StoreProvider>
+      <Text white inject>
+        <Padding inject x={5} y={2}>
+          <Text bold inject>
+            <p>Test</p>
+          </Text>
+        </Padding>
+      </Text>
       <QueryClientProvider client={queryClient}>
         {/* eslint-disable-next-line no-undef */}
         <GoogleReCaptchaProvider reCaptchaKey={process.env.REACT_APP_SITE_KEY}>
@@ -69,6 +80,5 @@ ReactDOM.render(
         </GoogleReCaptchaProvider>
       </QueryClientProvider>
     </StoreProvider>
-  </GlobalStateProvider>,
-  document.getElementById('root')
+  </GlobalStateProvider>
 );

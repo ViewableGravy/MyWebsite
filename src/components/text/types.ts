@@ -1,6 +1,11 @@
+import { className } from '../../../src/helpers/runtimeInjectableProps/className';
+
+import React from "react";
+
 export type TextProps = {
-  children: React.ReactNode | string,
+  children: React.ReactElement | string,
   className?: string,
+  inject?: boolean,
   'primary'?: boolean;
   'secondary'?: boolean;
   'black'?: boolean;
@@ -21,6 +26,10 @@ export type TextProps = {
   'span'?: boolean;
   'remove-margin'?: boolean;
 };
+
+export const runtimeInjectableProps = {
+  className,
+}
 
 export type TDefaults = {
   color: 'primary' | 'secondary' | 'black' | 'white';

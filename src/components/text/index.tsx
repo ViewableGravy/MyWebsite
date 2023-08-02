@@ -1,13 +1,14 @@
 import React from "react";
 import classNames from "classnames";
 
-import { TDefaults, TextProps } from "./types";
+import { TDefaults, TextProps, runtimeInjectableProps } from "./types";
 import useThemedStyles from "../../functionality/styler";
 import './_text.scss';
 
 import Heading from "./heading";
+import ChildInjector from "components/childInjector";
 
-const Text = ({ children, ...props }: TextProps) => {
+const Text = ({ children, inject, ...props }: TextProps): React.ReactElement => {
   const { color: themed } = useThemedStyles();
 
   const { color, size, weight, align, span } = Object.keys(props).reduce<TDefaults>((acc, key) => {
@@ -33,15 +34,19 @@ const Text = ({ children, ...props }: TextProps) => {
     [themed[color]]: !!themed[color],
   });
 
+  if (inject)
+    return <ChildInjector inject injectableProps={{ className: classes }}>{children}</ChildInjector>
+
   if (span)
-    return <span className={classes}>{children}</span>
+    return <span className={classes} >{children}</span>
 
   if (['string', 'number'].includes(typeof children) || Array.isArray(children))
-    return <p className={classes}>{children}</p>
+    return <p className={classes} >{children}</p>
 
   return <div className={classes}>{children}</div>
 }
 
 Text.Heading = Heading;
+Text.runtimeInjectableProps = runtimeInjectableProps;
 
 export default Text;
