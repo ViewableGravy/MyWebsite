@@ -5,7 +5,7 @@ import React from "react";
 export type TextProps = {
   children: React.ReactElement | string,
   className?: string,
-  inject?: boolean,
+  // inject?: boolean,
   'primary'?: boolean;
   'secondary'?: boolean;
   'black'?: boolean;

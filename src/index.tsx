@@ -1,14 +1,7 @@
-import ReactDOM from 'react-dom';
-
-import { createRoot } from 'react-dom/client';
-
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate
-} from "react-router-dom";
+// import { createRoot } from "react-dom";
+import * as reactdomclient from 'react-dom/client'
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import './index.css';
 
 import { Home } from "./pages/home/home";
@@ -21,46 +14,18 @@ import { GlobalStateProvider } from './functionality/state/[LEGACY]state';
 import { StoreProvider } from './functionality/state/state';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import Overlay from './components/TransitionOverlay';
-import Text from './components/text';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { useStatus } from 'hooks/useStatus';
-import Padding from 'components/padding';
-
-
-const MyStatus = () => {
-  const {
-    data: status,
-    isLoading
-  } = useStatus();
-
-  return !isLoading && (
-      <div style={{ height: '700px' }}>{status.map((monitor, index) => (
-        <p key={index}>
-          <Text white span>{monitor.monitor_name} :</Text>
-          <Text white span> {monitor.type},</Text>
-          <Text white span> {monitor.status}</Text>
-        </p>
-      ))}</div>
-  )
-}
 
 const queryClient = new QueryClient()
-const container = document.getElementById('root');
-const root = createRoot(container);
+
+const container = document.getElementById('root') as HTMLElement;
+const root = reactdomclient.createRoot(container);
 
 root.render(
   <GlobalStateProvider>
     <StoreProvider>
-      <Text white inject>
-        <Padding inject x={5} y={2}>
-          <Text bold inject>
-            <p>Test</p>
-          </Text>
-        </Padding>
-      </Text>
       <QueryClientProvider client={queryClient}>
-        {/* eslint-disable-next-line no-undef */}
-        <GoogleReCaptchaProvider reCaptchaKey={process.env.REACT_APP_SITE_KEY}>
+        <GoogleReCaptchaProvider reCaptchaKey={process.env.REACT_APP_SITE_KEY as string}>
           <React.StrictMode>
             <Router>
               <Overlay>
@@ -71,7 +36,6 @@ root.render(
                   <Route path='/subdomains' element={<Subdomains/>} />
                   <Route path='/login' element={<Login/>} />
                   <Route path='/contact' element={<Contact/>} />
-                  <Route path='/test/status' element={<MyStatus/>} />
                   <Route path='*' element={<Navigate to="/" />} />
                 </Routes>
               </Overlay>

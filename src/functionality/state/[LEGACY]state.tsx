@@ -1,6 +1,6 @@
-import React, { Dispatch, useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { Dispatch, useEffect } from "react";
 import { updateAuthToken, refreshOrExpireExistingtoken } from "../authentication/authentication";
-import { type } from "os";
 
 //https://beta.reactjs.org/learn/scaling-up-with-reducer-and-context
 

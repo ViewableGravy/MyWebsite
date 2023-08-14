@@ -1,7 +1,5 @@
-import classNames from "classnames";
 import React from "react";
 import './_padding.scss';
-import ClassInjector, { ClassInjector2 } from "../childInjector/classInjector";
 import ChildInjector from "components/childInjector";
 
 type TPaddingProps = {

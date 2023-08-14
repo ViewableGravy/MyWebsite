@@ -6,9 +6,8 @@ import useThemedStyles from "../../functionality/styler";
 import './_text.scss';
 
 import Heading from "./heading";
-import ChildInjector from "components/childInjector";
 
-const Text = ({ children, inject, ...props }: TextProps): React.ReactElement => {
+const Text = ({ children, ...props }: TextProps): React.ReactElement => {
   const { color: themed } = useThemedStyles();
 
   const { color, size, weight, align, span } = Object.keys(props).reduce<TDefaults>((acc, key) => {
@@ -34,8 +33,8 @@ const Text = ({ children, inject, ...props }: TextProps): React.ReactElement => 
     [themed[color]]: !!themed[color],
   });
 
-  if (inject)
-    return <ChildInjector inject injectableProps={{ className: classes }}>{children}</ChildInjector>
+  // if (inject)
+  //   return <ChildInjector inject injectableProps={{ className: classes }}>{children}</ChildInjector>
 
   if (span)
     return <span className={classes} >{children}</span>

@@ -8,8 +8,13 @@ import useAxios from "axios-hooks";
 import About from '../menu/about/about';
 import './article.scss'
 
+// eslint-disable-next-line no-undef
 const server = process.env.REACT_APP_BACKEND_SERVER;
+
+// eslint-disable-next-line no-undef
 const port = process.env.REACT_APP_BACKEND_PORT;
+
+// eslint-disable-next-line no-undef
 const protocol = process.env.REACT_APP_BACKEND_PROTOCOL;
 const url = `${protocol}://${server}:${port}`;
 
@@ -73,9 +78,9 @@ const MetaTags = ({ post }) => {
 
   return (
     <div className={"blog-article meta-tags"}>
-      {post?.tags.map((tag) => {
+      {post?.tags.map((tag, index) => {
         // return <div className={'blog-article meta-tag'}>{tag.name || tag}</div>
-        return <GenerateTag text={tag.name || tag} color={tag.color}/>
+        return <GenerateTag key={index} text={tag.name ?? tag} color={tag.color}/>
       })}
     </div>
   )
@@ -117,7 +122,7 @@ const Footer = () => {
     <div className={"blog-article footer"}>
       <About style={{ marginRight: '20px', marginLeft: '20px'}}/>
       <Socials/>
-      <p className={'blog-article footer copyright'}>© 2022. All rights reserved. Made by ViewableGravy</p>
+      <p className={'blog-article footer copyright'}>© 2023. All rights reserved. Made by ViewableGravy</p>
     </div>
   )
 }

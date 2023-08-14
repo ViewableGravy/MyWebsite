@@ -21,30 +21,36 @@ const useStyles = createUseStyles(styles);
 
 export const Subdomains = () => {
   const classes = useStyles();
+  const {
+    data,
+    isLoading
+  } = useStatus();
+
+  const domainsWithStatus = domains.map((domain) => {
+    const relative = isLoading ? null : data.find(({ monitor_name }) => {
+      return monitor_name.toLowerCase() === domain.name.toLowerCase() ||
+      monitor_name.toLowerCase() === domain.domain.toLowerCase()
+    });
+
+    return {
+      ...domain,
+      status: relative ? relative.status : "unknown"
+    }
+  })
   
   return (
     <div>
       <Menu author="ViewableGravy" className={classes.menu} />
       <div className='subdomains_wrapper'>
         <ul className='outer_list'> 
-          {domains.map((subdomain, index) => <Subdomain {...subdomain} key={index} index={index}/>)}
+          {domainsWithStatus.map((subdomain, index) => <Subdomain {...subdomain} key={index} index={index}/>)}
         </ul>
       </div>
     </div>
   )
 };
 
-const Subdomain = ({name, domain, path, color, information, index: SubdomainIndex}) => {
-  const {
-    data: status,
-    isLoading
-  } = useStatus(); 
-
-  const relative = isLoading ? null : status.find(({ monitor_name }) => {
-    return monitor_name.toLowerCase() === name.toLowerCase() || 
-    monitor_name.toLowerCase() === domain.toLowerCase()
-  });
-
+const Subdomain = ({name, domain, path, color, information, status, index: SubdomainIndex}) => {
   const style = { 
     "--clr": color, 
     opacity: information?.disabled ? '50%' : "100%"
@@ -68,7 +74,7 @@ const Subdomain = ({name, domain, path, color, information, index: SubdomainInde
         ))
       }
       <SubdomainIcon
-        value={relative ? relative.status : "unknown" }
+        value={status}
         subindex={SubdomainIndex}
         iconIndex={informationKeys.length + 1}
         type={"status"}

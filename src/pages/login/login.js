@@ -9,7 +9,7 @@ import loginImage from '../../assets/images/Lleyton.png';
 //on load should check if in cookies and then skip this page
 export const Login = () => {
   let navigate = useNavigate();
-  const [{ token }, dispatch] = useStore((store) => ({ token: store.token }));
+  const [, dispatch] = useStore(() => ({}));
 
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');

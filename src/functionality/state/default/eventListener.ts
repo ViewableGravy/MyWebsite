@@ -1,5 +1,5 @@
 import React from "react";
-import { TMediaKey, keys, mediaResolutions } from "hooks/useMedia";
+import { TMediaKey, mediaResolutions } from "hooks/useMedia";
 import { useStore } from "../state";
 
 export const useMediaListener = () => {
@@ -12,25 +12,25 @@ export const useMediaListener = () => {
 
   React.useEffect(() => {
     //set initial media
-    keys.forEach(key => {
-      if (window.matchMedia(mediaResolutions[key]).matches)
-        dispatch({ media: key })
-    });
+    for (const [key, resolution] of Object.entries(mediaResolutions)) {
+      if (window.matchMedia(resolution).matches)
+        dispatch({ media: key as TMediaKey })
+    }
 
     //add listeners
-    keys.forEach(key => {
+    for (const [key, resolution] of Object.entries(mediaResolutions)) {
       window
-        .matchMedia(mediaResolutions[key])
-        .addEventListener('change', handleMediaChange(key));
-    });
+        .matchMedia(resolution)
+        .addEventListener('change', handleMediaChange(key as TMediaKey));
+    }
 
     //remove listeners
     return () => {
-      keys.forEach(key => {
+      for (const [key, resolution] of Object.entries(mediaResolutions)) {
         window
-          .matchMedia(mediaResolutions[key])
-          .removeEventListener('change', handleMediaChange(key));
-      });
+          .matchMedia(resolution)
+          .removeEventListener('change', handleMediaChange(key as TMediaKey));
+      }
     }
   }, []);
 }

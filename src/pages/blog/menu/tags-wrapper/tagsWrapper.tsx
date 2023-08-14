@@ -130,7 +130,8 @@ const isDarkColor = (color: string) => {
   }
 
   if (color[0] === 'r') {
-    const [r, g, b] = color.substring(4, color.length - 1).replace(/ /g, '').split(',') as any; //
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [r, g, b] = color.substring(4, color.length - 1).replace(/ /g, '').split(',') as any;
     const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
 
     return luma < 80;
@@ -143,7 +144,7 @@ type TGenerateTag = {
   color: string,
   text: string,
   className: string,
-  onClick: any
+  onClick: any,
 }
 
 export const GenerateTag = React.forwardRef(({ color, text, className, onClick }: TGenerateTag, ref: any) => {

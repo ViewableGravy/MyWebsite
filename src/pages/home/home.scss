@@ -53,6 +53,7 @@
         justify-content: center;
         display: flex;
         min-height: 700px;
+        margin: 0 50px;
     }
     
     .active {
@@ -72,7 +73,7 @@
 
         opacity: 90%;
 
-        @media (width > 658px) {
+        @media (width >= 1112px) {
             &:hover {
                 height: 650px;
                 cursor: pointer;
@@ -120,7 +121,7 @@
         }
     }
 
-    @media (width < 658px) {
+    @media (width < 1112px) {
         .active {
             height: 200px;
         }
@@ -131,6 +132,10 @@
             height: 60px;
             padding-top: 10px;
             background: linear-gradient(0deg, rgba(0, 0, 0, 0.884) 70%, rgba(255, 255, 255, 0) 100%);
+        }
+
+        .background > div {
+            flex-direction: column;
         }
     }
 

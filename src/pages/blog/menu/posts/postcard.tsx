@@ -4,6 +4,7 @@ import { TStore } from "functionality/state/types";
 import { TDraftCardProps, TPostCardProps, TPublishedCardProps } from "./types";
 import { Link } from "react-router-dom";
 import TagMenu from "../tags-wrapper/tagsWrapper";
+import TLink from "components/TLink";
 
 const PostsCardsDataFromStore = (store: TStore) => ({
   draftMode: store.draftMode,
@@ -22,14 +23,11 @@ export const PostsCard = ({ post, onMouseLeave, onMouseOver }: TPostCardProps) =
 
   // normal post
   return (
-    <Link 
-      to={`/blog/${post.slug}`}
-      className={"post-card-link"} 
-      onMouseOver={onMouseOver}
-      onMouseLeave={onMouseLeave}
-    >
-      <PublishedCard {...post} />
-    </Link>
+    <div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} >
+      <TLink to={`/blog/${post.slug}`} className={"post-card-link"} >
+        <PublishedCard {...post} />
+      </TLink>
+    </div>
   )
 };
 

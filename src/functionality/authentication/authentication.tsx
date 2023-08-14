@@ -14,6 +14,7 @@ export const logout = (dispatch: (value: Partial<TStore>) => void) => {
 }
 
 axios.interceptors.request.use(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (config : any) => {
     const token = localStorage.getItem('token');
     config.headers.authorization = `Bearer ${token}`;
