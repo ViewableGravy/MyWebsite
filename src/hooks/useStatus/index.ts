@@ -2,7 +2,8 @@ import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 const server = process.env.REACT_APP_BACKEND_SERVER || "localhost";
 const port = process.env.REACT_APP_BACKEND_PORT || "3002";
-const wsapi = `ws://${server}:${port}`;
+const protocol = process.env.REACT_APP_WEBSOCKET_PROTOCOL || 'wss';
+const wsapi = `${protocol}://${server}:${port}`;
 const path = 'api/status';
 
 export const useStatus = () => {
