@@ -6,10 +6,10 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 COPY .env.production ./
 COPY . .
-RUN npm install
+RUN yarn
 
 #Build Package
-RUN npm run build
+RUN yarn build
 
 #Setup Nginx
 FROM nginx:latest
