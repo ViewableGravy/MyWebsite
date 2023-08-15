@@ -8,6 +8,7 @@ export const mediaResolutions = {
   xl: "(min-width: 993px) and (max-width: 1200px)",
   'dual-lg': "(min-width: 1201px) and (max-width: 1884px)",
   'dual-xl': "(min-width: 1885px) and (max-width: 2400px)",
+  'dual-xxl': "(min-width: 2401px)"
 };
 
 export type TMediaKey = keyof typeof mediaResolutions;
