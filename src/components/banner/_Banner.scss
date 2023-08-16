@@ -1,0 +1,29 @@
+
+.Banner {
+  max-height: 300px;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+
+  position: relative;
+  overflow: hidden;
+
+  &__image {
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    width: 100%;
+    position: absolute;
+
+    &--align-bottom {
+      bottom: 0;
+    }
+
+    &--align-top {
+      object-position: top;
+    }
+
+    &--align-center {
+      top: 50%;
+      transform: translateY(-50%)
+    }
+  }
+}

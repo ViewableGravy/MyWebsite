@@ -8,7 +8,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-    
     }
     
     .InitDiv {
@@ -51,43 +50,54 @@
         align-items: center;
         flex-wrap: wrap;
         gap: 50px;
-        height: min-content;
         justify-content: center;
         display: flex;
+        min-height: 700px;
+        margin: 0 50px;
     }
     
     .active {
+        all: unset;
+        margin: 0;
+        padding: 0;
         min-width: 300px;
         height: 500px;
-        transition: height .2s;
+        transition: height .2s, opacity .2s;
         overflow: hidden;
         border: 2px solid hsla(0,0%,100%,.26);
         position: relative;
         outline: none;
-
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-    
-    @media (width > 658px) {
-        .active:hover {
-            height: 650px;
-            cursor: pointer;
+
+        opacity: 90%;
+
+        @media (width >= 1112px) {
+            &:hover {
+                height: 650px;
+                cursor: pointer;
+                opacity: 100%;
+
+                & img {
+                    transform: scale(1.1);
+                }
+
+                & h1 {
+                    font-size: 40px;
+                }
+            }
         }
 
-        .active:hover > h1 {
-            font-size: 40px;
+        img {
+            transition: transform .2s;
+            position:relative;
+            object-fit: cover;
+            pointer-events: none;
+            width: 300px;
+            height: 650px;
         }
-    }    
-    
-    img {
-        position:relative;
-        object-fit: cover;
-        pointer-events: none;
-        width: 300px;
-        height: 650px;
-    }
+    }   
 
     .title {
         position: absolute;
@@ -95,14 +105,37 @@
         text-align: center;
         margin: auto;
         width: 100%;
-        color: white;
-        -webkit-text-stroke: 1px black;
         transition: font-size 0.2s;
+
+        &.first {
+            color: rgb(33, 80, 235);
+            -webkit-text-stroke: 1px black;
+        }
+
+        &.second {
+            color: #39f7ff;
+        }
+
+        &.third {
+            color: #f600fd;
+        }
     }
 
-    @media (width < 658px) {
+    @media (width < 1112px) {
         .active {
             height: 200px;
+        }
+
+        .active h1 {
+            box-sizing: border-box;
+            bottom: 0;
+            height: 60px;
+            padding-top: 10px;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.884) 70%, rgba(255, 255, 255, 0) 100%);
+        }
+
+        .background > div {
+            flex-direction: column;
         }
     }
 
@@ -137,5 +170,21 @@
 }
 
 
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    background: #191731;
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.4s ease-in-out;
 
+    z-index: 10;
+
+    &.active {
+        opacity: 100%;
+    }
+}
 

@@ -102,15 +102,11 @@
     right: 13px;
   }
 
-  .padlock_icon {
-    //
-  }
-
   .padlock_hover_information {
     background-color: rgb(73, 73, 73);
     position: absolute;
     padding: 5px 10px 5px 10px;
-    min-width: 125px;
+    min-width: 230px;
     bottom: 25px;
     right: 50%;
     transform: translateX(50%);

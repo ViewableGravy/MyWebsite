@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { useStore } from 'functionality/state/state';
+import API from '../../api/global';
 import './login.scss'
-import { useGlobalState } from '../../functionality/globalState';
 
-
-import { LoadingAnimation } from '../../components/loader/loadingAnimation';
 import loginImage from '../../assets/images/Lleyton.png';
-
-const server = process.env.REACT_APP_BACKEND_SERVER ?? 'localhost';
-const port = process.env.REACT_APP_BACKEND_PORT ?? '3000';
-const protocol = process.env.REACT_APP_BACKEND_PROTOCOL ?? 'http';
-const apiUrl = `${protocol}://${server}:${port}/api`;
 
 //on load should check if in cookies and then skip this page
 export const Login = () => {
   let navigate = useNavigate();
+  const [, dispatch] = useStore(() => ({}));
 
-  const [state, dispatch] = useGlobalState();
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [userIncorrect, setUserIncorrect] = useState('');
@@ -48,12 +41,8 @@ export const Login = () => {
 
       setShowLoading(true);
 
-      const { data } = await axios.post(`${apiUrl}/login`, {
-        email,
-        password
-      });
-      
-      dispatch({ token: data.access_token, username: data.username });
+      await API.Authentication.login({email, password}, dispatch);
+
       navigate(-1);
     } catch (err) {
       if (!err.response) {
@@ -63,7 +52,6 @@ export const Login = () => {
       }
 
       if (err.response?.status === 401) {
-        console.log(err)
         if (err.response.data === 'Authentication Failed') {
           setPassIncorrect('incorrect');
         }
@@ -122,12 +110,9 @@ export const Login = () => {
             value={password}/>
           <i className={eyeState} id="togglePassword" onClick={() => setShowPassword(current => !current)}></i>
         </div>
-        
         <div className='forgot-password-container'>
           <button className='forgot-password-button' onClick={() => navigate(-1)}>Forgot Password?</button>
         </div>
-        
-        
       </div>
       <button className='login-button' onClick={() => Login()}>{loginText}</button>
     </div>

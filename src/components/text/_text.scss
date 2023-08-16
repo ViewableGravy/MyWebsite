@@ -1,0 +1,67 @@
+@import '../../_global.scss';
+
+.Text {
+  font-family: $font-family;
+  font-weight: $default-font-weight;
+  font-size: $font-size-md;
+
+  &--bold {
+    font-weight: bold;
+  }
+
+  &--italic {
+    font-style: italic;
+  }
+
+  &--underline {
+    text-decoration: underline;
+  }
+
+  &--size {
+    &-xs {
+      font-size: $font-size-xs;
+    }
+
+    &-sm {
+      font-size: $font-size-sm;
+    }
+
+    &-md {
+      font-size: $font-size-md;
+    }
+
+    &-lg {
+      font-size: $font-size-lg;
+    }
+
+    &-xl {
+      font-size: $font-size-xl;
+    }
+
+    &-xxl {
+      font-size: $font-size-xxl;
+    }
+
+    &-xxxl {
+      font-size: $font-size-xxxl;
+    }
+  }
+
+  &--align {
+    &-left {
+      text-align: left;
+    }
+
+    &-center {
+      text-align: center;
+    }
+
+    &-right {
+      text-align: right;
+    }
+  }
+
+  &--remove-margin {
+    margin: 0;
+  }
+}

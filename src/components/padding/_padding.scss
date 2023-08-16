@@ -1,0 +1,67 @@
+@import '../../_global.scss';
+
+.Padding {
+  &--x {
+    &-xs {
+      padding-left: $padding-xs;
+      padding-right: $padding-xs;
+    }
+
+    &-sm {
+      padding-left: $padding-sm;
+      padding-right: $padding-sm;
+    }
+
+    &-md {
+      padding-left: $padding-md;
+      padding-right: $padding-md;
+    }
+
+    &-lg {
+      padding-left: $padding-lg;
+      padding-right: $padding-lg;
+    }
+
+    &-xl {
+      padding-left: $padding-xl;
+      padding-right: $padding-xl;
+    }
+
+    &-xxl {
+      padding-left: $padding-xxl;
+      padding-right: $padding-xxl;
+    }
+  }
+
+  &--y {
+    &-xs {
+      margin-top: $padding-xs;
+      margin-bottom: $padding-xs;
+    }
+
+    &-sm {
+      margin-top: $padding-sm;
+      margin-bottom: $padding-sm;
+    }
+
+    &-md {
+      margin-top: $padding-md;
+      margin-bottom: $padding-md;
+    }
+
+    &-lg {
+      margin-top: $padding-lg;
+      margin-bottom: $padding-lg;
+    }
+
+    &-xl {
+      margin-top: $padding-xl;
+      margin-bottom: $padding-xl;
+    }
+
+    &-xxl {
+      margin-top: $padding-xxl;
+      margin-bottom: $padding-xxl;
+    }
+  }
+}
