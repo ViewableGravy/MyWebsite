@@ -13,7 +13,18 @@ const initialClasses = classNames({
 });
 
 // author: string
-export const Menu = ({author, style, className}) => {
+/**
+ * @param {{
+ *  author: string,
+ *  style?: object,
+ *  className?: string
+ * }} props
+ */
+export const Menu = ({
+  author, 
+  style,
+  className
+}) => {
   const media = useMedia();
   const [menuOpen, setMenuOpen] = useState(false); //mobile menu open/close state
   const [menuItemsClasses, setMenuItems] = useState(initialClasses);

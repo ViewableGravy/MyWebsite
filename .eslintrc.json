@@ -19,6 +19,8 @@
     ],
     "rules": {
         "react/prop-types": "off",
-        "react/display-name": "off"
+        "react/display-name": "off",
+        // suppress errors for missing 'import React' in files
+        "react/react-in-jsx-scope": "off"
     }
 }

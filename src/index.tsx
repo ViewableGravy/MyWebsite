@@ -15,6 +15,7 @@ import { StoreProvider } from './functionality/state/state';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import Overlay from './components/TransitionOverlay';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { About } from "pages/about";
 
 const queryClient = new QueryClient()
 
@@ -36,6 +37,7 @@ root.render(
                   <Route path='/subdomains' element={<Subdomains/>} />
                   <Route path='/login' element={<Login/>} />
                   <Route path='/contact' element={<Contact/>} />
+                  <Route path='/testing' element={<About />} />
                   <Route path='*' element={<Navigate to="/" />} />
                 </Routes>
               </Overlay>
