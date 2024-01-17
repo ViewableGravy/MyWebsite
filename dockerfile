@@ -15,7 +15,7 @@ RUN yarn build
 FROM nginx:latest
 
 #COPY ./gravy.cc/docs /usr/share/nginx/html
-COPY --from=node /usr/src/app/build /usr/share/nginx/html
+COPY --from=node /usr/src/app/dist /usr/share/nginx/html
 COPY ./config/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 4200
