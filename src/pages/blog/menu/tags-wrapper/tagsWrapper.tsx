@@ -18,7 +18,7 @@ export const TagMenu: TTagMenu = ({ data }) => {
   const media = useMedia();
 
   /****** state ******/
-  const [clearTimer, setClearTimer] = useState<NodeJS.Timeout | null>(null);
+  const [clearTimer, setClearTimer] = useState<number | null>(null);
   const tags = useRef<HTMLElement[]>([]); //dunno why I made this a ref instead of state
   const innerContainer = useRef<HTMLDivElement>(null);
 
