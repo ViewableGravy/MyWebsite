@@ -3,9 +3,9 @@ import { TAPIGetDrafts, TAPIGetPosts } from "./types";
 
 import { TAPITag, TDraft, TPost, TTag } from "../../pages/blog/menu/posts/types"
 
-const server = process.env.REACT_APP_BACKEND_SERVER ?? 'localhost';
-const port = process.env.REACT_APP_BACKEND_PORT ?? '3000';
-const protocol = process.env.REACT_APP_BACKEND_PROTOCOL ?? 'http';
+const server = import.meta.env.VITE_APP_BACKEND_SERVER ?? 'localhost';
+const port = import.meta.env.VITE_APP_BACKEND_PORT ?? '3000';
+const protocol = import.meta.env.VITE_APP_BACKEND_PROTOCOL ?? 'http';
 const api = `${protocol}://${server}:${port}/api`
 
 // --------  API to data ----------- //

@@ -1,7 +1,78 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useGlobalState } from "../../functionality/state/[LEGACY]state";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import createTimeline from "../../helpers/functions/createTimeline";
+import Sockets from "hooks/sockets";
+import { faArrowPointer } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const usePreviousValue = <T, >(value: T) => {
+  const ref = React.useRef<T>(value);
+
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+
+  return ref.current;
+}
+
+const VisitorMouse = ({ x, y, username, route }: {
+    x: number,
+    y: number,
+    username: string,
+    route: string,
+}) => {
+  const { pathname } = useLocation();
+  const color = useMemo(() => Math.floor(Math.random()*16777215).toString(16), [username]);
+  const previousPosition = usePreviousValue({ x, y });
+  
+
+  /**
+   * vector indicating direction and momentum of x,y
+   */
+  const getVector = () => {
+    const vector = {
+      x: x - previousPosition.x,
+      y: y - previousPosition.y
+    };
+
+    return vector;
+  }
+
+  // 
+
+  if (pathname !== route) return null;
+
+  return (
+    <div style={{ position: "fixed", left: x, top: y, color, height: 100, width: 100, backgroundColor: 'red', transform: "translate(-50%, -50%)", transition: 'all 0.3s ease-in-out' }}>
+      {/* <FontAwesomeIcon icon={faArrowPointer} style={{ position: "fixed", left: x, top: y, color }} /> */}
+    </div>
+  )
+}
+
+
+
+const VisitorMice = ({ 
+  children 
+}: {
+  children: React.ReactNode
+}) => {
+  const username = useMemo(() => Math.random().toString(36).substring(7), []);
+  const { data, isError, isSuccess } = Sockets.useMousePosition(username);
+
+  return (
+    <>
+      <div style={{ position: "fixed", userSelect: 'none', inset: '0 0 0 0', zIndex: 5, pointerEvents: 'none' }}>
+        {isSuccess && (
+          data?.filter((mouse) => mouse.username !== username).map((mouse) => (
+            <VisitorMouse key={mouse.username} {...mouse} />
+          ))
+        )}
+      </div>
+      {children}
+    </>
+  )
+}
 
 const Overlay = ({ children }: { children: JSX.Element }) => {
   const [state, dispatch] = useGlobalState();
@@ -54,7 +125,9 @@ const Overlay = ({ children }: { children: JSX.Element }) => {
 
   return (
     <>
-      {children}
+      <VisitorMice>
+        {children}
+      </VisitorMice>
       <div className={`overlay ${transition ? 'active' : ''}`} style={{ display: hidden ? 'none' : '' }} />
     </>
   )

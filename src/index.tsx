@@ -26,7 +26,7 @@ root.render(
   <GlobalStateProvider>
     <StoreProvider>
       <QueryClientProvider client={queryClient}>
-        <GoogleReCaptchaProvider reCaptchaKey={process.env.REACT_APP_SITE_KEY as string}>
+        <GoogleReCaptchaProvider reCaptchaKey={import.meta.env.VITE_APP_SITE_KEY as string}>
           <React.StrictMode>
             <Router>
               <Overlay>

@@ -9,13 +9,13 @@ import About from '../menu/about/about';
 import './article.scss'
 
 // eslint-disable-next-line no-undef
-const server = process.env.REACT_APP_BACKEND_SERVER;
+const server = import.meta.env.VITE_APP_BACKEND_SERVER;
 
 // eslint-disable-next-line no-undef
-const port = process.env.REACT_APP_BACKEND_PORT;
+const port = import.meta.env.VITE_APP_BACKEND_PORT;
 
 // eslint-disable-next-line no-undef
-const protocol = process.env.REACT_APP_BACKEND_PROTOCOL;
+const protocol = import.meta.env.VITE_APP_BACKEND_PROTOCOL;
 const url = `${protocol}://${server}:${port}`;
 
 

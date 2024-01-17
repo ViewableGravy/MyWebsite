@@ -8,9 +8,9 @@ import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
 import graphicTop from '../../assets/images/Graphic-Design-Transparent.png'
 
-const server = process.env.REACT_APP_BACKEND_SERVER;
-const port = process.env.REACT_APP_BACKEND_PORT;
-const protocol = process.env.REACT_APP_BACKEND_PROTOCOL;
+const server = import.meta.env.VITE_APP_BACKEND_SERVER;
+const port = import.meta.env.VITE_APP_BACKEND_PORT;
+const protocol = import.meta.env.VITE_APP_BACKEND_PROTOCOL;
 const url = `${protocol}://${server}:${port}/api/contact`;
 
 const useStyles = createUseStyles(styles);
@@ -121,7 +121,7 @@ export const Contact = () => {
             <div className={classes.fieldContainer} ref={submitField}>
               <button type='submit' className={classes.field}>Hold to send</button>
             </div>
-            <ReCAPTCHA ref={captchaRef} sitekey={process.env.REACT_APP_SITE_KEY} size={'invisible'} />
+            <ReCAPTCHA ref={captchaRef} sitekey={import.meta.env.VITE_APP_SITE_KEY} size={'invisible'} />
           </form>
         </div>
       </div>
