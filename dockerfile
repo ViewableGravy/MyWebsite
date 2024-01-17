@@ -1,5 +1,5 @@
 #Install Node (Probably not required at this point) to build and run application
-FROM node:16 as node
+FROM node:20 as node
 WORKDIR /usr/src/app
 
 #Move package.json and install npm packages
