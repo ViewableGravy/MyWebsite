@@ -7,7 +7,7 @@ const server = {
     host: import.meta.env.VITE_APP_BACKEND_SERVER || "localhost",
     port: import.meta.env.VITE_APP_BACKEND_PORT || "3002",
     protocol: import.meta.env.VITE_APP_WEBSOCKET_PROTOCOL || 'wss',
-} satisfies Record<string, string>;
+} as Record<string, string>;
 
 const wsapi = `${server.protocol}://${server.host}:${server.port}/api/socket`;
 

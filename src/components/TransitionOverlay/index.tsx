@@ -44,9 +44,7 @@ const VisitorMouse = ({ x, y, username, route }: {
   if (pathname !== route) return null;
 
   return (
-    <div style={{ position: "fixed", left: x, top: y, color, height: 100, width: 100, backgroundColor: 'red', transform: "translate(-50%, -50%)", transition: 'all 0.3s ease-in-out' }}>
-      {/* <FontAwesomeIcon icon={faArrowPointer} style={{ position: "fixed", left: x, top: y, color }} /> */}
-    </div>
+      <FontAwesomeIcon icon={faArrowPointer} style={{ position: "fixed", left: x, top: y, color, transition: 'all 0.3s ease-in-out' }} />
   )
 }
 
