@@ -67,9 +67,8 @@ const routes = {
   blogArticle: new Route({
     getParentRoute: () => rootRoute,
     path: '/blog/$post',
-
     component: BlogArticle,
-  }),
+  })
 };
 
 const routeTree = rootRoute.addChildren([

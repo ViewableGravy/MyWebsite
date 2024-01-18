@@ -22,7 +22,7 @@ export const PostsCard = ({ post, onMouseLeave, onMouseOver }: TPostCardProps) =
   // normal post
   return (
     <div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} >
-      <Link to={`/blog/${post.slug}`} className={"post-card-link"} >
+      <Link to={`/blog/$post`} params={{ post: post.slug }} className={"post-card-link"} >
         <PublishedCard {...post} />
       </Link>
     </div>
