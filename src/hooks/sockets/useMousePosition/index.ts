@@ -28,8 +28,8 @@ const useLocalMousePosition = () => {
 
     const handleMouseMove = (event: MouseEvent) => {
         mousePosition.current = {
-            x: event.clientX,
-            y: event.clientY,
+            x: event.clientX - window.innerWidth / 2, // mouse position relative to the center of the screen
+            y: event.clientY
         };
         hasMouseMoved.current = true;
         timeout.current && clearTimeout(timeout.current);

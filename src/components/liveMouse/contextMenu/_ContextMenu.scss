@@ -1,0 +1,17 @@
+
+.contextMenu {
+
+    &__item {
+        position: absolute;
+        left: 100px;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.3s ease-in-out;
+        background: #fff;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        z-index: 5;
+        padding-block: 2px;
+    }
+}

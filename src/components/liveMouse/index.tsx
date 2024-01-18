@@ -1,8 +1,11 @@
 import { useRouterState } from "@tanstack/react-router";
-import { useMemo } from "react";
+import React, { CSSProperties, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowPointer } from "@fortawesome/free-solid-svg-icons";
 import sockets from "hooks/sockets";
+import { ContextMenu } from "./contextMenu";
+
+import './_VisitorMice.scss';
 
 const VisitorMouse = ({ x, y, username, route }: {
   x: number,
@@ -15,31 +18,77 @@ const VisitorMouse = ({ x, y, username, route }: {
 
   if (pathname !== route) return null;
 
+  const [scale, setScale] = useState(0.5);
+  const [showContextMenu, setShowContextMenu] = useState(false);
+
+  const toggleScale = () => setScale(scale === 0.5 ? 1 : 0.5);
+  const handleContextMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    setShowContextMenu(true);
+  }
+
+  const styles = {
+    circle: {
+      width: 80,
+      height: 80,
+      transition: 'all 0.3s ease-in-out',
+      left: x + window.innerWidth / 2, 
+      top: y, 
+      position: 'fixed',
+      borderRadius: '50%',
+      border: '2px solid #fff',
+      pointerEvents: 'all'
+    },
+    pointer: {
+      color,
+      position: 'absolute',
+      left: "50%",
+      top: "50%",
+      transform: `translate(-50%, -50%) scale(${scale})`,
+      transition: 'all 0.3s ease-in-out',
+    }
+  } satisfies Record<string, CSSProperties>;
+
+  const contextMenuItems = [
+    { label: 'test', onClick: () => {} }
+  ];
+
   return (
-    <FontAwesomeIcon 
-      icon={faArrowPointer} 
-      style={{ 
-        position: "fixed", 
-        left: x, 
-        top: y, 
-        color, 
-        transition: 'all 0.3s ease-in-out'
-      }} 
-    />
+    <div 
+      style={styles.circle}
+      onMouseEnter={toggleScale}
+      onMouseLeave={toggleScale}
+      onContextMenu={handleContextMenu}
+    >
+      <FontAwesomeIcon 
+        icon={faArrowPointer} 
+        style={styles.pointer}
+        size={"2x"}
+      />
+      {showContextMenu && (
+        <ContextMenu 
+          items={contextMenuItems} 
+          arcRadius={40} 
+          position="right" 
+        />
+      )}
+    </div>
   )
 }
 
-export const VisitorMice = ({ 
-  children 
-}: {
+type TVisitorMice = React.FC<{
   children: React.ReactNode
+}>
+
+export const VisitorMice: TVisitorMice = ({ 
+  children 
 }) => {
   const username = useMemo(() => Math.random().toString(36).substring(7), []);
   const { data, isSuccess } = sockets.useMousePosition(username);
 
   return (
     <>
-      <div style={{ position: "fixed", userSelect: 'none', inset: '0 0 0 0', zIndex: 5, pointerEvents: 'none' }}>
+      <div className="visitorMice">
         {isSuccess && (
           data?.filter((mouse) => mouse.username !== username).map((mouse) => (
             <VisitorMouse key={mouse.username} {...mouse} />
