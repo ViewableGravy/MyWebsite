@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import classNames from 'classnames'
 import './menu.scss'
 import { useStore } from 'functionality/state/state';
 import { logout } from '../../../functionality/authentication/authentication';
-import TLink from '../../../components/TLink';
 import { useMedia } from 'hooks/useMedia';
+import { Link } from '@tanstack/react-router';
 
 const initialClasses = classNames({
   desktop: true,
@@ -53,11 +53,11 @@ export const Menu = ({
       <div id="right" className={menuItemsClasses}> 
         <a href="https://status.gravy.cc/">Uptime</a>
         <a href="https://github.com/ViewableGravy">Github</a>
-        <TLink to="/">Home</TLink>
-        <TLink to="/blog">Blog</TLink>
+        <Link to="/">Home</Link>
+        <Link to="/blog">Blog</Link>
         {
-          !token 
-            ? <TLink to="/login">Login</TLink>
+          token 
+            ? <Link to="/login">Login</Link>
             : <button onClick={() => logout(dispatch)}>Logout</button> 
         }
         {['xs', 'sm'].includes(media) && <div id="close" onClick={() => setMenuOpen(!menuOpen)}></div>}

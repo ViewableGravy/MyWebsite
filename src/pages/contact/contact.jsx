@@ -3,10 +3,10 @@ import { createUseStyles } from "react-jss"
 import { Menu } from "../blog/menu/menu"
 import { ContactInformation } from "./contact_information"
 import { ContactForm } from "./contact_form"
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 
 const styles = {
   background: {
-    // '--primary': '#2e0249',
     '--primary': '#191731',
     '--font-deselected': '#8e7c9b',
     '--secondary': '#a91079',
@@ -45,12 +45,12 @@ export const Contact = () => {
   const classes = useStyle();
 
   return (
-    <>
+    <GoogleReCaptchaProvider reCaptchaKey={import.meta.env.VITE_APP_SITE_KEY}>
       <Menu author="ViewableGravy" style={styles.menu} />
       <section className={classes.background}>
         <ContactInformation />
         <ContactForm />
       </section>
-    </>
+    </GoogleReCaptchaProvider>
   );
 }

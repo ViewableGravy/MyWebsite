@@ -1,8 +1,8 @@
 import React, { useState, useRef }from 'react';
-import { Link } from 'react-router-dom';
 import { useMedia } from "hooks/useMedia/index";
 import { TTag } from '../posts/types';
 import './tagsWrapper.scoped.scss';
+import { Link } from '@tanstack/react-router';
 
 //todo - add toggle (+) on left to toggle between on and off rather than just clicking the text
 //on mobile this can be hidden and just clicking on an option while closed will toggle the state on (and show a minus to close)

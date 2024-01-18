@@ -1,4 +1,3 @@
-import { useParams } from 'react-router-dom'
 import { BlogContainer } from '../blog';
 import { PostsHead } from '../menu/posts/head';
 import { GenerateTag } from '../menu/tags-wrapper/tagsWrapper';
@@ -7,6 +6,7 @@ import Menu from '../menu/menu'
 import useAxios from "axios-hooks";
 import About from '../menu/about/about';
 import './article.scss'
+import { useParams } from '@tanstack/react-router';
 
 // eslint-disable-next-line no-undef
 const server = import.meta.env.VITE_APP_BACKEND_SERVER;
@@ -20,10 +20,8 @@ const url = `${protocol}://${server}:${port}`;
 
 
 export const BlogArticle = () => {
-  const { article } = useParams();
-  const [{ data }] = useAxios( `${url}/api/blog/posts/${article}`);
-
-  console.log(data)
+  const params = useParams();
+  const [{ data }] = useAxios( `${url}/api/blog/posts/${params?.post}`);
   
   return (
     <BlogContainer>

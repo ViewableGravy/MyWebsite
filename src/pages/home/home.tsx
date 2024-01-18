@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './home.scss'
-import TLink from '../../components/TLink';
 
 import BlogImage from 'assets/images/home/blog_test_2.webp';
 import ContactImage from '../../assets/images/home/contact_me.webp';
 import SubdomainsImage from '../../assets/images/home/subdomains.webp';
+import { Link } from '@tanstack/react-router';
 
 export const Home = () => {
   const [ welcome, setWelcome ] = useState(true);
@@ -37,18 +37,18 @@ export const Home = () => {
         <div className='home_outer'>
           <div className='background'>
             <div>
-              <TLink className='active' to={'/subdomains'}>
+              <Link className='active' to={'/subdomains'}>
                 <img src={SubdomainsImage} alt="test"/>
                 <h1 className='title first'>Services</h1>
-              </TLink>
-              <TLink className={'active'} to={'/contact'}>
+              </Link>
+              <Link className={'active'} to={'/contact'}>
                 <img src={ContactImage} alt="test"/>
                 <h1 className='title second'>Contact</h1>
-              </TLink>
-              <TLink className='active' to={'/blog'}>
+              </Link>
+              <Link className='active' to={'/blog'}>
                 <img src={BlogImage} alt="test"/>
                 <h1 className='title third'>Blog</h1>
-              </TLink>
+              </Link>
             </div>
           </div>
         </div>

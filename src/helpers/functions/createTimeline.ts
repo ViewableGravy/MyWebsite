@@ -1,4 +1,4 @@
-const createTimeline = (stages: { event: () => void, delay: number }[]) => {
+export const createTimeline = (stages: { event: () => void, delay: number }[]) => {
   return () => {
     const length = stages.length;
     let currentStage = 0;
@@ -20,4 +20,7 @@ const createTimeline = (stages: { event: () => void, delay: number }[]) => {
   };
 }
 
-export default createTimeline;
+export const timelineEvent = (event: () => void, delay: number) => ({
+  event,
+  delay
+})

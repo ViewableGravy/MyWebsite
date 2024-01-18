@@ -1,6 +1,6 @@
+import { useRouterState } from '@tanstack/react-router';
 import { safeParse } from 'hooks/useStatus';
-import { useEffect, useMemo, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 const server = {
@@ -57,7 +57,7 @@ export const useMousePosition = (username: string) => {
         shouldReconnect: () => true,
     });
     const { mousePosition, hasMouseMoved } = useLocalMousePosition();
-    const { pathname } = useLocation();
+    const { location: { pathname } } = useRouterState();
 
     useEffect(() => {
         const interval = setInterval(() => {

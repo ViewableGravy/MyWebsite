@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
 import { useStore } from 'functionality/state/state';
 import API from '../../api/global';
 import './login.scss'
 
 import loginImage from '../../assets/images/Lleyton.png';
+import { useNavigate } from '@tanstack/react-router';
 
 //on load should check if in cookies and then skip this page
 export const Login = () => {

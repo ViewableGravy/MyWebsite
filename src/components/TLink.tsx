@@ -7,6 +7,11 @@ type TTLinkProps = {
   className?: string;
 }
 
+/**
+ * @deprecated
+ * 
+ * Temporarily deprecated due to introducing tanstack router.
+ */
 const TLink = ({ children, to, ...props }: TTLinkProps) => {
   const [, dispatch] = useGlobalState();
 
