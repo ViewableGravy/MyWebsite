@@ -31,6 +31,8 @@ export const Home = () => {
     document.removeEventListener("mousedown", incrementState);
   }
 
+  console.log('Application ', import.meta.env.DEV ? 'is in development mode' : 'has been built')
+
   const main = (): JSX.Element => { 
     return (
       <>

@@ -1,5 +1,4 @@
-import { Link, NotFoundRoute, Outlet, Register, RootRoute, Route, Router } from '@tanstack/react-router';
-import Overlay from 'components/TransitionOverlay';
+import { NotFoundRoute, Outlet, RootRoute, Route, Router } from '@tanstack/react-router';
 import { VisitorMice } from 'components/liveMouse';
 import { About } from 'pages/about';
 import BlogArticle from 'pages/blog/article/article';
@@ -11,7 +10,7 @@ import Subdomains from 'pages/subdomains/subdomains';
 import React, { Suspense } from 'react';
 
 const TanStackRouterDevtools =
-  import.meta.env.NODE_ENV === 'production'
+  import.meta.env.PROD
     ? () => null // Render nothing in production
     : React.lazy(() =>
         // Lazy load in development
