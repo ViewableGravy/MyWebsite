@@ -16,8 +16,6 @@ const VisitorMouse = ({ x, y, username, route }: {
   const { location: { pathname } } = useRouterState();
   const color = useMemo(() => Math.floor(Math.random()*16777215).toString(16), [username]);
 
-  if (pathname !== route) return null;
-
   const [scale, setScale] = useState(0.5);
   const [showContextMenu, setShowContextMenu] = useState(false);
 
@@ -26,6 +24,8 @@ const VisitorMouse = ({ x, y, username, route }: {
     e.preventDefault();
     setShowContextMenu(true);
   }
+
+  if (pathname !== route) return null;
 
   const styles = {
     circle: {
