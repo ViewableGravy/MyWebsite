@@ -26,7 +26,6 @@
     "react-jss": "^10.10.0",
     "react-query": "^3.39.3",
     "react-responsive-carousel": "^3.2.23",
-    "react-router-dom": "^6.21.2",
     "react-swipeable": "^7.0.1",
     "react-transition-group": "^4.4.5",
     "react-use-websocket": "^4.5.0",
