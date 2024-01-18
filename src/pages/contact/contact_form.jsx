@@ -285,8 +285,6 @@ async function handleSubmit(values, captchaRef, setSubmitting) {
       captchaToken: token,
     });
 
-    console.log(result);
-
   } catch (error) {
     console.log('An error has occured, information below:\n' + error)
   } finally {

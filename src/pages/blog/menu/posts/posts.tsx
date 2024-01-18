@@ -18,7 +18,7 @@ export const Posts = () => {
     <>
       <PostsHead title={title} />
       <div className="posts">
-        <Hover onSize={['md', 'lg', 'xl', 'dual-lg', 'dual-xl']}>
+        <Hover onSize={['md', 'lg', 'xl', 'dual-lg', 'dual-xl', 'dual-xxl']}>
           {({ onMouseOver, onMouseLeave }) => (
             <ConditionalRender
               condition={!isLoading && !error}

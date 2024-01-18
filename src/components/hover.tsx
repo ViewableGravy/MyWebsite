@@ -38,7 +38,7 @@ export const Hover: Hover = ({ children, onSize }) => {
   const isMatchMedia = useMedia(onSize);
   const classes = useStyles();
   const ref = React.useRef<HTMLDivElement | null>(null);
-
+  
   const onMouseLeave = React.useCallback(() => {
     if (!ref.current) 
       return;
