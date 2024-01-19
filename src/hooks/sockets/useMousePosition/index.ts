@@ -59,6 +59,12 @@ export const useMousePosition = (username: string) => {
     const { mousePosition, hasMouseMoved } = useLocalMousePosition();
     const { location: { pathname } } = useRouterState();
 
+    const _data = safeParse<TUseMousePositionMessage>(lastMessage?.data);
+    const isInitializing = readyState !== ReadyState.OPEN;
+    const isError = _data && 'error' in _data;
+    const isSuccess = _data && 'data' in _data && _data.event === 'mousePosition';
+    const data = _data && 'error' in _data ? null : _data?.data ?? null
+
     useEffect(() => {
         const interval = setInterval(() => {
             if (!hasMouseMoved.current) return;
@@ -76,12 +82,6 @@ export const useMousePosition = (username: string) => {
 
         return () => clearInterval(interval);
     }, [pathname]);
-
-    const _data = safeParse<TUseMousePositionMessage>(lastMessage?.data);
-    const isInitializing = readyState !== ReadyState.OPEN;
-    const isError = _data && 'error' in _data;
-    const isSuccess = _data && 'data' in _data && _data.event === 'mousePosition';
-    const data = _data && 'error' in _data ? null : _data?.data ?? null
 
     return {
         data,
