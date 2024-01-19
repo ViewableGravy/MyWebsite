@@ -3,6 +3,7 @@ import { useRouterState } from "@tanstack/react-router";
 import { faArrowPointer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ContextMenu } from "../contextMenu";
+import { useDelayedCallback } from "./useDelay";
 
 const generateStyles = ({ x, y, color, scale }: {
   x: number,
@@ -18,8 +19,9 @@ const generateStyles = ({ x, y, color, scale }: {
     top: y, 
     position: 'fixed',
     borderRadius: '50%',
-    border: '2px solid #fff',
-    pointerEvents: 'none'
+    // border: '2px solid #fff',
+    pointerEvents: 'none',
+    transform: 'scale(2)'
   },
   pointer: {
     color,
@@ -37,15 +39,18 @@ export const OwnVisitorMouse = ({ x, y, username, route }: {
     username: string,
     route: string,
   }) => {
-    /***** HOOKS *****/
-    const { location: { pathname } } = useRouterState();
-    const previousOverlapRef = useRef<boolean>(false);
-    
     /***** STATE *****/
     const color = useMemo(() => Math.floor(Math.random()*16777215).toString(16), [username]);
     const ref = useRef<HTMLDivElement | null>(null);
     const [scale, setScale] = useState(0.5);
     const [showContextMenu, setShowContextMenu] = useState(false);
+
+    /***** HOOKS *****/
+    const { location: { pathname } } = useRouterState();
+    const previousOverlapRef = useRef<boolean>(false);
+    const { initiate, clear } = useDelayedCallback(() => {
+      setShowContextMenu(false);
+    }, 1000)
 
     /***** EFFECTS *****/
     useEffect(() => {
@@ -76,11 +81,14 @@ export const OwnVisitorMouse = ({ x, y, username, route }: {
         const distance = Math.sqrt(Math.pow(x - ref.current.offsetLeft, 2) + Math.pow(y - ref.current.offsetTop, 2));
         if (distance > 40 && previousOverlapRef.current) {
           previousOverlapRef.current = false;
+          if (!showContextMenu)
+            initiate();
           return setScale(0.5);
         } 
         
         if (distance < 40 && !previousOverlapRef.current) {
           previousOverlapRef.current = true;
+          clear();
           return setScale(1);
         }
       }
@@ -92,7 +100,7 @@ export const OwnVisitorMouse = ({ x, y, username, route }: {
         window.removeEventListener('contextmenu', handleContextMenu);
         window.removeEventListener('mousemove', handleHover);
       }
-    }, [])
+    }, [initiate, clear, showContextMenu])
 
     /**** RENDER HELPERS *****/
     const styles = generateStyles({ x, y, color, scale })
@@ -117,7 +125,8 @@ export const OwnVisitorMouse = ({ x, y, username, route }: {
           <ContextMenu 
             items={contextMenuItems} 
             arcRadius={40} 
-            position="right" 
+            position="right"
+            delay={{ initiate, clear }}
           />
         )}
       </div>

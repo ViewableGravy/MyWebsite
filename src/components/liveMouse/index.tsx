@@ -19,8 +19,8 @@ export const VisitorMice: TVisitorMice = ({
   const { data, isSuccess } = sockets.useMousePosition(username);
 
   const _data = [...data ?? [], {
-    x: 400,
-    y: 400,
+    x: 100,
+    y: 100,
     route: '/',
     username: 'testing-mouse'
   }] satisfies typeof data

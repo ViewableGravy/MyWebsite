@@ -1,17 +1,52 @@
 
 .contextMenu {
-
+    // border: 1px solid red;
+    width: 160px;
+    pointer-events: all;
+    position: absolute;
+    left: 80px;
+    top: -2px;
+    
     &__item {
+        pointer-events: all;
+        all: unset;
         position: absolute;
         left: 100px;
         top: 50%;
-        transform: translate(-50%, -50%);
+        transform: translateY(-50%);
         transition: all 0.3s ease-in-out;
         background: #fff;
-        border-radius: 5px;
         padding: 10px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        padding-right: 20px;
         z-index: 5;
-        padding-block: 2px;
+        padding-block: 4px;
+        min-width: 200px;
+    }
+    
+    &__background {
+        pointer-events: all;
+        width: 162px;
+        margin-left: -82px;
+    }
+
+    &__option3 {
+        width: 40px;
+        position: absolute;
+        left: 35px;
+        top: 46px;
+        cursor: pointer;
+
+        &Hover {
+            transition: opacity 0.3s ease-in-out;
+            width: 51px;
+            position: absolute;
+            left: 28px;
+            top: 45px;
+            opacity: 0;
+
+            &--show {
+                opacity: 1;
+            }
+        }
     }
 }
