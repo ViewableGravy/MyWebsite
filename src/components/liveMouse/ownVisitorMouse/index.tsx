@@ -21,7 +21,7 @@ const generateStyles = ({ x, y, color, scale }: {
     borderRadius: '50%',
     // border: '2px solid #fff',
     pointerEvents: 'none',
-    transform: 'scale(2)'
+    // transform: 'scale(2)'
   },
   pointer: {
     color,
@@ -104,9 +104,9 @@ export const OwnVisitorMouse = ({ x, y, username, route }: {
 
     /**** RENDER HELPERS *****/
     const styles = generateStyles({ x, y, color, scale })
-    const contextMenuItems = [
-      { label: 'test', onClick: () => {} }
-    ];
+    const contextMenuItems = {
+      third: () => { console.log('third') }
+    }
 
     /***** RENDER *****/
     if (pathname !== route) return null;
@@ -121,14 +121,11 @@ export const OwnVisitorMouse = ({ x, y, username, route }: {
           style={styles.pointer}
           size={"2x"}
         />
-        {showContextMenu && (
-          <ContextMenu 
-            items={contextMenuItems} 
-            arcRadius={40} 
-            position="right"
-            delay={{ initiate, clear }}
-          />
-        )}
+        <ContextMenu 
+          isOpen={showContextMenu}
+          items={contextMenuItems} 
+          delay={{ initiate, clear }}
+        />
       </div>
     )
   }
