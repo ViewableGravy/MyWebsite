@@ -37,10 +37,10 @@ export const ContextMenu: TContextMenu = ({ items, delay, isOpen }) => {
   return (
     <div 
       className={classes.contextMenu}
+      >
+      <img
       onMouseEnter={delay?.clear}
       onMouseLeave={delay?.initiate}
-    >
-      <img
         className={classes.background} 
         src={contextMenuBackground} 
         alt="context menu" 
