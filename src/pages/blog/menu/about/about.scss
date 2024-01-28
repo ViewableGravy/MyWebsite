@@ -3,12 +3,12 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin: 10px 10px 0 10px;
-  // border-top: 1px solid grey;
-  // border-bottom: 1px solid grey;
-  border-top: 1px solid rgb(55, 101, 122);
-  border-bottom: 1px solid rgb(55, 101, 122);
-  padding: 20px 0 20px 0;
+  margin: 40px 10px 0 10px;
+
+  box-shadow: #18001e 0px 7px 20px 0px;
+  border-radius: 30px;
+  padding: 20px 35px;
+  background-color: #24264f;
 
   .circle {
     overflow: hidden;
@@ -32,6 +32,7 @@
 
   @media (max-width: 576px) {
     flex-direction: column;
+    padding-inline: 10px;
 
     p {
       margin-left: 0;
