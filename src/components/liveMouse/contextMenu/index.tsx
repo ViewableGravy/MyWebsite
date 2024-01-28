@@ -33,6 +33,16 @@ export const ContextMenu: TContextMenu = ({ items, delay, isOpen }) => {
     option3: 'contextMenu__option3',
   }), [isOpen, option3Hovered])
 
+  const onMouseEnter = () => {
+    setOption3Hovered(true);
+    delay?.clear();
+  };
+  const onMouseLeave = () => {
+    setOption3Hovered(false);
+    delay?.initiate();
+  }
+  const mouseEvents = { onMouseEnter, onMouseLeave };
+
   return (
     <div 
       className={classes.contextMenu}
@@ -50,14 +60,14 @@ export const ContextMenu: TContextMenu = ({ items, delay, isOpen }) => {
             className={classes.option3Hover}
             src={selectedBackground3}
             alt="follow-hover-effect"
+            {...mouseEvents}
           />
           <img
             className={classes.option3}
             src={follow}
             alt="follow"
             onClick={items.third}
-            onMouseEnter={() => setOption3Hovered(true)}
-            onMouseLeave={() => setOption3Hovered(false)}
+            {...mouseEvents}
           />
         </>
       )}

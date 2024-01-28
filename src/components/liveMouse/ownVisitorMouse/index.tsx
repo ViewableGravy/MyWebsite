@@ -1,11 +1,12 @@
 import { CSSProperties, useEffect, useMemo, useRef, useState } from "react";
-import { useRouterState } from "@tanstack/react-router";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { faArrowPointer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ContextMenu } from "../contextMenu";
 import { useDelayedCallback } from "./useDelay";
 import { useAtom } from "jotai/react";
 import { store } from "store";
+import { usePrevious } from "hooks/usePrevious";
 
 const generateStyles = ({ x, y, color, scale }: {
   x: number,
@@ -44,7 +45,7 @@ export const OwnVisitorMouse = ({ x, y, username, route }: {
     const ref = useRef<HTMLDivElement | null>(null);
     const [scale, setScale] = useState(0.5);
     const [showContextMenu, setShowContextMenu] = useState(false);
-    const [, setFollowing] = useAtom(store.visitorMice.following.followerState)
+    const [{ following, isFollowing }, setFollowing] = useAtom(store.visitorMice.following.followerState)
 
     /***** HOOKS *****/
     const { location: { pathname } } = useRouterState();
@@ -52,6 +53,8 @@ export const OwnVisitorMouse = ({ x, y, username, route }: {
     const { initiate, clear } = useDelayedCallback(() => {
       setShowContextMenu(false);
     }, 1000)
+    const previousRoute = usePrevious(route)
+    const navigate = useNavigate();
 
     /***** EFFECTS *****/
     useEffect(() => {
@@ -102,6 +105,13 @@ export const OwnVisitorMouse = ({ x, y, username, route }: {
         window.removeEventListener('mousemove', handleHover);
       }
     }, [initiate, clear, showContextMenu])
+
+    useEffect(() => {
+      if (!isFollowing || following !== username) return;
+      if (route !== previousRoute) {
+        navigate({ to: route })
+      }
+    }, [route, following, isFollowing, username, previousRoute])
 
     /**** RENDER HELPERS *****/
     const styles = generateStyles({ x, y, color, scale })
