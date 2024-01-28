@@ -20,7 +20,6 @@ type TContextMenu = React.FC<{
 }>
 
 export const ContextMenu: TContextMenu = ({ items, delay, isOpen }) => {
-  
   const [option3Hovered, setOption3Hovered] = useState(false);
 
   const classes = useMemo(() => ({
@@ -37,10 +36,10 @@ export const ContextMenu: TContextMenu = ({ items, delay, isOpen }) => {
   return (
     <div 
       className={classes.contextMenu}
-      >
+    >
       <img
-      onMouseEnter={delay?.clear}
-      onMouseLeave={delay?.initiate}
+        onMouseEnter={delay?.clear}
+        onMouseLeave={delay?.initiate}
         className={classes.background} 
         src={contextMenuBackground} 
         alt="context menu" 

@@ -1,5 +1,6 @@
 
 .contextMenu {
+    border: 1px solid red;
     pointer-events: all;
     position: absolute;
     left: 160px;
@@ -30,6 +31,7 @@
     }
     
     &__background {
+        border: 1px solid red;
         pointer-events: all;
         width: 324px;
         margin-left: -202px;

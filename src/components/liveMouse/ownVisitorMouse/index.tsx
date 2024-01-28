@@ -4,6 +4,8 @@ import { faArrowPointer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ContextMenu } from "../contextMenu";
 import { useDelayedCallback } from "./useDelay";
+import { useAtom } from "jotai/react";
+import { store } from "store";
 
 const generateStyles = ({ x, y, color, scale }: {
   x: number,
@@ -19,9 +21,7 @@ const generateStyles = ({ x, y, color, scale }: {
     top: y, 
     position: 'fixed',
     borderRadius: '50%',
-    // border: '2px solid #fff',
     pointerEvents: 'none',
-    // transform: 'scale(2)'
   },
   pointer: {
     color,
@@ -44,6 +44,7 @@ export const OwnVisitorMouse = ({ x, y, username, route }: {
     const ref = useRef<HTMLDivElement | null>(null);
     const [scale, setScale] = useState(0.5);
     const [showContextMenu, setShowContextMenu] = useState(false);
+    const [, setFollowing] = useAtom(store.visitorMice.following.followerState)
 
     /***** HOOKS *****/
     const { location: { pathname } } = useRouterState();
@@ -105,7 +106,7 @@ export const OwnVisitorMouse = ({ x, y, username, route }: {
     /**** RENDER HELPERS *****/
     const styles = generateStyles({ x, y, color, scale })
     const contextMenuItems = {
-      third: () => { console.log('third') }
+      third: () => { setFollowing(username) }
     }
 
     /***** RENDER *****/
