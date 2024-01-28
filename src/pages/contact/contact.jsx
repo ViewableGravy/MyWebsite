@@ -1,9 +1,7 @@
-import React from "react"
 import { createUseStyles } from "react-jss"
 import { Menu } from "../blog/menu/menu"
 import { ContactInformation } from "./contact_information"
 import { ContactForm } from "./contact_form"
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 
 const styles = {
   background: {
@@ -45,12 +43,12 @@ export const Contact = () => {
   const classes = useStyle();
 
   return (
-    <GoogleReCaptchaProvider reCaptchaKey={import.meta.env.VITE_APP_SITE_KEY}>
+    <>
       <Menu author="ViewableGravy" style={styles.menu} />
       <section className={classes.background}>
         <ContactInformation />
         <ContactForm />
       </section>
-    </GoogleReCaptchaProvider>
+    </>
   );
 }

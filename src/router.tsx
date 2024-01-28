@@ -8,6 +8,7 @@ import Home from 'pages/home/home';
 import Login from 'pages/login/login';
 import Subdomains from 'pages/subdomains/subdomains';
 import React, { Suspense } from 'react';
+import { DevTools } from 'jotai-devtools'
 
 const TanStackRouterDevtools =
   import.meta.env.PROD
@@ -26,7 +27,8 @@ const rootRoute = new RootRoute({
     <Suspense fallback={null}>
       <VisitorMice>
         <Outlet />
-        <TanStackRouterDevtools />
+        <DevTools />
+        <TanStackRouterDevtools position='bottom-right' />
       </VisitorMice>
     </Suspense>
   ),

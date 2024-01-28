@@ -3,8 +3,6 @@ import { createUseStyles } from 'react-jss';
 import { styles } from './style.js';
 import { Menu } from '../blog/menu/menu.js';
 import { useReducer } from 'react';
-
-import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
 import graphicTop from '../../assets/images/Graphic-Design-Transparent.png'
 
@@ -121,7 +119,6 @@ export const Contact = () => {
             <div className={classes.fieldContainer} ref={submitField}>
               <button type='submit' className={classes.field}>Hold to send</button>
             </div>
-            <ReCAPTCHA ref={captchaRef} sitekey={import.meta.env.VITE_APP_SITE_KEY} size={'invisible'} />
           </form>
         </div>
       </div>

@@ -1,11 +1,11 @@
-import React from "react";
+import { useRef } from "react";
 import { createUseStyles } from "react-jss";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import Reaptcha from 'reaptcha'
 
 
 const styles = {
@@ -185,7 +185,7 @@ const url = `${protocol}://${server}:${port}/api/contact`;
 
 export const ContactForm = () => {
   const classes = useStyle();
-  const captchaRef = React.useRef();
+  const captchaRef = useRef();
   const [sliderValue, setSliderValue] = useState(50);
 
   return (
@@ -198,10 +198,16 @@ export const ContactForm = () => {
           interests: [], 
         }}
         validate={validateForm}
-        onSubmit={(values, { setSubmitting }) => handleSubmit({ ...values, sliderValue }, captchaRef, setSubmitting)}
+        onSubmit={() => {
+          captchaRef.current.execute();
+        }}
       >
-        {({ isSubmitting, values, handleChange }) => (
+        {({ isSubmitting, values, handleChange, setSubmitting }) => (
           <Form className={classes.form}>
+            <Reaptcha sitekey={import.meta.env.VITE_APP_SITE_KEY} ref={captchaRef} size="invisible" onVerify={(res) => {
+              handleSubmit({ ...values, sliderValue }, res, setSubmitting)
+            }} />
+
             <div>
               <fieldset className={classes.interests}>
                 <legend className={classes.legend}>{"I'm interested In..."}</legend>
@@ -236,9 +242,7 @@ export const ContactForm = () => {
                 name="message"
                 value={values.message}
                 onChange={handleChange}
-              ></textarea>
-
-              <ReCAPTCHA ref={captchaRef} sitekey={import.meta.env.VITE_APP_SITE_KEY} size={'invisible'} />
+              />
             </div>
 
             <button type="submit" className={classes.submit} disabled={isSubmitting} >
@@ -269,12 +273,19 @@ function validateForm(values) {
   return errors;
 }
 
-
-
-async function handleSubmit(values, captchaRef, setSubmitting) {
+/**
+ * 
+ * @param {Record<string, any>} values 
+ * @param {string} token 
+ * @param {(boolean) => void} setSubmitting 
+ * @returns 
+ */
+async function handleSubmit(values, token, setSubmitting) {
   try {
-    const token = await captchaRef.current.executeAsync();
-    captchaRef.current.reset();
+    if (!token) {
+      console.warn('no token');
+      return;
+    }
 
     const result = await axios.post(url, {
       name: values.name,
