@@ -18,6 +18,9 @@ const port = import.meta.env.VITE_APP_BACKEND_PORT;
 const protocol = import.meta.env.VITE_APP_BACKEND_PROTOCOL;
 const url = `${protocol}://${server}:${port}`;
 
+const getYear = () => {
+  return new Date().getFullYear();
+}
 
 export const BlogArticle = () => {
   const params = useParams();
@@ -120,7 +123,7 @@ const Footer = () => {
     <div className={"blog-article footer"}>
       <About style={{ marginRight: '20px', marginLeft: '20px'}}/>
       <Socials/>
-      <p className={'blog-article footer copyright'}>© 2023. All rights reserved. Made by ViewableGravy</p>
+      <p className={'blog-article footer copyright'}>© {getYear()}. All rights reserved. Made by ViewableGravy</p>
     </div>
   )
 }
