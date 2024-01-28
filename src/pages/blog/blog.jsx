@@ -1,4 +1,3 @@
-import React from 'react';
 import { Menu } from './menu/menu'
 import { About } from './menu/about/about'
 import Posts from './menu/posts/posts';
@@ -16,7 +15,7 @@ export const Blog = () => {
 
 export const BlogContainer = ({ children }) => {
   return (
-    <div className={"blog_container"}>
+    <div className="blog_container">
       <div id={"outer"}>
         <div id={"background"}>
           {children}

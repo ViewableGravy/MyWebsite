@@ -1,11 +1,10 @@
-import React from "react";
-import Socials from "./_socials";
+import { Socials } from "./_socials";
 
 const getYear = () => {
   return new Date().getFullYear();
 }
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <div className={"footer"}>
       <Socials/>
@@ -13,5 +12,3 @@ const Footer = () => {
     </div>
   )
 }
-
-export default Footer;

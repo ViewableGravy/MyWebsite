@@ -4,9 +4,8 @@ import { PostsHead } from "./head";
 import { PostsCard } from "./postcard";
 import { ConditionalRender } from "../../../../components/conditionalRender/turneryRender";
 import { useGetPostsOrDraftsQuery } from "./queries";
-import Footer from "./_footer";
+import { Footer } from "./_footer";
 import useConditional from "../../../../hooks/useConditional";
-import React from "react";
 import './posts.scss'
 
 export const Posts = () => {
