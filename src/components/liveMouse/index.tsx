@@ -18,19 +18,12 @@ export const VisitorMice: TVisitorMice = ({
   const username = useMemo(() => Math.random().toString(36).substring(7), []);
   const { data, isSuccess } = sockets.useMousePosition(username);
 
-  const _data = [...data ?? [], {
-    x: 100,
-    y: 100,
-    route: '/',
-    username: 'testing-mouse'
-  }] satisfies typeof data
-
   /*****RENDER *****/
   return (
     <>
       <div className="visitorMice">
         {isSuccess && (
-          _data?.filter((mouse) => mouse.username !== username).map((mouse) => (
+          data?.filter((mouse) => mouse.username !== username).map((mouse) => (
             <OwnVisitorMouse key={mouse.username} {...mouse} />
           ))
         )}

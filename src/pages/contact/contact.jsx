@@ -45,12 +45,12 @@ export const Contact = () => {
   const classes = useStyle();
 
   return (
-    <GoogleReCaptchaProvider reCaptchaKey={import.meta.env.VITE_APP_SITE_KEY}>
+    <>
       <Menu author="ViewableGravy" style={styles.menu} />
       <section className={classes.background}>
         <ContactInformation />
         <ContactForm />
       </section>
-    </GoogleReCaptchaProvider>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import * as reactdomclient from 'react-dom/client'
 import './index.css';
 import { GlobalStateProvider } from './functionality/state/[LEGACY]state';
