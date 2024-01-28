@@ -1,8 +1,7 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { createUseStyles } from "react-jss";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'

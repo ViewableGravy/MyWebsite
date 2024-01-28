@@ -1,9 +1,7 @@
-import React from "react"
 import { createUseStyles } from "react-jss"
 import { Menu } from "../blog/menu/menu"
 import { ContactInformation } from "./contact_information"
 import { ContactForm } from "./contact_form"
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 
 const styles = {
   background: {
