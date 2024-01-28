@@ -1,0 +1,35 @@
+.OwnVisitorMouse {
+    &__circle {
+        width: 80px;
+        height: 80px;
+        transition: all 0.3s ease-in-out;
+        position: fixed;
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    &__pointer {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transition: all 0.3s ease-in-out;
+    }
+
+    &__stop {
+        padding: 20px;
+        background-color: white;
+        position: fixed;
+        inset: 20px 20px auto auto;
+        pointer-events: all;
+        border-radius: 20px;
+        font-size: large;
+        font-weight: 600;
+        opacity: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            opacity: 70%;
+        }
+    }
+}

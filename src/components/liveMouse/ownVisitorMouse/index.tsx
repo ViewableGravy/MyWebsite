@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useMemo, useRef, useState } from "react";
+import {  useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { faArrowPointer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,32 +7,7 @@ import { useDelayedCallback } from "./useDelay";
 import { useAtom } from "jotai/react";
 import { store } from "store";
 import { usePrevious } from "hooks/usePrevious";
-
-const generateStyles = ({ x, y, color, scale }: {
-  x: number,
-  y: number,
-  color: string,
-  scale: number
-}) => ({
-  circle: {
-    width: 80,
-    height: 80,
-    transition: 'all 0.3s ease-in-out',
-    left: x + window.innerWidth / 2, 
-    top: y, 
-    position: 'fixed',
-    borderRadius: '50%',
-    pointerEvents: 'none',
-  },
-  pointer: {
-    color,
-    position: 'absolute',
-    left: "50%",
-    top: "50%",
-    transform: `translate(-50%, -50%) scale(${scale})`,
-    transition: 'all 0.3s ease-in-out',
-  }
-}) satisfies Record<string, CSSProperties>;
+import './_OwnVisitorMouse.scss'
 
 export const OwnVisitorMouse = ({ x, y, username, route }: {
     x: number,
@@ -114,29 +89,42 @@ export const OwnVisitorMouse = ({ x, y, username, route }: {
     }, [route, following, isFollowing, username, previousRoute])
 
     /**** RENDER HELPERS *****/
-    const styles = generateStyles({ x, y, color, scale })
     const contextMenuItems = {
       third: () => { setFollowing(username) }
+    }
+    const classes = {
+      circle: "OwnVisitorMouse__circle",
+      pointer: "OwnVisitorMouse__pointer",
+      stop: "OwnVisitorMouse__stop"
     }
 
     /***** RENDER *****/
     if (pathname !== route) return null;
   
     return (
-      <div 
-        ref={ref}
-        style={styles.circle}
-      >
-        <FontAwesomeIcon 
-          icon={faArrowPointer} 
-          style={styles.pointer}
-          size={"2x"}
-        />
-        <ContextMenu 
-          isOpen={showContextMenu}
-          items={contextMenuItems} 
-          delay={{ initiate, clear }}
-        />
-      </div>
+      <>
+        <div 
+          ref={ref} 
+          className={classes.circle} 
+          style={{ left: (x + window.innerWidth / 2) - 40, top: y - 45 }}
+        >
+          <FontAwesomeIcon 
+            icon={faArrowPointer} 
+            className={classes.pointer}
+            size={"2x"}
+            style={{ color, transform: `translate(-50%, -50%) scale(${scale})` }}
+          />
+          <ContextMenu 
+            isOpen={showContextMenu}
+            items={contextMenuItems} 
+            delay={{ initiate, clear }}
+          />
+        </div>
+        {isFollowing && following === username && (
+          <button className={classes.stop} onClick={() => setFollowing()}>
+            Stop Following
+          </button>
+        )}
+      </>
     )
   }
