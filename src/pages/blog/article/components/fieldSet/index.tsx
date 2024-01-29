@@ -1,8 +1,6 @@
-type TOwnFieldset = React.FC<{
-  legend: string,
-  content: string,
-  color?: string
-}>
+import type { TComponentProps } from "../componentConstructor";
+
+type TOwnFieldset = React.FC<TComponentProps<'Fieldset'>>
 
 export const Fieldset: TOwnFieldset = ({ legend, content, color = '#d6a21a'}) => {
   if (!content?.length) return null;

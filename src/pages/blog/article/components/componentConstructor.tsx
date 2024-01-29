@@ -5,6 +5,10 @@ import { z } from "zod";
 
 type PropsOf<T> = T extends React.FC<infer P> ? P : never;
 
+/**
+ * Base object with validators for the props of components. Component props are based on the validator types and are accessible
+ * via the TComponentProps type. This is used to ensure that the component props are always in sync with the validator.
+ */
 const validators = {
   Paragraph: z.object({
     type: z.literal('Paragraph'),
@@ -22,35 +26,31 @@ const validators = {
   })
 }
 
-type TPossibleComponentProps = {
+export type TComponentProps<Name extends keyof typeof validators> = z.infer<typeof validators[Name]>['props'];
+export type TComponentNames = keyof typeof validators;
+
+const Components = {
   Paragraph: {
-    type: 'Paragraph',
-    props: PropsOf<typeof Paragraph>
+    component: Paragraph,
+    validator: validators.Paragraph
   },
   Fieldset: {
-    type: 'Fieldset',
-    props: PropsOf<typeof Fieldset>
-  },
+    component: Fieldset,
+    validator: validators.Fieldset
+  }
 }
 
-type ValidateValidator<T extends keyof TPossibleComponentProps> = z.infer<typeof validators[T]> extends TPossibleComponentProps[T] ? true : false
-type TParagraphMatches = ValidateValidator<keyof TPossibleComponentProps>
-
-/**
- * This line is going to throw an error if the validation schema becomes out of sync with the component. If this does return
- * false and you are unsure of which component is triggering the error. Start by commenting out each key in 
- * TPossibleComponentProps one by one until the error goes away, then from there you can figure out which component is
- * causing the error and update the validator accordingly.
- */
-if (import.meta.env.DEV) {
-  const isValidValidator: TParagraphMatches = true;
-}
-
-const safeParse = (
+const safeParse = ({
+  props,
+  validator,
+  Component
+}: {
   props: unknown,
   validator: keyof typeof validators,
   Component: React.FC<any>
-) => {
+}) => {
+  if (!(validator in validators)) return null;
+
   const parsed = validators[validator].safeParse({ type: validator, props });
 
   if (parsed.success)
@@ -59,19 +59,18 @@ const safeParse = (
     return null;
 }
 
-type TComponentConstructor = React.FC<TPossibleComponentProps[keyof TPossibleComponentProps]>;
+type TComponentConstructor = React.FC<{ type: TComponentNames | undefined, props: TComponentProps<keyof typeof validators> }>;
 /**
  * Note: This component is expected to take in API responses and construct the relevant react component based on the response.
  * Although the response from the API "SHOULD" match the expected format, validation is done at this layer to ensure 
  * all the relevant prop information is present;
  */
 export const ConstructComponent: TComponentConstructor = ({ type, props }) => {
-  switch (type) {
-    case 'Paragraph':
-      return safeParse(props, type, Paragraph);
-    case 'Fieldset':
-      return safeParse(props, type, Fieldset);
-    default:
-      return null;
-  }
+  if (!type) return null;
+
+  return safeParse({
+    props, 
+    validator: type, 
+    Component: Components[type].component
+  });
 }
