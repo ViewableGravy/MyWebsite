@@ -3,8 +3,6 @@ import { Paragraph } from "./paragraph";
 import { Fieldset } from "./fieldSet";
 import { z } from "zod";
 
-type PropsOf<T> = T extends React.FC<infer P> ? P : never;
-
 /**
  * Base object with validators for the props of components. Component props are based on the validator types and are accessible
  * via the TComponentProps type. This is used to ensure that the component props are always in sync with the validator.
@@ -59,7 +57,11 @@ const safeParse = ({
     return null;
 }
 
-type TComponentConstructor = React.FC<{ type: TComponentNames | undefined, props: TComponentProps<keyof typeof validators> }>;
+type TComponentConstructor = React.FC<{ 
+  type: TComponentNames | undefined, 
+  props: TComponentProps<keyof typeof validators> 
+}>;
+
 /**
  * Note: This component is expected to take in API responses and construct the relevant react component based on the response.
  * Although the response from the API "SHOULD" match the expected format, validation is done at this layer to ensure 

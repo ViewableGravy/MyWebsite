@@ -95,7 +95,13 @@ const OwnContent = ({ post }) => {
 
   return (
     <div className="blog-article content">
-      {post.content.map(({ type, _id: key, ...props }) => <ConstructComponent {...{ props, type, key }} />)}
+      {post.content.map(({ type, _id: key, ...props }) => (
+        <ConstructComponent 
+          type={type} 
+          props={props} 
+          key={key} 
+        />
+      ))}
     </div>
   )
 }

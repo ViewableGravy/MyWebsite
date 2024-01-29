@@ -65,12 +65,9 @@ const Banner = ({ children, src, alt, brightness = 1, ...props }: TBannerProps) 
         style={style} 
         className={imageClasses} 
       />
-      <ConditionalRender
-        condition={!!children}
-        onTrue={
-          renderOrInvokeChildren({ isMouseOver })
-        }
-      />
+      <ConditionalRender condition={!!children}>
+        {renderOrInvokeChildren({ isMouseOver })}
+      </ConditionalRender>
     </div>
   );
 }

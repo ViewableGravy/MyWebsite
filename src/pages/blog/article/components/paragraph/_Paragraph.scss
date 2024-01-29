@@ -1,0 +1,24 @@
+
+.Paragraph {
+    font-size: 1.18rem;
+    color: var(--standard-text-darker);
+    line-height: calc(1em + 0.725rem);
+    overflow-wrap: break-word;
+    font-family: 'Wotfard', 'Wotfard-fallback', sans-serif;
+
+    // Realistically this should be removed once a "link" element is available
+    a {
+        transition: color 0.15s ease-in-out;
+
+        &:hover {
+            color: var(--inline-link-hover);
+        }
+    }
+
+    h3 {
+        color: #3891b3;
+        margin-top: 95px;
+        margin-bottom: 30px;
+        font-size: 28px;;
+    }
+}

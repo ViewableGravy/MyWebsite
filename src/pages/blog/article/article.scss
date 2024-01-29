@@ -62,7 +62,7 @@
   color: var(--standard-text-darker);
   // margin-right: 20px;
   // margin-left: 20px;
-  font-weight: 500;
+  font-weight: 400;
 
   a {
     transition: color 0.15s ease-in-out;
@@ -75,6 +75,10 @@
   h3 {
     color: var(--header-text);
   }
+}
+
+.blog-article .AboutComponent {
+  margin-top: 80px;
 }
 
 .footer {
