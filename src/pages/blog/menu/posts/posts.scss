@@ -3,6 +3,16 @@
   src: url('../../../../assets/fonts/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
 }
 
+.BlogArticle #posts-head #posts-title {
+  color: var(--standard-text);
+  text-align: center;
+  width: 100%;
+  margin-top: 100px;
+  padding-bottom: 20px;
+  margin-bottom: 25px;
+  font-size: 45px;
+  border-bottom: 1px solid cornflowerblue;
+}
 
 //blog home heading (Drafts | Posts)
 #posts-head {
@@ -18,12 +28,8 @@
   #posts-title {
     color: var(--standard-text);
     text-align: center;
-    width: 100%;
-    margin-top: 100px;
-    padding-bottom: 20px;
-    margin-bottom: 25px;
-    font-size: 45px;
-    border-bottom: 1px solid cornflowerblue;
+    margin-top: 30px;
+    margin-bottom: 30px;
   }
 
   #toggle_container {
