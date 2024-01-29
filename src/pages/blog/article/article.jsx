@@ -31,7 +31,7 @@ export const BlogArticle = () => {
   return (
     <QuerySwitch queryData={result} onError={onError}>
       {(post) => (
-        <BlogContainer>
+        <BlogContainer className="BlogArticle">
           <Menu author="ViewableGravy"/>
           <OwnMeta post={post} />
           <OwnContent post={post} />
@@ -47,17 +47,19 @@ const OwnMeta = (props) => {
   if (!title || !date || !author || !tags) return null;
 
   return (
-    <div className={"blog-article meta"}>
+    <div className={"BlogArticleMeta"}>
       <PostsHead title={title}/>
-      <span className={'blog-article date'}>{date}</span>
-      <span className={'blog-article meta separator'}> • </span>
-      <OwnReadTime className={'blog-article read-time'} post={props.post} />
-      <OwnMetaTags className={'blog-article tags'} tags={tags} />
+      <div className="BlogArticleMeta__dateWrapper">
+        <span className={'BlogArticleMeta__date'}>{date}</span>
+        <span className={'BlogArticleMeta__separator'}> • </span>
+        <OwnReadTime className={'BlogArticleMeta__readTime'} post={props.post} />
+      </div>
+      <OwnMetaTags className={'BlogArticleMeta__tags'} tags={tags} />
     </div>
   )
 }
 
-const OwnReadTime = ({ post }) => {
+const OwnReadTime = ({ post, className }) => {
   if (!post?.content) return null;
 
   const words = post.content.reduce((acc, item) => {
@@ -68,22 +70,23 @@ const OwnReadTime = ({ post }) => {
   }, 0);
 
   return (
-    <span className="blog-article read-time">
+    <span className={className}>
       {Math.ceil(words / 200)} min read
     </span>
   )
 }
 
-const OwnMetaTags = ({ tags }) => {
+const OwnMetaTags = ({ tags, className }) => {
   if (!tags) return null;
 
   return (
-    <div className="blog-article meta-tags">
+    <div className={className}>
       {tags.map((tag, index) => (
         <GenerateTag 
           key={index} 
           text={tag.name ?? tag} 
           color={tag.color}
+          className="BlogArticleMeta__tag"
         />
       ))}
     </div>
@@ -95,10 +98,10 @@ const OwnContent = ({ post }) => {
 
   return (
     <div className="blog-article content">
-      {post.content.map(({ type, _id: key, ...props }) => (
+      {post.content.map(({ type, _id: key, ...props }, index) => (
         <ConstructComponent 
           type={type} 
-          props={props} 
+          props={{ ...props, isFirst: index === 0 || undefined }} 
           key={key} 
         />
       ))}

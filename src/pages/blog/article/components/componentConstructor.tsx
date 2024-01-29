@@ -11,7 +11,8 @@ const validators = {
   Paragraph: z.object({
     type: z.literal('Paragraph'),
     props: z.object({
-      text: z.string()
+      text: z.string(),
+      isFirst: z.boolean().optional()
     })
   }),
   Fieldset: z.object({

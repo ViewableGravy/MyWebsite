@@ -5,6 +5,14 @@
     line-height: calc(1em + 0.725rem);
     overflow-wrap: break-word;
     font-family: 'Wotfard', 'Wotfard-fallback', sans-serif;
+    
+    // has low browser support
+    &--first::first-letter {
+        initial-letter: 2.04;
+        margin-right: 6px;
+        color: #a900ff;
+        font-weight: bold;
+    }
 
     // Realistically this should be removed once a "link" element is available
     a {

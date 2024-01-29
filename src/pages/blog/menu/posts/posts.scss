@@ -18,8 +18,12 @@
   #posts-title {
     color: var(--standard-text);
     text-align: center;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    width: 100%;
+    margin-top: 100px;
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+    font-size: 45px;
+    border-bottom: 1px solid cornflowerblue;
   }
 
   #toggle_container {
@@ -43,10 +47,6 @@
       right: 0px;
       top: 2px;
       border-left: 1px solid grey;
-    }
-
-    #posts-title {
-      width: 50%;
     }
   }
   
