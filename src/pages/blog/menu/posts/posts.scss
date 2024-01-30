@@ -3,6 +3,16 @@
   src: url('../../../../assets/fonts/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
 }
 
+.BlogArticle #posts-head #posts-title {
+  color: var(--standard-text);
+  text-align: center;
+  width: 100%;
+  margin-top: 100px;
+  padding-bottom: 20px;
+  margin-bottom: 25px;
+  font-size: 45px;
+  border-bottom: 1px solid cornflowerblue;
+}
 
 //blog home heading (Drafts | Posts)
 #posts-head {
@@ -13,6 +23,10 @@
 
   * {
     z-index: 1;
+  }
+
+  .tgl-btn {
+    margin-right: 30px; //for the love of god, refactor everything here... why was I using IDs?? what is this className? Gimme BEM!
   }
 
   #posts-title {
@@ -43,10 +57,11 @@
       right: 0px;
       top: 2px;
       border-left: 1px solid grey;
+      width: 100%;
     }
 
     #posts-title {
-      width: 50%;
+      width: 100%;
     }
   }
   

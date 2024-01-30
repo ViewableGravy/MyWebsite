@@ -27,7 +27,7 @@
 
   .about {
     margin-left: 20px;
-    color: var(--standard-text)
+    color: var(--standard-text);
   }
 
   @media (max-width: 576px) {
@@ -36,6 +36,10 @@
 
     p {
       margin-left: 0;
+    }
+
+    .about {
+      margin-right: 20px;
     }
   }
 }

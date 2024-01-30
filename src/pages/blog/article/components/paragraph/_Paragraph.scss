@@ -1,0 +1,39 @@
+
+.Paragraph {
+    font-size: 1.18rem;
+    color: var(--standard-text-darker);
+    line-height: calc(1em + 0.725rem);
+    overflow-wrap: break-word;
+    font-family: 'Wotfard', 'Wotfard-fallback', sans-serif;
+    
+    // has low browser support
+    &--first::first-letter {
+        initial-letter: 2.04;
+        margin-right: 6px;
+        color: #a900ff;
+        font-weight: bold;
+    }
+
+    // Realistically this should be removed once a "link" element is available
+    a {
+        transition: color 0.15s ease-in-out;
+
+        &:hover {
+            color: var(--inline-link-hover);
+        }
+    }
+
+    h3 {
+        color: #3891b3;
+        margin-top: 95px;
+        margin-bottom: 30px;
+        font-size: 28px;;
+    }
+
+    h2 {
+        color: #65dbdf;
+        margin-top: 95px;
+        margin-bottom: 30px;
+        font-size: 36px;
+    }
+}

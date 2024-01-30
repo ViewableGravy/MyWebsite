@@ -1,8 +1,9 @@
-import React, { useState, useRef }from 'react';
+import React, { useState, useRef, CSSProperties }from 'react';
 import { useMedia } from "hooks/useMedia/index";
 import { TTag } from '../posts/types';
 import './tagsWrapper.scoped.scss';
 import { Link } from '@tanstack/react-router';
+import classNames from 'classnames';
 
 //todo - add toggle (+) on left to toggle between on and off rather than just clicking the text
 //on mobile this can be hidden and just clicking on an option while closed will toggle the state on (and show a minus to close)
@@ -147,22 +148,19 @@ type TGenerateTag = {
   onClick: any,
 }
 
-export const GenerateTag = React.forwardRef(({ color, text, className, onClick }: TGenerateTag, ref: any) => {
-  if (!color) color = '#e008ce'; //black
-
+export const GenerateTag = React.forwardRef(({ color = '#e008ce', text, className, onClick }: TGenerateTag, ref: any) => {
   const properties = {
     to: '/',
     style: { 
       touchAction: 'pan-x',
       backgroundColor: color,
-      color: '#000000',
-    },
-    className: `${className} tag`,
+      color: isDarkColor(color) ? '#f1f1f1' : '#000000',
+    } satisfies CSSProperties,
+    className: classNames(className, 'tag'),
     'data-color': isDarkColor(color) ? '#f1f1f1' : '#000000',
     ref,
-  } as any;
-  
-  if (onClick) properties.onClick = onClick;
+    onclick
+  } as const;
 
   return (
     <Link {...properties}>

@@ -18,7 +18,7 @@ const styles = {
   },
   backgroundHover: {
     position: 'absolute',
-    borderRadius: '5px',
+    borderRadius: '20px',
     transition: 'all 0.2s ease-in-out',
     zIndex: -1,
     cursor: 'pointer',

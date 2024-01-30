@@ -1,7 +1,9 @@
-import React from 'react';
+import classNames from 'classnames';
+
 import { Menu } from './menu/menu'
 import { About } from './menu/about/about'
 import Posts from './menu/posts/posts';
+
 import './blog.scss'
 
 export const Blog = () => {
@@ -14,9 +16,11 @@ export const Blog = () => {
   )
 }
 
-export const BlogContainer = ({ children }) => {
+export const BlogContainer = ({ children, className }) => {
+  const _className = classNames('blog_container', className)
+
   return (
-    <div className={"blog_container"}>
+    <div className={_className}>
       <div id={"outer"}>
         <div id={"background"}>
           {children}

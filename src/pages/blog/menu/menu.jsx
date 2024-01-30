@@ -1,18 +1,11 @@
 import { useState, useEffect } from 'react';
 import classNames from 'classnames'
-import './menu.scss'
 import { useStore } from 'functionality/state/state';
 import { logout } from '../../../functionality/authentication/authentication';
 import { useMedia } from 'hooks/useMedia';
 import { Link } from '@tanstack/react-router';
+import './menu.scss'
 
-const initialClasses = classNames({
-  desktop: true,
-  mobile: false,
-  open: false,
-});
-
-// author: string
 /**
  * @param {{
  *  author: string,
@@ -26,55 +19,62 @@ export const Menu = ({
   className
 }) => {
   const media = useMedia();
-  const [menuOpen, setMenuOpen] = useState(false); //mobile menu open/close state
-  const [menuItemsClasses, setMenuItems] = useState(initialClasses);
-  const [{token}, dispatch] = useStore((store) => ({
-    token: store.token
-  }));
+  //TODO: Apply useDelay and manually set visibility after the transition time. 0.35s, also set transition time in style instead of CSS here (id=close)
+  //Probably worth a full refactor when I am feeling like it
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); 
 
-  const menuClasses = classNames({
-    [menuItemsClasses]: true,
-    [className]: className,
-  })
+  /***** RENDER VARIABLES *****/
+  const menuClassName = classNames({
+    desktop: !['xs', 'sm'].includes(media),
+    mobile: ['xs', 'sm'].includes(media),
+    open: isMobileMenuOpen,
+  }, className)
 
-  useEffect(() => {
-    setMenuItems(classNames({
-      desktop: !['xs', 'sm'].includes(media),
-      mobile: ['xs', 'sm'].includes(media),
-      open: menuOpen,
-    }))
-  }, [media, menuOpen])
-
+  /***** RENDER *****/
   return (
-    <div id="menu" className={menuClasses} style={style}>
+    <div id="menu" className={menuClassName} style={style}>
       <div id="left" >
         <span id="Author">{author}</span>
       </div>
-      <div id="right" className={menuItemsClasses}> 
+      <div id="right" className={menuClassName}> 
         <a href="https://status.gravy.cc/">Uptime</a>
         <a href="https://github.com/ViewableGravy">Github</a>
         <Link to="/">Home</Link>
         <Link to="/blog">Blog</Link>
-        {
-          token 
-            ? <Link to="/login">Login</Link>
-            : <button onClick={() => logout(dispatch)}>Logout</button> 
-        }
-        {['xs', 'sm'].includes(media) && <div id="close" onClick={() => setMenuOpen(!menuOpen)}></div>}
+        <OwnAuthenticationAction />
+        {['xs', 'sm'].includes(media) && (
+          <div id="close" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}></div>
+        )}
       </div>
       {
-        ['xs', 'sm'].includes(media) &&
-        <div className={"borger"} onClick={() => setMenuOpen(!menuOpen)}>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
+        ['xs', 'sm'].includes(media) && (
+          <div className={"borger"} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        )
       }
     </div>
   )
+}
+
+/**
+ * Internal component for rendering the login/logout button
+ */
+const OwnAuthenticationAction = () => {
+  const [{token}, dispatch] = useStore((store) => ({
+    token: store.token
+  }));
+
+  if (token) {
+    return <button onClick={() => logout(dispatch)}>Logout</button>
+  } else {
+    return <Link to="/login">Login</Link>
+  }
 }
 
 export default Menu;

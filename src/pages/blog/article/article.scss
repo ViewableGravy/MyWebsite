@@ -1,42 +1,55 @@
-.blog-article.meta {
-
-  .date, .read-time, .separator {
-    font-size: 0.8rem;
-    line-height : 1.75;
-    color: var(--standard-text);
-    margin-right: 10px;
-    font-weight: 500;
+.BlogArticle {
+  //TODO: This either needs to be moved or it needs to have the 
+  //styling updated as it is just randomly sitting on the title at the moment
+  #toggle_container {
+    visibility: hidden;
   }
 
-  .date {
-    margin-left: 20px;
-  }
+  &Meta {
+    &__date, &__readTime, &__separator, &__tag {
+      font-size: 0.9rem;
+      line-height : 1.75;
+      color: var(--standard-text);
+      margin-right: 10px;
+      font-weight: 500;
+    }
 
-  .meta-tags {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    gap: 10px;
-    margin-left: 20px;
-    flex-wrap: wrap;
+    &__dateWrapper {
+      margin-bottom: 20px;
 
-    .tag {
+      @media (max-width: 576px) {
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    &__tags {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      column-gap: 10px;
+      margin-block: 20px;
+
+      @media (max-width: 576px) {
+        justify-content: center;
+      }
+    }
+
+    &__tag {
       word-break: keep-all;
       white-space: nowrap;
+      margin-bottom: 20px;
+
+      box-shadow: 7px 7px 9px 1px rgb(215 55 255 / 62%);
+      border: 1px solid #7f37a37a;
     }
 
-    span {
-      padding: 4px 4px 4px 4px;
-    }
-
-    a {
-      padding: 4px 4px 4px 4px;
+    span, a {
+      padding: 4px;
     }
   }
-
 }
 
 .blog-article.fieldset {
@@ -60,9 +73,9 @@
   font-size: 1rem;
   line-height : 1.75;
   color: var(--standard-text-darker);
-  margin-right: 20px;
-  margin-left: 20px;
-  font-weight: 500;
+  // margin-right: 20px;
+  // margin-left: 20px;
+  font-weight: 400;
 
   a {
     transition: color 0.15s ease-in-out;
@@ -75,6 +88,10 @@
   h3 {
     color: var(--header-text);
   }
+}
+
+.blog-article .AboutComponent {
+  margin-top: 80px;
 }
 
 .footer {
