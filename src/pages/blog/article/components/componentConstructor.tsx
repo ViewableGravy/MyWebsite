@@ -74,6 +74,6 @@ export const ConstructComponent: TComponentConstructor = ({ type, props }) => {
   return safeParse({
     props, 
     validator: type, 
-    Component: Components[type].component
+    Component: Components[type]?.component
   });
 }

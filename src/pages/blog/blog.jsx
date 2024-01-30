@@ -1,8 +1,10 @@
+import classNames from 'classnames';
+
 import { Menu } from './menu/menu'
 import { About } from './menu/about/about'
 import Posts from './menu/posts/posts';
+
 import './blog.scss'
-import classNames from 'classnames';
 
 export const Blog = () => {
   return (

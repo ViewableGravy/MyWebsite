@@ -8,6 +8,7 @@ import { Navigate, useParams } from '@tanstack/react-router';
 import { QuerySwitch } from 'components/conditionalRender/conditionalRender';
 import { Socials } from '../menu/posts/_socials';
 import { ConstructComponent } from './components/componentConstructor';
+import { router } from 'router';
 
 import './article.scss'
 
@@ -16,12 +17,14 @@ const port = import.meta.env.VITE_APP_BACKEND_PORT;
 const protocol = import.meta.env.VITE_APP_BACKEND_PROTOCOL;
 const url = `${protocol}://${server}:${port}`;
 
+
 const getYear = () => {
   return new Date().getFullYear();
 }
 
 /**
  * Rendered at /blog/:post
+ * @see {@link router}
  */
 export const BlogArticle = () => {
   const { post } = useParams({ from: '/blog/$post' });
