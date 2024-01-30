@@ -12,6 +12,10 @@
   background-color: var(--background);
   padding-inline: 20px;
 
+  @media (max-width: 576px) {
+    padding-inline: 0;
+  }
+
   .magic-link {
     --purple: #8e2de2;
     --violet: #4a00e0;
