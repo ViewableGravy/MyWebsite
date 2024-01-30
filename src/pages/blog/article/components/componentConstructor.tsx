@@ -2,6 +2,7 @@ import React from "react";
 import { Paragraph } from "./paragraph";
 import { Fieldset } from "./fieldSet";
 import { z } from "zod";
+import { OwnDevHandleMessage } from "./devmode";
 
 /**
  * Base object with validators for the props of components. Component props are based on the validator types and are accessible
@@ -39,6 +40,10 @@ const Components = {
   }
 }
 
+/**
+ * Safe parse is used to parse the props of a component and return the component if the props are valid. If the props are invalid
+ * then the OwnDevHandleMessage component is returned with the relevant error information (in dev mode)
+ */
 const safeParse = ({
   props,
   validator,
@@ -48,14 +53,28 @@ const safeParse = ({
   validator: keyof typeof validators,
   Component: React.FC<any>
 }) => {
-  if (!(validator in validators)) return null;
+  if (!(validator in validators)) return (
+    <OwnDevHandleMessage 
+      type={validator} 
+      validator={validator} 
+      props={props} 
+      parsed={{ error: 'Validator not found' }} 
+    />
+  )
 
   const parsed = validators[validator].safeParse({ type: validator, props });
 
   if (parsed.success)
     return <Component {...parsed.data.props} />
-  else
-    return null;
+
+  return (
+    <OwnDevHandleMessage 
+      type={validator} 
+      validator={validator} 
+      props={props} 
+      parsed={parsed} 
+    />
+  )
 }
 
 type TComponentConstructor = React.FC<{ 
