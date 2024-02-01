@@ -10,4 +10,7 @@ export default defineConfig({
         open: true,
         port: 3000, 
     },
+    build: {
+        commonjsOptions: { include: [] },
+    },
 })
