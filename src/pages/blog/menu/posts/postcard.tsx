@@ -51,7 +51,7 @@ const PublishedCard = ({ title, summary, date, tags }: TPublishedCardProps) => (
       <p className={`summary`} dangerouslySetInnerHTML={{ __html: summary }}/>
     </div>
     <div className='right-section'>
-      <p className={`date`}>{date}</p>
+      <p className="date">{date}</p>
       <TagMenu data={tags} />
     </div>
   </div>

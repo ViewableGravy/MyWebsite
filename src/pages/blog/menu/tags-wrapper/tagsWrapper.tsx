@@ -25,15 +25,15 @@ export const TagMenu: TTagMenu = ({ data }) => {
 
   /****** functions ******/
   const onReset = () => {
-    if (!tags?.current) return;
     if (!innerContainer.current) return;
-    if (tags.current.length === 0) return;
-
     //reset innerContainer width
     innerContainer.current.style.position = ['xs'].includes(media)
       ? 'relative'
       : 'absolute';
-    innerContainer.current.style.width = 'null';
+    innerContainer.current.style.width = 'unset';
+
+    if (!tags?.current) return;
+    if (tags.current.length === 0) return;
 
     //reset front tag to default width
     const front = tags.current[tags.current.length - 1];
@@ -72,6 +72,7 @@ export const TagMenu: TTagMenu = ({ data }) => {
       style.color = dataset.color || 'white';
     });
     
+    console.log('here')
     innerContainer.current.style.width = `${widths.reduce((a, b) => a + b + 10, 0)}px`;
   };
 
@@ -104,7 +105,6 @@ export const TagMenu: TTagMenu = ({ data }) => {
           data.map((tag, index) => 
             <GenerateTag 
               key={index}
-              className={''}
               color={tag.color}
               text={tag.name}
               ref={(ref: HTMLElement) => tags.current[index] = ref}
@@ -144,7 +144,7 @@ const isDarkColor = (color: string) => {
 type TGenerateTag = {
   color: string,
   text: string,
-  className: string,
+  className?: string,
   onClick: any,
 }
 

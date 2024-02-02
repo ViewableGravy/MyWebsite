@@ -12,9 +12,9 @@ type HoverProps = {
 
 type Hover = React.FC<HoverProps>;
 
-const styles = {
+const useStyles = createUseStyles({
   stackContext: {
-    isolation: 'isolate'
+    isolation: 'isolate',
   },
   backgroundHover: {
     position: 'absolute',
@@ -22,12 +22,9 @@ const styles = {
     transition: 'all 0.2s ease-in-out',
     zIndex: -1,
     cursor: 'pointer',
-    marginBlock: '5px',
-    padding: '0 0 0 0'
+    marginBlock: 5
   }
-}
-
-const useStyles = createUseStyles(styles)
+})
 
 /**
  * TODO, take in an offset that will be used to offset the background highlight
@@ -38,6 +35,7 @@ export const Hover: Hover = ({ children, onSize }) => {
   const isMatchMedia = useMedia(onSize);
   const classes = useStyles();
   const ref = React.useRef<HTMLDivElement | null>(null);
+  const expandX = (width: number, offset: number) => ({ width: width + offset, marginLeft: -1 * offset / 2 });
   
   const onMouseLeave = React.useCallback(() => {
     if (!ref.current) 
@@ -49,15 +47,18 @@ export const Hover: Hover = ({ children, onSize }) => {
     if (onSize && !isMatchMedia)
       return onMouseLeave();
 
-    const width = event.currentTarget.offsetWidth,
-          distanceFromTop = event.currentTarget.offsetTop,
-          height = event.currentTarget.offsetHeight;
+    const _width = event.currentTarget.offsetWidth;
+    const distanceFromTop = event.currentTarget.offsetTop;
+    const height = event.currentTarget.offsetHeight;
 
-    if (!width || !distanceFromTop || !height || !ref?.current) return;
+    if (!_width || !distanceFromTop || !height || !ref?.current) return;
+
+    const { width, marginLeft } = expandX(_width, 20)
 
     const highlight = ref.current.style;
     highlight.top = `${distanceFromTop + 4}px`;
     highlight.width = `${width}px`;
+    highlight.marginLeft = `${marginLeft}px`;
     highlight.height = `${height - 20}px`
     highlight.backgroundColor = 'white';
   }, [isMatchMedia]);

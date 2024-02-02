@@ -264,8 +264,12 @@
       50% { opacity: 0.3 }
     }
 
-    * {
-      transition: all 0.2s ease-in-out;
+    .tags-inner {
+      transition: width 0.2s ease-in-out
+    }
+
+    .tag {
+      transition: right 0.2s ease-in-out;
     }
 
     .title_container {
