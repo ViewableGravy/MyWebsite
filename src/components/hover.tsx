@@ -22,7 +22,8 @@ const useStyles = createUseStyles({
     transition: 'all 0.2s ease-in-out',
     zIndex: -1,
     cursor: 'pointer',
-    marginBlock: 5
+    marginBlock: 5,
+    marginLeft: 10
   }
 })
 

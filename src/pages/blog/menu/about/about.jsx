@@ -8,7 +8,7 @@ export const About = ({ style }) => {
   if ( !style ) style = {}
 
   return (
-    <Floater className="AboutComponent">
+    <Floater className="AboutComponent" clickable>
       <div style={style} className="AboutComponent__padder">
         <div className="circle">
           <img alt={'ViewableGravy Portrait'} src={Portrait}></img>

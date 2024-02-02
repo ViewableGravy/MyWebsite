@@ -11,9 +11,8 @@
     &__inner {
         position: absolute;
 
-        &:hover {
+        &--animating {
             animation-name: floating;
-            animation-duration: 0.3s;
             animation-iteration-count: 1;
             animation-timing-function: ease-in-out;
         }
