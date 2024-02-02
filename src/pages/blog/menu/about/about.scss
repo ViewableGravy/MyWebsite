@@ -1,14 +1,17 @@
 //About Me section
 .AboutComponent {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
   margin: 40px 10px 0 10px;
 
-  box-shadow: #18001e 0px 7px 20px 0px;
-  border-radius: 30px;
-  padding: 20px 35px;
-  background-color: #24264f;
+  &__padder {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    
+    box-shadow: #18001e 0px 7px 20px 0px;
+    border-radius: 30px;
+    padding: 20px 35px;
+    background-color: #24264f;
+  }
 
   .circle {
     overflow: hidden;
