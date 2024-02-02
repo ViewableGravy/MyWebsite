@@ -8,7 +8,7 @@ import classNames from "classnames";
 
 /***** CONSTS *****/
 import './_Floater.scss'
-import React, { useCallback, useLayoutEffect } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { useDelayedCallback } from "components/liveMouse/ownVisitorMouse/useDelay";
 
 type TFloater = React.FC<{
@@ -23,9 +23,9 @@ type TFloater = React.FC<{
  */
 export const Floater: TFloater = ({ children, className, clickable = false, duration = 200 }) => {
     /***** STATE *****/
-    const [height, setHeight] = React.useState<undefined | number>(undefined);
-    const [isAnimating, setIsAnimating] = React.useState(false);
-    const innerRef = React.useRef<HTMLDivElement>(null);
+    const [height, setHeight] = useState<undefined | number>(undefined);
+    const [isAnimating, setIsAnimating] = useState(false);
+    const innerRef = useRef<HTMLDivElement>(null);
 
     /***** HOOKS *****/
     const { initiate } = useDelayedCallback(() => setIsAnimating(false), duration)
