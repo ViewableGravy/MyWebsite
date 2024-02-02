@@ -15,6 +15,7 @@
 		position: relative;
 		cursor: pointer;
     user-select: none;
+    min-width: 85px;
 
 		&:after,
     &:before {

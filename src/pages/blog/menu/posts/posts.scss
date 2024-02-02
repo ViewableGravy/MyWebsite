@@ -39,7 +39,7 @@
   .FlipToggle {
     position: absolute;
     display: inline;
-    right: 30px;
+    right: 20px;
     vertical-align: middle;
   }
 
@@ -85,7 +85,7 @@
   justify-content: center;
   max-width: calc(100% - 20px);
   list-style: none;
-  padding: 0px 0 0px 0;
+  padding: 0;
   margin: 0 10px 0 10px;
 
   * {
@@ -113,7 +113,7 @@
     flex-direction: row;
     align-items: stretch;
     transition: all 0.2s ease-in-out;
-    width: calc(100% - 20px);
+    width: 100%;
     min-height: 130px;
     margin-inline: auto;
 

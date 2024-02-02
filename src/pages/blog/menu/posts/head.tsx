@@ -24,8 +24,8 @@ export const PostsHead: TPostsHead = ({ title, showToggle = true }) => {
         token && showToggle && <FlipToggle 
           initialState={draftMode} 
           onChange={changeToggle} 
-          titleEnabled={"Published"} 
-          titleDisabled={"Drafts"} 
+          titleEnabled="Published" 
+          titleDisabled="Drafts" 
         /> 
       }  
     </div>
