@@ -72,6 +72,7 @@
   max-width: 100vw;
 
   #right {
+    visibility: hidden;
     transition: right 0.35s;
 
     background: white;
@@ -111,6 +112,7 @@
 
   #right.open {
     right: 0;
+    visibility: visible;
   }
 
   .borger {
@@ -118,9 +120,8 @@
     flex-direction: column-reverse;
     align-items: center;
     gap: 0.15px 0;
-    width: 30px;
+    width: 50px;
     padding-right: 20px;
-    ;
 
     >div:nth-child(1) {
       background: rgb(215, 165, 121);

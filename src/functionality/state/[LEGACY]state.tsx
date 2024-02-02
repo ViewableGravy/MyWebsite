@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { Dispatch, useEffect } from "react";
 import { updateAuthToken, refreshOrExpireExistingtoken } from "../authentication/authentication";
 

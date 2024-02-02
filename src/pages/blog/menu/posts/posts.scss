@@ -3,6 +3,16 @@
   src: url('../../../../assets/fonts/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
 }
 
+.BlogArticle #posts-head #posts-title {
+  color: var(--standard-text);
+  text-align: center;
+  width: 100%;
+  margin-top: 100px;
+  padding-bottom: 20px;
+  margin-bottom: 25px;
+  font-size: 45px;
+  border-bottom: 1px solid cornflowerblue;
+}
 
 //blog home heading (Drafts | Posts)
 #posts-head {
@@ -15,6 +25,10 @@
     z-index: 1;
   }
 
+  .tgl-btn {
+    margin-right: 30px; //for the love of god, refactor everything here... why was I using IDs?? what is this className? Gimme BEM!
+  }
+
   #posts-title {
     color: var(--standard-text);
     text-align: center;
@@ -22,10 +36,10 @@
     margin-bottom: 30px;
   }
 
-  #toggle_container {
+  .FlipToggle {
     position: absolute;
     display: inline;
-    right: 30px;
+    right: 20px;
     vertical-align: middle;
   }
 
@@ -35,7 +49,7 @@
       justify-content: space-around;
     }
 
-    #toggle_container {
+    .FlipToggle {
       position: relative;
       width: 50%;
       display: flex;
@@ -43,10 +57,11 @@
       right: 0px;
       top: 2px;
       border-left: 1px solid grey;
+      width: 100%;
     }
 
     #posts-title {
-      width: 50%;
+      width: 100%;
     }
   }
   
@@ -70,7 +85,7 @@
   justify-content: center;
   max-width: calc(100% - 20px);
   list-style: none;
-  padding: 0px 0 0px 0;
+  padding: 0;
   margin: 0 10px 0 10px;
 
   * {
@@ -98,8 +113,9 @@
     flex-direction: row;
     align-items: stretch;
     transition: all 0.2s ease-in-out;
-    width: calc(100% - 20px);
+    width: 100%;
     min-height: 130px;
+    margin-inline: auto;
 
     
     &.loading {
@@ -248,8 +264,12 @@
       50% { opacity: 0.3 }
     }
 
-    * {
-      transition: all 0.2s ease-in-out;
+    .tags-inner {
+      transition: width 0.2s ease-in-out
+    }
+
+    .tag {
+      transition: right 0.2s ease-in-out;
     }
 
     .title_container {

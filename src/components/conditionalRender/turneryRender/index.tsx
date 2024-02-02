@@ -1,22 +1,20 @@
-import React from "react";
-
 type TConditionalRenderProps = {
   condition: boolean,
-  onTrue?: JSX.Element | JSX.Element[] | (() => JSX.Element),
-  onFalse?: JSX.Element | JSX.Element[] | (() => JSX.Element) 
+  children?: React.ReactNode | (() => JSX.Element),
+  onFalse?: React.ReactNode | (() => JSX.Element) 
 }
 
-export const ConditionalRender = ({ condition, onTrue, onFalse }: TConditionalRenderProps) => {
+export const ConditionalRender = ({ condition, children, onFalse }: TConditionalRenderProps) => {
   const renderTrue = () => {
-    if (typeof onTrue === 'function') {
-      return onTrue();
+    if (typeof children === 'function') {
+      return children();
     }
 
-    if (!onTrue) {
+    if (!children) {
       return null;
     }
 
-    return <>{onTrue}</>;
+    return <>{children}</>;
   }
 
   const renderFalse = () => {

@@ -10,6 +10,11 @@
   min-height: 100vh;
   min-width: 100%;
   background-color: var(--background);
+  padding-inline: 20px;
+
+  @media (max-width: 576px) {
+    padding-inline: 0;
+  }
 
   .magic-link {
     --purple: #8e2de2;

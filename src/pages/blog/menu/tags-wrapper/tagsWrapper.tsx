@@ -1,8 +1,9 @@
-import React, { useState, useRef }from 'react';
+import React, { useState, useRef, CSSProperties }from 'react';
 import { useMedia } from "hooks/useMedia/index";
 import { TTag } from '../posts/types';
 import './tagsWrapper.scoped.scss';
 import { Link } from '@tanstack/react-router';
+import classNames from 'classnames';
 
 //todo - add toggle (+) on left to toggle between on and off rather than just clicking the text
 //on mobile this can be hidden and just clicking on an option while closed will toggle the state on (and show a minus to close)
@@ -24,15 +25,15 @@ export const TagMenu: TTagMenu = ({ data }) => {
 
   /****** functions ******/
   const onReset = () => {
-    if (!tags?.current) return;
     if (!innerContainer.current) return;
-    if (tags.current.length === 0) return;
-
     //reset innerContainer width
     innerContainer.current.style.position = ['xs'].includes(media)
       ? 'relative'
       : 'absolute';
-    innerContainer.current.style.width = 'null';
+    innerContainer.current.style.width = 'unset';
+
+    if (!tags?.current) return;
+    if (tags.current.length === 0) return;
 
     //reset front tag to default width
     const front = tags.current[tags.current.length - 1];
@@ -71,6 +72,7 @@ export const TagMenu: TTagMenu = ({ data }) => {
       style.color = dataset.color || 'white';
     });
     
+    console.log('here')
     innerContainer.current.style.width = `${widths.reduce((a, b) => a + b + 10, 0)}px`;
   };
 
@@ -103,7 +105,6 @@ export const TagMenu: TTagMenu = ({ data }) => {
           data.map((tag, index) => 
             <GenerateTag 
               key={index}
-              className={''}
               color={tag.color}
               text={tag.name}
               ref={(ref: HTMLElement) => tags.current[index] = ref}
@@ -143,26 +144,23 @@ const isDarkColor = (color: string) => {
 type TGenerateTag = {
   color: string,
   text: string,
-  className: string,
+  className?: string,
   onClick: any,
 }
 
-export const GenerateTag = React.forwardRef(({ color, text, className, onClick }: TGenerateTag, ref: any) => {
-  if (!color) color = '#e008ce'; //black
-
+export const GenerateTag = React.forwardRef(({ color = '#e008ce', text, className, onClick }: TGenerateTag, ref: any) => {
   const properties = {
     to: '/',
     style: { 
       touchAction: 'pan-x',
       backgroundColor: color,
-      color: '#000000',
-    },
-    className: `${className} tag`,
+      color: isDarkColor(color) ? '#f1f1f1' : '#000000',
+    } satisfies CSSProperties,
+    className: classNames(className, 'tag'),
     'data-color': isDarkColor(color) ? '#f1f1f1' : '#000000',
     ref,
-  } as any;
-  
-  if (onClick) properties.onClick = onClick;
+    onclick
+  } as const;
 
   return (
     <Link {...properties}>

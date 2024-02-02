@@ -4,11 +4,11 @@ import API from '../../api/global';
 import './login.scss'
 
 import loginImage from '../../assets/images/Lleyton.png';
-import { useNavigate } from '@tanstack/react-router';
+import { useNavigate, useRouter } from '@tanstack/react-router';
 
 //on load should check if in cookies and then skip this page
 export const Login = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const [, dispatch] = useStore(() => ({}));
 
   const [password, setPassword] = useState('');
@@ -18,9 +18,6 @@ export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [eyeState, setEyeState] = useState('far fa-eye-slash eyeball');
 
-  const [showLoading, setShowLoading] = useState(false);
-  const [loginText, setLoading] = useState('Login'); //loading animation
-
   useEffect(() => {
     if (showPassword) {
       setEyeState('far fa-eye eyeball');
@@ -29,7 +26,7 @@ export const Login = () => {
     }
   }, [showPassword]);
 
-  const Login = async () => {
+  const login = async () => {
     try {
       setPassIncorrect('');
       setUserIncorrect('');
@@ -39,15 +36,12 @@ export const Login = () => {
         return;
       }
 
-      setShowLoading(true);
-
       await API.Authentication.login({email, password}, dispatch);
 
-      navigate(-1);
+      navigate({ to: "/" })
     } catch (err) {
       if (!err.response) {
         alert('Network error');
-        setShowLoading(false);
         return;
       }
 
@@ -59,27 +53,9 @@ export const Login = () => {
         if (err.response.data === 'User not found') {
           setUserIncorrect('incorrect')
         }
-
-        setShowLoading(false);
       }
     }
   }
-
-  useEffect(() => {
-      const interval = setInterval(() => {
-        setLoading(loadingText => {
-          if (showLoading) {
-            const fullState = ' . . . .'
-            return loadingText.length !== fullState && loadingText !== 'Login'
-              ? loadingText + ' .'
-              : ' .'
-          } else
-            return 'Login'
-        })
-      }, 500);
-
-      return () => clearInterval(interval);
-  }, [showLoading]);
   
   return (
     <div className='login-page-outer'>
@@ -95,7 +71,7 @@ export const Login = () => {
             setEmail(e.target.value); 
             setUserIncorrect('')}
           } 
-          onKeyDown={e => e.key === "Enter" && Login()}
+          onKeyDown={e => e.key === "Enter" && login()}
           value={email}/>
         <div className='pass-container'>
           <input 
@@ -106,15 +82,15 @@ export const Login = () => {
               setPassword(e.target.value); 
               setPassIncorrect('')}
             } 
-            onKeyDown={e => e.key === "Enter" && Login()}
+            onKeyDown={e => e.key === "Enter" && login()}
             value={password}/>
           <i className={eyeState} id="togglePassword" onClick={() => setShowPassword(current => !current)}></i>
         </div>
         <div className='forgot-password-container'>
-          <button className='forgot-password-button' onClick={() => navigate(-1)}>Forgot Password?</button>
+          <button className='forgot-password-button' onClick={() => navigate({ to: '/' })}>Forgot Password?</button>
         </div>
       </div>
-      <button className='login-button' onClick={() => Login()}>{loginText}</button>
+      <button className='login-button' onClick={login}>Login</button>
     </div>
   )
 }

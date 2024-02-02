@@ -4,15 +4,16 @@ import { PostsHead } from "./head";
 import { PostsCard } from "./postcard";
 import { ConditionalRender } from "../../../../components/conditionalRender/turneryRender";
 import { useGetPostsOrDraftsQuery } from "./queries";
-import Footer from "./_footer";
+import { Footer } from "./_footer";
 import useConditional from "../../../../hooks/useConditional";
-import React from "react";
 import './posts.scss'
 
 export const Posts = () => {
   const [{ draftMode }] = useStore((store) => ({ draftMode: store.draftMode }));
   const { isLoading, data, error } = useGetPostsOrDraftsQuery(draftMode)
   const title = useConditional(draftMode, 'Drafts', 'Posts');
+
+  const postcards = [...Array(5).keys()].map((_, i) => <PostsCard key={i}/>);
   
   return (
     <>
@@ -20,9 +21,8 @@ export const Posts = () => {
       <div className="posts">
         <Hover onSize={['md', 'lg', 'xl', 'dual-lg', 'dual-xl', 'dual-xxl']}>
           {({ onMouseOver, onMouseLeave }) => (
-            <ConditionalRender
-              condition={!isLoading && !error}
-              onTrue={data?.map((post) => (
+            <ConditionalRender condition={!isLoading && !error} onFalse={postcards}>
+              {data?.map((post) => (
                 <PostsCard
                   key={post._id}
                   post={post}
@@ -30,8 +30,7 @@ export const Posts = () => {
                   onMouseLeave={onMouseLeave}
                 />
               ))}
-              onFalse={[...Array(5).keys()].map((_, i) => <PostsCard key={i}/>)}
-            />
+            </ConditionalRender>
           )}
         </Hover>
       </div>
