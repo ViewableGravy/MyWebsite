@@ -38,10 +38,7 @@ export const Login = () => {
 
       await API.Authentication.login({email, password}, dispatch);
 
-      console.log('here')
-
       navigate({ to: "/" })
-      // router.history.back();
     } catch (err) {
       if (!err.response) {
         alert('Network error');
