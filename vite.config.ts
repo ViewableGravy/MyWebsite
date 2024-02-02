@@ -5,12 +5,13 @@ import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 
 export default defineConfig({
     base: '',
-    plugins: [react(), viteTsconfigPaths(), TanStackRouterVite()],
+    plugins: [
+        react(), 
+        viteTsconfigPaths(), 
+        TanStackRouterVite()
+    ],
     server: {    
         open: true,
         port: 3000, 
-    },
-    build: {
-        commonjsOptions: { include: [] },
-    },
+    }
 })
