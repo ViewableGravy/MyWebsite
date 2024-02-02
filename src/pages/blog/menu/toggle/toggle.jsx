@@ -1,26 +1,48 @@
-import React, { useState } from 'react';
+/***** BASE IMPORTS *****/
+import { useState } from 'react';
+import classNames from 'classnames';
+
+/***** HOOKS *****/
+import { useIsMouseDown } from 'hooks/isMouseDown';
+
+/***** CONSTS *****/
 import './toggle.scss'
 
 export const FlipToggle = ({ onChange, initialState, titleEnabled, titleDisabled }) => {
-  const [state, setStateBoolean] = useState(initialState);
+  /***** STATE *****/
+  const [isChecked, setIsChecked] = useState(!initialState);
+  const [isMouseDown, mouseDownEventHandlers] = useIsMouseDown();
 
+  /***** RENDER HELPERS *****/
   const toggleState = () => {
     onChange();
-    setStateBoolean(!state);
+    setIsChecked((isChecked) => !isChecked);
   }
 
+  const classes = {
+    input: 'FlipToggle__input',
+    label: classNames('FlipToggle__label', {
+      'FlipToggle__label--checked': isChecked,
+      'FlipToggle__label--mousedown': isMouseDown,
+    })
+  }
+
+  /***** RENDER *****/
   return (
-    <div id="toggle_container">
-      <input 
-        type="checkbox"
-        checked={state}
-        onChange={toggleState}
-        id="cb1" 
-        className="tgl tgl-flip"
-      />
-      <label className="tgl-btn" data-tg-off={titleEnabled} data-tg-on={titleDisabled} htmlFor="cb1"></label>
+    <div className="FlipToggle">
+      <label 
+        {...mouseDownEventHandlers}
+        className={classes.label} 
+        data-tg-off={titleDisabled} 
+        data-tg-on={titleEnabled} 
+      >
+        <input 
+          type="checkbox"
+          checked={isChecked}
+          onChange={toggleState}
+          className={classes.input}
+        />
+      </label>
     </div>
   )
 };
-
-export default FlipToggle;

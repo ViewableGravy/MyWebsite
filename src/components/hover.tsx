@@ -22,8 +22,8 @@ const styles = {
     transition: 'all 0.2s ease-in-out',
     zIndex: -1,
     cursor: 'pointer',
-    margin: '5px 5px 5px -5px',
-    padding: '0 0 0 10px'
+    marginBlock: '5px',
+    padding: '0 0 0 0'
   }
 }
 

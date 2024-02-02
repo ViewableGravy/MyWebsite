@@ -1,15 +1,19 @@
 import React from "react";
 import { useStore } from 'functionality/state/state';
 import { TStore } from "functionality/state/types";
-import { TPostsHead } from "./types";
-import FlipToggle from "../toggle/toggle";
+import { FlipToggle } from "../toggle/toggle";
 
 const PostsHeadDataFromStore = (store: TStore) => ({
   draftMode: store.draftMode,
   token: store.token
 })
 
-export const PostsHead: TPostsHead = ({ title }: { title: string }) => {
+type TPostsHead = React.FC<{
+  title: string,
+  showToggle?: boolean
+}>;
+
+export const PostsHead: TPostsHead = ({ title, showToggle = true }) => {
   const [{ token, draftMode }, dispatch] = useStore(PostsHeadDataFromStore);
   const changeToggle = () => { dispatch({ draftMode: !draftMode })};
 
@@ -17,7 +21,7 @@ export const PostsHead: TPostsHead = ({ title }: { title: string }) => {
     <div id="posts-head">
       <h1 id="posts-title">{title}</h1>
       { 
-        token && <FlipToggle 
+        token && showToggle && <FlipToggle 
           initialState={draftMode} 
           onChange={changeToggle} 
           titleEnabled={"Published"} 
