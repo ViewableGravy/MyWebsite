@@ -4,7 +4,9 @@ import { THeadingProps } from "../types";
 import { Switch } from "components/conditionalRender/conditionalRender";
 
 
-
+/**
+ * Note, this component does not currently work with setting innerHTML to true
+ */
 const Heading = ({ children, level, ...props }: THeadingProps) => {
   const { 'remove-margin' : removeMargin } = props;
 
@@ -13,7 +15,7 @@ const Heading = ({ children, level, ...props }: THeadingProps) => {
 
   return (
     <>
-      <Text {...props}>
+      <Text {...props as any}>
         <Switch state={state} onState={{
           1: <h1 style={styles}>{children}</h1>,
           2: <h2 style={styles}>{children}</h2>,

@@ -2,14 +2,15 @@ import { className } from '../../../src/helpers/runtimeInjectableProps/className
 
 import React from "react";
 
-export type TextProps = {
-  children: React.ReactElement | string,
+type BaseTextProps = {
   className?: string,
   // inject?: boolean,
   'primary'?: boolean;
   'secondary'?: boolean;
   'black'?: boolean;
   'white'?: boolean;
+  
+  'sizeCustom'?: string | number;
   'size-xs'?: boolean;
   'size-sm'?: boolean;
   'size-md'?: boolean;
@@ -17,6 +18,7 @@ export type TextProps = {
   'size-xl'?: boolean;
   'size-xxl'?: boolean;
   'size-xxxl'?: boolean;
+
   'bold'?: boolean;
   'italic'?: boolean;
   'underline'?: boolean;
@@ -24,8 +26,17 @@ export type TextProps = {
   'align-center'?: boolean;
   'align-right'?: boolean;
   'span'?: boolean;
+  'heading'?: boolean;
   'remove-margin'?: boolean;
-};
+}
+
+export type TextProps = BaseTextProps & ({
+  children: string | number,
+  innerHTML: true;
+} | {
+  children: React.ReactNode,
+  innerHTML?: false;
+});
 
 export const runtimeInjectableProps = {
   className,

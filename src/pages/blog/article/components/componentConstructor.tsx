@@ -3,28 +3,7 @@ import { Paragraph } from "./paragraph";
 import { Fieldset } from "./fieldSet";
 import { z } from "zod";
 import { OwnDevHandleMessage } from "./devmode";
-
-/**
- * Base object with validators for the props of components. Component props are based on the validator types and are accessible
- * via the TComponentProps type. This is used to ensure that the component props are always in sync with the validator.
- */
-const validators = {
-  Paragraph: z.object({
-    type: z.literal('Paragraph'),
-    props: z.object({
-      text: z.string(),
-      isFirst: z.boolean().optional()
-    })
-  }),
-  Fieldset: z.object({
-    type: z.literal('Fieldset'),
-    props: z.object({
-      legend: z.string(),
-      content: z.string(),
-      color: z.string().optional()
-    })
-  })
-}
+import { validators } from "./validators";
 
 export type TComponentProps<Name extends keyof typeof validators> = z.infer<typeof validators[Name]>['props'];
 export type TComponentNames = keyof typeof validators;
@@ -37,8 +16,16 @@ const Components = {
   Fieldset: {
     component: Fieldset,
     validator: validators.Fieldset
+  },
+  Span: {
+    component: () => null,
+    validator: validators.Span
+  },
+  Anchor: {
+    component: () => null,
+    validator: validators.Anchor
   }
-}
+} as const;
 
 /**
  * Safe parse is used to parse the props of a component and return the component if the props are valid. If the props are invalid

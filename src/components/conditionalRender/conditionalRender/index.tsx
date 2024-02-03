@@ -1,10 +1,8 @@
 import React from "react";
 
-type TRenderJSX = React.ReactElement;
-
 type TOnState<T extends string | null> = T extends null 
-  ? { default: TRenderJSX } & { [key: string]: TRenderJSX } 
-  : { [K in Exclude<T, null>]: TRenderJSX }
+  ? { default: React.ReactNode } & { [key: string]: React.ReactNode } 
+  : { [K in Exclude<T, null>]: React.ReactNode }
 
 type TConditionalRenderProps<T extends string | null> = {
   state: T,
