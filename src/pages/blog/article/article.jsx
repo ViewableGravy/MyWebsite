@@ -64,6 +64,7 @@ const OwnMeta = (props) => {
 
 const OwnReadTime = ({ post, className }) => {
   if (!post?.content) return null;
+  if (post.content.some(item => Array.isArray(item.text))) return null;
 
   const words = post.content.reduce((acc, item) => {
     if (item.type === 'Paragraph')

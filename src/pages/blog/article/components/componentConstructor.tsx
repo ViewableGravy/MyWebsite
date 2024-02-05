@@ -4,6 +4,8 @@ import { Fieldset } from "./fieldSet";
 import { z } from "zod";
 import { OwnDevHandleMessage } from "./devmode";
 import { validators } from "./validators";
+import { Span } from "./span";
+import { Anchor } from "./anchor";
 
 export type TComponentProps<Name extends keyof typeof validators> = z.infer<typeof validators[Name]>['props'];
 export type TComponentNames = keyof typeof validators;
@@ -18,11 +20,11 @@ const Components = {
     validator: validators.Fieldset
   },
   Span: {
-    component: () => null,
+    component: Span,
     validator: validators.Span
   },
   Anchor: {
-    component: () => null,
+    component: Anchor,
     validator: validators.Anchor
   }
 } as const;
@@ -40,19 +42,22 @@ const safeParse = ({
   validator: keyof typeof validators,
   Component: React.FC<any>
 }) => {
-  if (!(validator in validators)) return (
-    <OwnDevHandleMessage 
-      type={validator} 
-      validator={validator} 
-      props={props} 
-      parsed={{ error: 'Validator not found' }} 
-    />
-  )
+  if (!(validator in validators)) {
+    return (
+      <OwnDevHandleMessage 
+        type={validator} 
+        validator={validator} 
+        props={props} 
+        parsed={{ error: 'Validator not found' }} 
+      />
+    )
+  }
 
   const parsed = validators[validator].safeParse({ type: validator, props });
 
-  if (parsed.success)
+  if (parsed.success) {
     return <Component {...parsed.data.props} />
+  }
 
   return (
     <OwnDevHandleMessage 
@@ -66,7 +71,8 @@ const safeParse = ({
 
 type TComponentConstructor = React.FC<{ 
   type: TComponentNames | undefined, 
-  props: TComponentProps<keyof typeof validators> 
+  props: TComponentProps<keyof typeof validators>,
+  allowed?: TComponentNames[]
 }>;
 
 /**
@@ -74,8 +80,16 @@ type TComponentConstructor = React.FC<{
  * Although the response from the API "SHOULD" match the expected format, validation is done at this layer to ensure 
  * all the relevant prop information is present;
  */
-export const ConstructComponent: TComponentConstructor = ({ type, props }) => {
+export const ConstructComponent: TComponentConstructor = ({ type, props, allowed }) => {
   if (!type) return null;
+
+  if (allowed && !allowed.includes(type)) {
+    if (import.meta.env.DEV) {
+      throw new Error(`Type ${type} is not allowed. Allowed types are: ${allowed.join(', ')}`)
+    }
+
+    return null; // fallback to null in production
+  }
 
   return safeParse({
     props, 
