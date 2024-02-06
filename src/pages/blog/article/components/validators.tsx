@@ -7,7 +7,7 @@ import { z } from 'zod';
  * Therefore the getAcceptableRawChildren function is used to create a validator that can be used to validate the children of a component without
  * being in the format { type: string, props: object } and instead in a flat object format like they will be formatted.
  */
-const getAcceptableRawChildren = <G extends string, T extends z.ZodObject<any>>(validator: z.ZodObject<{ type: z.ZodLiteral<G>, props: T }>) => {
+const getAcceptableRawChildren = <G extends string, T extends z.ZodObject<any> | z.ZodUnion<any>>(validator: z.ZodObject<{ type: z.ZodLiteral<G>, props: T }>) => {
   return z.intersection(
     z.object({
       type: validator.shape.type,
@@ -21,7 +21,7 @@ const getAcceptableRawChildren = <G extends string, T extends z.ZodObject<any>>(
  * 
  * The rawValidator should only be used to validate the children of a component, not the component itself.
  */
-const generateTypePropsValidator = <Literal extends string, T extends z.ZodObject<any>>(type: Literal, props: T) => {
+const generateTypePropsValidator = <Literal extends string, T extends z.ZodObject<any> | z.ZodUnion<[z.ZodTypeAny, ...z.ZodTypeAny[]]>>(type: Literal, props: T) => {
   const validator = z.object({
     type: z.literal(type),
     props
@@ -33,42 +33,49 @@ const generateTypePropsValidator = <Literal extends string, T extends z.ZodObjec
   } as const;
 }
 
-const { validator: FieldsetValidator } = generateTypePropsValidator('Fieldset', z.object({
+const Fieldset = generateTypePropsValidator('Fieldset', z.object({
   legend: z.string(),
   content: z.string(),
   color: z.string().optional()
 }));
 
-const { validator: SpanValidator, rawValidator: SpanRawValidator } = generateTypePropsValidator('Span', z.object({
+const Span = generateTypePropsValidator('Span', z.object({
   text: z.string()
 }));
 
-const { validator: AnchorValidator, rawValidator: AnchorRawValidator } = generateTypePropsValidator('Anchor', z.object({
-  text: z.string(),
-  to: z.string()
-}));
+const Anchor = generateTypePropsValidator(
+  'Anchor', 
+  z.union([
+    z.object({
+      text: z.string(),
+      to: z.string(),
+      params: z.record(z.string())
+    }), 
+    z.object({
+      text: z.string(),
+      href: z.string()
+    })
+  ])
+);
 
-const ParagraphValidator = z.object({
-  type: z.literal('Paragraph'),
-  props: z.object({
-      text: z.union([
-          z.string(),
-          z.array(z.union([
-            AnchorRawValidator,
-            SpanRawValidator
-          ]))
-      ]),
-      isFirst: z.boolean().optional()
-  })
-})
+const Paragraph = generateTypePropsValidator('Paragraph', z.object({
+  text: z.union([
+      z.string(),
+      z.array(z.union([
+        Anchor.rawValidator,
+        Span.rawValidator
+      ]))
+  ]),
+  isFirst: z.boolean().optional()
+}));
 
 /**
  * Base object with validators for the props of components. Component props are based on the validator types and are accessible
  * via the TComponentProps type. This is used to ensure that the component props are always in sync with the validator.
  */
 export const validators = {
-  Fieldset: FieldsetValidator,
-  Span: SpanValidator,
-  Anchor: AnchorValidator,
-  Paragraph: ParagraphValidator
+  Fieldset: Fieldset.validator,
+  Span: Span.validator,
+  Anchor: Anchor.validator,
+  Paragraph: Paragraph.validator
 } as const;

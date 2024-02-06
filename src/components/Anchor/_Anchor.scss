@@ -1,0 +1,16 @@
+.Anchor {
+    transition: color 0.15s ease-in-out;
+    color: var(--inline-link);
+
+    &:hover {
+        color: var(--inline-link-hover);
+    }
+
+    &__link {
+
+    }
+
+    &__a {
+
+    }
+}

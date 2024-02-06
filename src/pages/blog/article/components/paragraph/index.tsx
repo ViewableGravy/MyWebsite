@@ -3,15 +3,16 @@ import { ConstructComponent, type TComponentProps } from "../componentConstructo
 
 import './_Paragraph.scss'
 import Text from "components/text"
+import React, { createElement } from "react"
 
 type TParagraph = React.FC<TComponentProps<'Paragraph'>>
+type TRenderTextArray = React.FC<{ text: TComponentProps<'Paragraph'>['text'] }>
 
-const renderTextArray = (text: TComponentProps<'Paragraph'>['text']) => {
+const RenderTextArray: TRenderTextArray = ({ text }) => {
   if (!Array.isArray(text)) return null;
 
-  return text.map(({ type, ...props }, index) => (
+  return text.map(({ type, ...props }) => (
     <ConstructComponent 
-      key={index} 
       allowed={['Span', 'Anchor']} 
       type={type}
       props={props} 
@@ -34,7 +35,7 @@ export const Paragraph: TParagraph = ({ isFirst, text }) => {
 
     return Object.assign(baseProps, {
       innerHTML: false,
-      children: renderTextArray(text)
+      children: <RenderTextArray text={text} />
     } as const)
   }
 
@@ -43,7 +44,5 @@ export const Paragraph: TParagraph = ({ isFirst, text }) => {
     className: classNames("Paragraph", { "Paragraph--first": isFirst })
   })
 
-  return (
-    <Text {...props} />
-  )
+  return createElement(Text, props, props.children);
 }
