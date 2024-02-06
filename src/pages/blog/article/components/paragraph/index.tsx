@@ -11,8 +11,9 @@ type TRenderTextArray = React.FC<{ text: TComponentProps<'Paragraph'>['text'] }>
 const RenderTextArray: TRenderTextArray = ({ text }) => {
   if (!Array.isArray(text)) return null;
 
-  return text.map(({ type, ...props }) => (
+  return text.map(({ type, ...props }, index) => (
     <ConstructComponent 
+      key={index}
       allowed={['Span', 'Anchor']} 
       type={type}
       props={props} 

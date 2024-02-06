@@ -54,16 +54,25 @@ const getPrimaryProperties  = (props: TextProps) => {
     return 'white';
   }
 
+  const getWeight = (props: TextProps) => {
+    if ('bold' in props && props.bold) return 'bold';
+    if ('italic' in props && props.italic) return 'italic';
+    if ('underline' in props && props.underline) return 'underline';
+
+    return '';
+  }
+
   return {
-    color: getColor(props)
+    color: getColor(props),
+    weight: getWeight(props)
   }
 
 };
 
 const Text = (props: TextProps): React.ReactElement => {
   const { children, className, innerHTML, sizeCustom } = props
-  const { size, weight, align, span } = Object.keys(props).reduce<TDefaults>(reducer, defaults);
-  const { color } = getPrimaryProperties(props);
+  const { size, align, span } = Object.keys(props).reduce<TDefaults>(reducer, defaults);
+  const { color, weight } = getPrimaryProperties(props);
   const { color: themed } = useThemedStyles();
 
   /***** RENDER HELPERS *****/
