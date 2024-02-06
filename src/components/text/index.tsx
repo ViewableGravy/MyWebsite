@@ -7,14 +7,6 @@ import Heading from "./heading";
 
 import './_text.scss';
 
-const defaults = {
-  color: 'secondary',
-  size: '',
-  weight: '',
-  align: '',
-  span: false
-} satisfies TDefaults;
-
 const reducer = (acc: TDefaults, key: string) => {
   /***** COLOR *****/
   if (key === 'primary') acc.color = 'primary';
@@ -71,7 +63,13 @@ const getPrimaryProperties  = (props: TextProps) => {
 
 const Text = (props: TextProps): React.ReactElement => {
   const { children, className, innerHTML, sizeCustom } = props
-  const { size, align, span } = Object.keys(props).reduce<TDefaults>(reducer, defaults);
+  const { size, align, span } = Object.keys(props).reduce<TDefaults>(reducer, {
+    color: 'secondary',
+    size: '',
+    weight: '',
+    align: '',
+    span: false
+  });
   const { color, weight } = getPrimaryProperties(props);
   const { color: themed } = useThemedStyles();
 
