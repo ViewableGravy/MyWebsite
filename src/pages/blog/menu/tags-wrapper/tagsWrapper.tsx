@@ -159,7 +159,7 @@ export const GenerateTag = React.forwardRef(({ color = '#e008ce', text, classNam
     className: classNames(className, 'tag'),
     'data-color': isDarkColor(color) ? '#f1f1f1' : '#000000',
     ref,
-    onclick
+    onClick
   } as const;
 
   return (
