@@ -67,9 +67,11 @@ const OwnReadTime = ({ post, className }) => {
   if (post.content.some(item => Array.isArray(item.text))) return null;
 
   const words = post.content.reduce((acc, item) => {
-    if (item.type === 'Paragraph')
-      return acc + item.text.split(' ').length;
-    else
+    if (item.type === 'Paragraph') {
+      if (Array.isArray(item.children)) return 0;
+
+      return acc + (item.text ?? item.children).split(' ').length;
+    } else
       return acc;
   }, 0);
 

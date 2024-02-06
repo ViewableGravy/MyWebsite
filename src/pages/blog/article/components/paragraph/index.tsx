@@ -6,7 +6,7 @@ import Text from "components/text"
 import React, { createElement } from "react"
 
 type TParagraph = React.FC<TComponentProps<'Paragraph'>>
-type TRenderTextArray = React.FC<{ text: TComponentProps<'Paragraph'>['text'] }>
+type TRenderTextArray = React.FC<{ text: TComponentProps<'Paragraph'>['children'] }>
 
 const RenderTextArray: TRenderTextArray = ({ text }) => {
   if (!Array.isArray(text)) return null;
@@ -21,22 +21,22 @@ const RenderTextArray: TRenderTextArray = ({ text }) => {
   ))
 }
 
-export const Paragraph: TParagraph = ({ isFirst, text }) => {
+export const Paragraph: TParagraph = ({ isFirst, children }) => {
   /** 
    * Sometimes, we must sacrifice to satisfy the typescript overlords, 
    * I am confident they will be pleased with this offering
    */
   const createProps = <T extends Record<string, unknown>>(baseProps: T) => {
-    if (typeof text === 'string') {
+    if (typeof children === 'string') {
       return Object.assign(baseProps, {
         innerHTML: true,
-        children: text as string
+        children: children as string
       } as const)
     } 
 
     return Object.assign(baseProps, {
       innerHTML: false,
-      children: <RenderTextArray text={text} />
+      children: <RenderTextArray text={children} />
     } as const)
   }
 

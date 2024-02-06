@@ -7,7 +7,7 @@ import { z } from 'zod';
  * Therefore the getAcceptableRawChildren function is used to create a validator that can be used to validate the children of a component without
  * being in the format { type: string, props: object } and instead in a flat object format like they will be formatted.
  */
-const getAcceptableRawChildren = <G extends string, T extends z.ZodObject<any> | z.ZodUnion<any>>(validator: z.ZodObject<{ type: z.ZodLiteral<G>, props: T }>) => {
+const getAcceptableRawChildren = <G extends string, T extends z.ZodTypeAny>(validator: z.ZodObject<{ type: z.ZodLiteral<G>, props: T }>) => {
   return z.intersection(
     z.object({
       type: validator.shape.type,
@@ -21,7 +21,7 @@ const getAcceptableRawChildren = <G extends string, T extends z.ZodObject<any> |
  * 
  * The rawValidator should only be used to validate the children of a component, not the component itself.
  */
-const generateTypePropsValidator = <Literal extends string, T extends z.ZodObject<any> | z.ZodUnion<[z.ZodTypeAny, ...z.ZodTypeAny[]]>>(type: Literal, props: T) => {
+const generateTypePropsValidator = <Literal extends string, T extends z.ZodTypeAny>(type: Literal, props: T) => {
   const validator = z.object({
     type: z.literal(type),
     props
@@ -59,7 +59,7 @@ const Anchor = generateTypePropsValidator(
 );
 
 const Paragraph = generateTypePropsValidator('Paragraph', z.object({
-  text: z.union([
+  children: z.union([
       z.string(),
       z.array(z.union([
         Anchor.rawValidator,
