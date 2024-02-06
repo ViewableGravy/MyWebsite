@@ -1,7 +1,7 @@
 import React, { CSSProperties } from "react";
 import classNames from "classnames";
 
-import { TDefaults, TextProps, runtimeInjectableProps } from "./types";
+import { TDefaults, TextColorProps, TextProps, runtimeInjectableProps } from "./types";
 import useThemedStyles from "../../functionality/styler";
 import Heading from "./heading";
 
@@ -16,26 +16,58 @@ const defaults = {
 } satisfies TDefaults;
 
 const reducer = (acc: TDefaults, key: string) => {
+  /***** COLOR *****/
   if (key === 'primary') acc.color = 'primary';
   if (key === 'secondary') acc.color = 'secondary';
   if (key === 'black') acc.color = 'black';
   if (key === 'white') acc.color = 'white';
+
+  /***** WEIGHT *****/
   if (key.startsWith('bold')) acc.weight = 'bold';
   if (key.startsWith('italic')) acc.weight = 'italic';
   if (key.startsWith('underline')) acc.weight = 'underline';
-  if (key.startsWith('span')) acc.span = true;
-  if (key.startsWith('size-')) acc.size = key as Exclude<TDefaults['size'], ''>;
-  if (key.startsWith('align-')) acc.align = key as Exclude<TDefaults['align'], ''>;
 
+  /***** SIZE *****/
+  if (key.startsWith('size-')) acc.size = key as Exclude<TDefaults['size'], ''>;
+  
+  /***** ALIGN *****/
+  if (key.startsWith('align-')) acc.align = key as Exclude<TDefaults['align'], ''>;
+  
+  /***** SPAN *****/
+  if (key.startsWith('span')) acc.span = true;
+  
   return acc;
 };
 
-const Text = ({ children, className, innerHTML, sizeCustom, ..._props }: TextProps): React.ReactElement => {
-  const { color, size, weight, align, span } = Object.keys(_props).reduce<TDefaults>(reducer, defaults);
+/**
+ * WIP - more robust and easily understandble internal API for getting primary properties
+ */
+const getPrimaryProperties  = (props: TextProps) => {
+
+  const getColor = (props: TextColorProps) => {
+    if ('white' in props && props.white) return 'white';
+    if ('black' in props && props.black) return 'black';
+    if ('primary' in props && props.primary) return 'primary';
+    if ('secondary' in props && props.secondary) return 'secondary';
+    if ('customColor' in props && props.customColor) return props.customColor;
+
+    return 'white';
+  }
+
+  return {
+    color: getColor(props)
+  }
+
+};
+
+const Text = (props: TextProps): React.ReactElement => {
+  const { children, className, innerHTML, sizeCustom } = props
+  const { size, weight, align, span } = Object.keys(props).reduce<TDefaults>(reducer, defaults);
+  const { color } = getPrimaryProperties(props);
   const { color: themed } = useThemedStyles();
 
   /***** RENDER HELPERS *****/
-  const props = {
+  const _props = {
     children: innerHTML ? undefined : children,
     dangerouslySetInnerHTML: innerHTML ? { __html: children } : undefined,
     className: classNames({
@@ -43,7 +75,7 @@ const Text = ({ children, className, innerHTML, sizeCustom, ..._props }: TextPro
       [`Text--${size}`]: !!size,
       [`Text--${weight}`]: !!weight,
       [`Text--${align}`]: !!align,
-      [`Text--remove-margin`]: !!_props['remove-margin'],
+      [`Text--remove-margin`]: !!props['remove-margin'],
       [themed[color]]: !!themed[color],
     }, className),
     style: { 
@@ -53,12 +85,12 @@ const Text = ({ children, className, innerHTML, sizeCustom, ..._props }: TextPro
 
   /***** RENDER *****/
   if (span)
-    return <span {...props} />
+    return <span {..._props} />
 
   if (['string', 'number'].includes(typeof children) || Array.isArray(children))
-    return <p {...props} />
+    return <p {..._props} />
 
-  return <div {...props} />
+  return <div {..._props} />
 }
 
 Text.Heading = Heading;

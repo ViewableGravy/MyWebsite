@@ -1,14 +1,10 @@
+import useThemedStyles from 'functionality/styler';
 import { className } from '../../../src/helpers/runtimeInjectableProps/className';
 
 import React from "react";
 
 type BaseTextProps = {
   className?: string,
-  // inject?: boolean,
-  'primary'?: boolean;
-  'secondary'?: boolean;
-  'black'?: boolean;
-  'white'?: boolean;
   
   'sizeCustom'?: string | number;
   'size-xs'?: boolean;
@@ -30,7 +26,20 @@ type BaseTextProps = {
   'remove-margin'?: boolean;
 }
 
-export type TextProps = BaseTextProps & ({
+type RTThemedColors = ReturnType<typeof useThemedStyles>['color']
+export type TextColorProps = {
+  primary?: string
+} | {
+  secondary?: string
+} | {
+  black?: string
+} | {
+  white?: string
+} | {
+  customColor?: keyof RTThemedColors
+} | {};
+
+export type TextProps = BaseTextProps & TextColorProps & ({
   children: string | number,
   innerHTML: true;
 } | {
