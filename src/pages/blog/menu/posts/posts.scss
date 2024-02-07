@@ -401,10 +401,11 @@
       .right-section {
         flex-direction: column;
         align-items: left;
+        margin-left: 0;
 
         .date {
           width: calc(100% - 19px);
-          text-align: left;
+          text-align: center;
         }
       }
     }
