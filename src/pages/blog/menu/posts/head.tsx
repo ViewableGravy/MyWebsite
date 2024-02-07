@@ -2,6 +2,7 @@ import React from "react";
 import { useStore } from 'functionality/state/state';
 import { TStore } from "functionality/state/types";
 import { FlipToggle } from "../toggle/toggle";
+import Text from "components/text";
 
 const PostsHeadDataFromStore = (store: TStore) => ({
   draftMode: store.draftMode,
@@ -17,9 +18,14 @@ export const PostsHead: TPostsHead = ({ title, showToggle = true }) => {
   const [{ token, draftMode }, dispatch] = useStore(PostsHeadDataFromStore);
   const changeToggle = () => { dispatch({ draftMode: !draftMode })};
 
+  const classes = {
+    title: "Posts__title"
+  } as const;
+
   return (
     <div id="posts-head">
-      <h1 id="posts-title">{title}</h1>
+      <Text.Heading level={1} white className={classes.title}>{title}</Text.Heading>
+      {/* <h1 id="posts-title">{title}</h1> */}
       { 
         token && showToggle && <FlipToggle 
           initialState={draftMode} 
