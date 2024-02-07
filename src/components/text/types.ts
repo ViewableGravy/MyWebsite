@@ -28,24 +28,26 @@ type BaseTextProps = {
 
 type RTThemedColors = ReturnType<typeof useThemedStyles>['color']
 export type TextColorProps = {
-  primary?: string
+  primary?: boolean
 } | {
-  secondary?: string
+  secondary?: boolean
 } | {
-  black?: string
+  black?: boolean
 } | {
-  white?: string
+  white?: boolean
 } | {
   customColor?: keyof RTThemedColors
-} | {};
+};
 
-export type TextProps = BaseTextProps & TextColorProps & ({
+type TInnerHTMLUnion = ({
   children: string | number,
   innerHTML: true;
 } | {
   children: React.ReactNode,
-  innerHTML?: false;
-});
+  innerHTML?: false | undefined;
+})
+
+export type TextProps = BaseTextProps & TextColorProps & TInnerHTMLUnion;
 
 export const runtimeInjectableProps = {
   className,
@@ -59,4 +61,7 @@ export type TDefaults = {
   span: boolean;
 }
 
-export type THeadingProps = Omit<TextProps, 'children'> & { level: 1 | 2 | 3 | 4 | 5, children: string | number };
+export type THeadingProps = Omit<TextProps, 'children' | 'innerHTML'> & { 
+  level: 1 | 2 | 3 | 4 | 5, 
+  children: React.ReactNode
+} & TextColorProps & BaseTextProps;
