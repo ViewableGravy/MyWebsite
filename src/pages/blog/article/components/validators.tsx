@@ -1,22 +1,6 @@
 import { z } from 'zod';
 
 /**
- * Validator are in the format { type: string, props: object } to match the format expected by the ConstructComponent component.
- * 
- * When children are nested however, there is a need for this nested structure to be validated prior to the props being passed to the component.
- * Therefore the getAcceptableRawChildren function is used to create a validator that can be used to validate the children of a component without
- * being in the format { type: string, props: object } and instead in a flat object format like they will be formatted.
- */
-const getAcceptableRawChildren = <G extends string, T extends z.ZodTypeAny>(validator: z.ZodObject<{ type: z.ZodLiteral<G>, props: T }>) => {
-  return z.intersection(
-    z.object({
-      type: validator.shape.type,
-    }), 
-    validator.shape.props
-  )
-}
-
-/**
  * Generator function to create a validator and raw validator in the shape of { type: string, props: object } for a component.
  * 
  * The rawValidator should only be used to validate the children of a component, not the component itself.
@@ -25,11 +9,18 @@ const generateTypePropsValidator = <Literal extends string, T extends z.ZodTypeA
   const validator = z.object({
     type: z.literal(type),
     props
-  });
+  }).required();
+
+  const rawValidator = z.intersection(
+    z.object({
+      type: z.literal(type)
+    }),
+    props
+  )
 
   return {
     validator,
-    rawValidator: getAcceptableRawChildren(validator)
+    rawValidator
   } as const;
 }
 
