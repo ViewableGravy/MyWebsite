@@ -4,9 +4,7 @@ import './about.scss'
 import { Floater } from 'components/floater'
 
 //todo, get this from database based on currently signed in user
-export const About = ({ style }) => {
-  if ( !style ) style = {}
-
+export const About = ({ style = {} }) => {
   return (
     <Floater className="AboutComponent" clickable>
       <div style={style} className="AboutComponent__padder">

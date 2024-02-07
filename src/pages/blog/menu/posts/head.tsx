@@ -25,7 +25,6 @@ export const PostsHead: TPostsHead = ({ title, showToggle = true }) => {
   return (
     <div id="posts-head">
       <Text.Heading level={1} white className={classes.title}>{title}</Text.Heading>
-      {/* <h1 id="posts-title">{title}</h1> */}
       { 
         token && showToggle && <FlipToggle 
           initialState={draftMode} 
