@@ -1,0 +1,9 @@
+# Simple file to organize the migraton for `article-modifications` going into master.
+
+This task requires changes to the database schema, specifically changing it to { type: string, children: unknown[] } from { type: string, text: string }.
+
+I can think of two good ways to do this. One would be to provide a temporary validator that accepts strings or an array, Since the site is small, I only then need to update the blog posts
+manually and then once they have all been changed, just push an update without them.
+
+Alternatively I can build a maintenance page (which I think is a good idea anyway) and just take the site offline for a few hours. This really isn't that bad either but there is a chance
+that something goes wrong and then I have to leave the site offline which is not ideal.
