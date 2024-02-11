@@ -1,7 +1,7 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, forwardRef } from "react";
 import classNames from "classnames";
 
-import { TDefaults, TextColorProps, TextProps, runtimeInjectableProps } from "./types";
+import { TDefaults, TextColorProps, TextProps } from "./types";
 import useThemedStyles from "../../functionality/styler";
 import Heading from "./heading";
 
@@ -61,7 +61,7 @@ const getPrimaryProperties  = (props: TextProps) => {
 
 };
 
-const Text = (props: TextProps): React.ReactElement => {
+const Text = forwardRef(({ paragraph, ...props }: TextProps, ref): React.ReactElement => {
   const { children, className, innerHTML, sizeCustom } = props
   const { size, align, span } = Object.keys(props).reduce<TDefaults>(reducer, {
     color: 'secondary',
@@ -87,20 +87,20 @@ const Text = (props: TextProps): React.ReactElement => {
     }, className),
     style: { 
       fontSize: typeof sizeCustom === 'number' ? `${sizeCustom}px` : sizeCustom ?? size
-    } satisfies CSSProperties
+    } satisfies CSSProperties,
+    ref: ref ?? undefined
   } as any;
 
   /***** RENDER *****/
   if (span)
     return <span {..._props} />
 
-  if (['string', 'number'].includes(typeof children) || Array.isArray(children))
+  if (['string', 'number'].includes(typeof children) || Array.isArray(children) || paragraph)
     return <p {..._props} />
 
   return <div {..._props} />
-}
+});
 
-Text.Heading = Heading;
-Text.runtimeInjectableProps = runtimeInjectableProps;
-
-export default Text;
+export default Object.assign(Text, {
+  Heading
+});
