@@ -63,7 +63,7 @@ export const About = ({
       className: classes.container,
       style: { 
         background: 'linear-gradient(90deg, hsla(280, 84%, 41%, 1) 0%, hsla(218, 97%, 56%, 1) 100%)',
-        boxShadow: "#d36071 0px 0px 20px 0px"
+        boxShadow: "#7423cb 0px 0px 20px 0px"
       } as CSSProperties
     }
   } as const;
