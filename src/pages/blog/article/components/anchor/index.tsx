@@ -5,24 +5,33 @@ import { router } from "router";
 
 type TAnchor = React.FC<TComponentProps<'Anchor'>>;
 
-export const Anchor: TAnchor = ({ text, ...rest }) => {
+const isValidRoute = (to: string | LinkProps['to']): to is LinkProps['to'] => {
+    // @ts-ignore
+    return !!router.matchRoute(to);
+}
+
+export const Anchor: TAnchor = ({ children, ...rest }) => {
     if ('to' in rest) {
-        const matched = router.matchRoute(rest.to);
-        
-        if (!matched) {
-            if (import.meta.env.DEV) {
-                console.log(`The route ${rest.to} does not exist in the router`);
-            }
-            return null;
+        const { to } = rest;
+
+        if (isValidRoute(to)) {
+            const _rest = { ...rest, to: rest.to as LinkProps['to']  }
+            return <GlobalAnchor {..._rest}>{children}</GlobalAnchor>
         }
+        
+        if (import.meta.env.DEV) {
+            console.log(`The route ${rest.to} does not exist in the router`);
+        }
+
+        return <GlobalAnchor key="existn't" to="/" params>{children}</GlobalAnchor>;
     }
 
     if (!('to' in rest)) {
-        return <GlobalAnchor {...rest}>{text}</GlobalAnchor>
+        return <GlobalAnchor {...rest}>{children}</GlobalAnchor>
     }
 
     const _rest = { ...rest, to: rest.to as LinkProps['to']  }
 
-    return <GlobalAnchor {..._rest}>{text}</GlobalAnchor>
+    return <GlobalAnchor {..._rest}>{children}</GlobalAnchor>
 
 }

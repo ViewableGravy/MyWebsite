@@ -4,10 +4,10 @@ import { TComponentProps } from "../componentConstructor"
 
 type TSpan = React.FC<TComponentProps<'Span'>>
 
-export const Span: TSpan = ({ text }) => {
+export const Span: TSpan = ({ children }) => {
     return (
         <Text span>
-            {text}
+            {children}
         </Text>
     )
 }

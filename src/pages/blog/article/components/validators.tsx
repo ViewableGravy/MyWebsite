@@ -31,19 +31,19 @@ const Fieldset = generateTypePropsValidator('Fieldset', z.object({
 }));
 
 const Span = generateTypePropsValidator('Span', z.object({
-  text: z.string()
+  children: z.string()
 }));
 
 const Anchor = generateTypePropsValidator(
   'Anchor', 
   z.union([
     z.object({
-      text: z.string(),
+      children: z.string(),
       to: z.string(),
       params: z.record(z.string())
     }), 
     z.object({
-      text: z.string(),
+      children: z.string(),
       href: z.string()
     })
   ])
