@@ -1,7 +1,7 @@
 import Menu from "pages/blog/menu/menu";
 import { modes, getContent } from "./content";
 import { useGreetings } from "./hooks";
-import { useState } from "react";
+import { CSSProperties, useState } from "react";
 
 import "./_About.scss"
 import classNames from "classnames";
@@ -33,13 +33,40 @@ export const About = ({
   const [mode, setMode] = useState(_mode);
 
   const {
-    name,
-    description,
-    greetings,
-    profileImage
+    employment,
+    introduction,
+    programming,
+    projects
   } = getContent(mode);
 
-  const greeting = useGreetings(greetings);
+  const greeting = useGreetings(introduction.greetings);
+
+  const sectionProps = {
+    personal: {
+      className: classes.container
+    },
+    employment: {
+      className: classes.container,
+      style: { 
+        background: 'linear-gradient(61deg, rgba(0,255,44,1) 0%, rgba(0,239,255,1) 100%)',
+        boxShadow: "rgba(0, 242, 255, 0.65) 0px 0px 20px 0px"
+      } as CSSProperties
+    },
+    programming: {
+      className: classes.container,
+      style: { 
+        background: 'linear-gradient(90deg, hsla(192, 80%, 51%, 1) 0%, hsla(355, 85%, 63%, 1) 100%)',
+        boxShadow: "#d36071 0px 0px 20px 0px"
+      } as CSSProperties
+    },
+    projects: {
+      className: classes.container,
+      style: { 
+        background: 'linear-gradient(90deg, hsla(280, 84%, 41%, 1) 0%, hsla(218, 97%, 56%, 1) 100%)',
+        boxShadow: "#d36071 0px 0px 20px 0px"
+      } as CSSProperties
+    }
+  } as const;
 
   return (
     <div className={classes.outer} style={{
@@ -49,25 +76,54 @@ export const About = ({
 
       <button onClick={() => setMode(mode === modes.PROFESSIONAL ? modes.CASUAL : modes.PROFESSIONAL)}>Toggle Mode</button>
 
-      <section className={classes.container}>
+      {/* Personal Overview */}
+      <section {...sectionProps.personal}>
         <div className={classes.text.container('right')}>
-          <h1 className={classes.text.name}>{name}</h1>
-          <p className={classes.text.description}>{greeting} {description}</p>
+          <h1 className={classes.text.name}>{introduction.name}</h1>
+          <p className={classes.text.description}>{greeting} {introduction.description}</p>
         </div>
         <div className={classes.image.container}>
-          <img className={classes.image.image} src={profileImage} />
+          <img className={classes.image.image} src={introduction.profileImage} />
         </div>
       </section>
 
-      <section className={classes.container} style={{ 
-        background: 'linear-gradient(61deg, rgba(0,255,44,1) 0%, rgba(0,239,255,1) 100%)',
-        boxShadow: "rgba(0, 242, 255, 0.65) 0px 0px 20px 0px"
-      }}>
-        <p>Ultimately my goal here is to burn out your retinas with these pretty bright colours. I&apos;ve stared into the abyss long enough at this point</p>
+      {/* Employment */}
+      <section {...sectionProps.employment}>
+        <div className={classes.image.container}>
+          <img className={classes.image.image} src={employment.image} />
+        </div>
+        <div className={classes.text.container('left')}>
+          <h1 className={classes.text.name}>{employment.title}</h1>
+          <p className={classes.text.description} style={{ color: 'rgb(73 73 73)' }}>
+            {employment.description}
+          </p>
+        </div>
       </section>
 
-      <section className={classes.container}>
-        
+      {/* Programming */}
+      <section {...sectionProps.programming}>
+        <div className={classes.text.container('right')} style={{ marginRight: -20 }}>
+          <h1 className={classes.text.name}>{programming.title}</h1>
+          <p className={classes.text.description} style={{ color: 'white' }}>
+            {programming.description}
+          </p>
+        </div>
+        <div className={classes.image.container}>
+          <img className={classes.image.image} src={programming.image} style={{ height: 'clamp(110px, 22vw, 280px)', marginRight: 15, marginTop: -30 }}/>
+        </div>
+      </section>
+
+      {/* Projects */}
+      <section {...sectionProps.projects}>
+        <div className={classes.image.container}>
+          <img className={classes.image.image} src={projects.image} style={{ height: 'clamp(120px, 24vw, 280px)', marginRight: 20, marginTop: -30 }} />
+        </div>
+        <div className={classes.text.container('left')}>
+          <h1 className={classes.text.name}>{projects.title}</h1>
+          <p className={classes.text.description}>
+            {projects.description}
+          </p>
+        </div>
       </section>
     </div>
   );
