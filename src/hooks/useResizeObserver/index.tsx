@@ -17,7 +17,7 @@ export const useResizeObserver: TUseResizeObserver = (onResize, ref, deps = []) 
         }
 
         return () => observer.disconnect();
-    }, [onResize, _ref.current, ...deps])
+    }, [_ref.current, ...deps])
 
     return _ref;
 }
