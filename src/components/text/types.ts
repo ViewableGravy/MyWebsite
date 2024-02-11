@@ -21,7 +21,16 @@ type BaseTextProps = {
   'align-left'?: boolean;
   'align-center'?: boolean;
   'align-right'?: boolean;
+
+  /**
+   * Force the use of a span tag
+   */
   'span'?: boolean;
+  /**
+   * Force the use of a paragraph tag
+   */
+  paragraph?: boolean;
+  
   'heading'?: boolean;
   'remove-margin'?: boolean;
 }
