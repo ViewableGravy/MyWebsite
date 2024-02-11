@@ -5,6 +5,10 @@
   background-color: var(--background);
 }
 
+body {
+  overflow: unset;
+}
+
 .blog_container {
   
   min-height: 100vh;
