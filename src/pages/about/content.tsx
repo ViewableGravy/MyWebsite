@@ -2,6 +2,9 @@
 import ventraLogo from '../../assets/images/ventraip_logo-removebg-preview.png';
 import vscodeLogo from '../../assets/images/Visual_Studio_Code_1.35_icon.svg.png';
 import lucidLogo from '../../assets/images/3865608556737_8f4ae4a98b36ab6912b3_512-removebg-preview.png';
+import officeLogo from '../../assets/images/Microsoft_Outlook-Logo.wine.svg';
+import Text from 'components/text';
+import { Anchor } from 'components/Anchor';
 
 export const modes = {
   PROFESSIONAL: 'PROFESSIONAL',
@@ -81,11 +84,23 @@ const getProjects = (mode: TModes) => {
   }
 }
 
+const getContact = (mode: TModes) => {
+  const title = 'Contact';
+  const image = officeLogo;
+  const description = <Text className="aboutPage__text">If you have any questions, feedback, or would like to collaborate on a project, please feel free to reach out to me. You can find my contact information on the <Anchor params to="/contact">Contact Me</Anchor> page. Whether it's about my work, a potential opportunity, or just to say hello, I'm always happy to hear from you. Looking forward to connecting!</Text>
+
+  return {
+    title,
+    image,
+    description
+  }
+}
+
 
 export const getContent = (mode: TModes) => ({
   introduction: getIntroduction(mode),
   employment: getEmployment(mode),
   programming: getProgramming(mode),
   projects: getProjects(mode),
-  contact: {}
+  contact: getContact(mode)
 });

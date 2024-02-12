@@ -54,6 +54,11 @@ const getPrimaryProperties  = (props: TextProps) => {
     return '';
   }
 
+  const getLead = (props: TextProps) => {
+    if ('lead-0' in props) return 'lead--0';
+    if ('lead-1' in props) return 'lead--1';
+  }
+
   return {
     color: getColor(props),
     weight: getWeight(props)

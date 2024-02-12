@@ -5,6 +5,8 @@ import { CSSProperties, useState } from "react";
 
 import "./_About.scss"
 import classNames from "classnames";
+import { useStore } from "functionality/state/state";
+import { useMedia } from "hooks/useMedia";
 
 const classes = {
   outer: 'aboutPage',
@@ -31,12 +33,14 @@ export const About = ({
   _mode = modes.PROFESSIONAL 
 }: TProps) => {
   const [mode, setMode] = useState(_mode);
+  const isMobile = useMedia(['xs', 'sm']);
 
   const {
     employment,
     introduction,
     programming,
-    projects
+    projects,
+    contact
   } = getContent(mode);
 
   const greeting = useGreetings(introduction.greetings);
@@ -69,9 +73,7 @@ export const About = ({
   } as const;
 
   return (
-    <div className={classes.outer} style={{
-      paddingInline: 50
-    }}>
+    <div className={classes.outer}>
       <Menu style={{ maxWidth: 800, marginInline: 'auto' }} author={"ViewableGravy"}/>
 
       <button onClick={() => setMode(mode === modes.PROFESSIONAL ? modes.CASUAL : modes.PROFESSIONAL)}>Toggle Mode</button>
@@ -109,20 +111,33 @@ export const About = ({
           </p>
         </div>
         <div className={classes.image.container}>
-          <img className={classes.image.image} src={programming.image} style={{ height: 'clamp(110px, 22vw, 280px)', marginRight: 15, marginTop: -30 }}/>
+          <img className={classes.image.image} src={programming.image} style={{ height: 'clamp(110px, 22vw, 280px)', marginRight: 15, marginTop: isMobile ? 0 : -30 }}/>
         </div>
       </section>
 
       {/* Projects */}
       <section {...sectionProps.projects}>
         <div className={classes.image.container}>
-          <img className={classes.image.image} src={projects.image} style={{ height: 'clamp(120px, 24vw, 280px)', marginRight: 20, marginTop: -30 }} />
+          <img className={classes.image.image} src={projects.image} style={{ height: 'clamp(120px, 24vw, 280px)', marginRight: isMobile ? 10 : 20, marginTop: isMobile ? 20 : -30 }} />
         </div>
         <div className={classes.text.container('left')}>
           <h1 className={classes.text.name}>{projects.title}</h1>
           <p className={classes.text.description}>
             {projects.description}
           </p>
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section {...sectionProps.programming}>
+        <div className={classes.text.container('right')} style={{ marginRight: -20 }}>
+          <h1 className={classes.text.name}>{contact.title}</h1>
+          <p className={classes.text.description} style={{ color: 'white' }}>
+            {contact.description}
+          </p>
+        </div>
+        <div className={classes.image.container}>
+          <img className={classes.image.image} src={contact.image} style={isMobile ? { marginRight: -40, height: 150} : { marginTop: -70, marginRight: -90, marginLeft: -100 }}/>
         </div>
       </section>
     </div>
