@@ -38,6 +38,11 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   }
 
+  &__toggle {
+    margin-left: 95px;
+    margin-top: -30px;
+  }
+
   .textContainer {
     display: flex;
     flex-direction: column;

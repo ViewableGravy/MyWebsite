@@ -7,6 +7,7 @@ import "./_About.scss"
 import classNames from "classnames";
 import { useStore } from "functionality/state/state";
 import { useMedia } from "hooks/useMedia";
+import { FlipToggle } from "pages/blog/menu/toggle/toggle";
 
 const classes = {
   outer: 'aboutPage',
@@ -76,7 +77,13 @@ export const About = ({
     <div className={classes.outer}>
       <Menu style={{ maxWidth: 800, marginInline: 'auto' }} author={"ViewableGravy"}/>
 
-      <button onClick={() => setMode(mode === modes.PROFESSIONAL ? modes.CASUAL : modes.PROFESSIONAL)}>Toggle Mode</button>
+      <FlipToggle 
+        className="aboutPage__toggle" 
+        titleEnabled="Career" 
+        titleDisabled="Casual" 
+        onChange={() => setMode(mode === modes.PROFESSIONAL ? modes.CASUAL : modes.PROFESSIONAL)} 
+        initialState={mode === "CASUAL"} 
+      />
 
       {/* Personal Overview */}
       <section {...sectionProps.personal}>
