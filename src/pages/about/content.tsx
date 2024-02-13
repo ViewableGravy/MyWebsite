@@ -1,8 +1,9 @@
 
-import ventraLogo from '../../assets/images/ventraip_logo-removebg-preview.png';
+import ventraLogo from '../../assets/images/vip-logo.svg';
 import vscodeLogo from '../../assets/images/Visual_Studio_Code_1.35_icon.svg.png';
-import lucidLogo from '../../assets/images/3865608556737_8f4ae4a98b36ab6912b3_512-removebg-preview.png';
-import officeLogo from '../../assets/images/Microsoft_Outlook-Logo.wine.svg';
+import lucidLogo from '../../assets/images/lucidchartLogo.png'
+import officeLogo from '../../assets/images/outlookLogo.svg';
+import zeroTwo from '../../assets/images/9cf4f0296dc287ce13c6997004dcf8eb (1).png'
 import Text from 'components/text';
 import { Anchor } from 'components/Anchor';
 
@@ -26,9 +27,7 @@ const getIntroduction = (mode: TModes) => {
     night: 'Oyasumi nasai!'
   } as const;
   
-  const getProfileImage = (mode: TModes) => mode === modes.PROFESSIONAL 
-    ? 'https://i.pinimg.com/originals/9c/f4/f0/9cf4f0296dc287ce13c6997004dcf8eb.png'
-    : 'https://i.pinimg.com/originals/9c/f4/f0/9cf4f0296dc287ce13c6997004dcf8eb.png';
+  const getProfileImage = (mode: TModes) => zeroTwo;
   
   const getName = (mode: TModes) => mode === modes.PROFESSIONAL ? 'Lleyton Morris' : 'ViewableGravy';
   
@@ -87,7 +86,7 @@ const getProjects = (mode: TModes) => {
 const getContact = (mode: TModes) => {
   const title = 'Contact';
   const image = officeLogo;
-  const description = <Text className="aboutPage__text">If you have any questions, feedback, or would like to collaborate on a project, please feel free to reach out to me. You can find my contact information on the <Anchor params to="/contact">Contact Me</Anchor> page. Whether it's about my work, a potential opportunity, or just to say hello, I'm always happy to hear from you. Looking forward to connecting!</Text>
+  const description = <Text remove-margin className="aboutPage__text">If you have any questions, feedback, or would like to collaborate on a project, please feel free to reach out to me. You can find my contact information on the <Anchor params to="/contact">Contact Me</Anchor> page. Whether it's about my work, a potential opportunity, or just to say hello, I'm always happy to hear from you. Looking forward to connecting!</Text>
 
   return {
     title,

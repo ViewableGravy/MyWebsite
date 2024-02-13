@@ -8,10 +8,10 @@
  */
 export const bemBuilder = <T extends string>(component: T) => {
     const generator = (
-        <GElement extends string, GModifier extends string | undefined = undefined>
+        <GElement extends string | undefined = undefined, GModifier extends string | undefined = undefined>
         (element: GElement, modifier?: GModifier): 
-        `${T}__${GElement}${GModifier extends undefined ? '' : `--${GModifier}`}` => 
-        `${component}__${element}${modifier ? `--${modifier}` : ''}` as any
+        `${T}${GElement extends undefined ? '' : `__${GElement}`}${GModifier extends undefined ? '' : `--${GModifier}`}` => 
+        `${component}${element ? `__${element}` : ''}${modifier ? `--${modifier}` : ''}` as any
     )
 
     return [

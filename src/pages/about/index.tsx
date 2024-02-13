@@ -1,5 +1,6 @@
 import Menu from "pages/blog/menu/menu";
 import { modes, getContent } from "./content";
+import { AboutSection } from "./components/AboutSection";
 import { useGreetings } from "./hooks";
 import { CSSProperties, useState } from "react";
 import classNames from "classnames";
@@ -7,6 +8,7 @@ import { useMedia } from "hooks/useMedia";
 import { FlipToggle } from "pages/blog/menu/toggle/toggle";
 
 import "./_About.scss"
+import { bemBuilder } from "helpers/functions/bemBuilder";
 
 const classes = {
   outer: 'aboutPage',
@@ -32,8 +34,11 @@ type TProps = {
 export const About = ({ 
   _mode = modes.PROFESSIONAL 
 }: TProps) => {
+  /***** HOOKS *****/
   const [mode, setMode] = useState(_mode);
   const isMobile = useMedia(['xs', 'sm']);
+
+  const [, classGen] = bemBuilder('AboutPage')
 
   const {
     employment,
@@ -91,68 +96,35 @@ export const About = ({
         initialState={mode === "CASUAL"} 
       />
 
-      {/* Personal Overview */}
-      <section {...sectionProps.personal}>
-        <div className={classes.text.container('right')}>
-          <h1 className={classes.text.name}>{introduction.name}</h1>
-          <p className={classes.text.description}>{greeting} {introduction.description}</p>
-        </div>
-        <div className={classes.image.container}>
-          <img className={classes.image.image} src={introduction.profileImage} />
-        </div>
-      </section>
+      {/* Personal Overview 2.0 */}
+      <AboutSection imageSide="right" className={classGen("personalContainer")}>
+        <AboutSection.ContentPair heading={introduction.name} description={greeting + " " + introduction.description} />
+        <AboutSection.Image src={introduction.profileImage} alt="Profile Image" offset={{ up: isMobile && 20, right: isMobile ? 15 : 10 }} />
+      </AboutSection>
 
-      {/* Employment */}
-      <section {...sectionProps.employment}>
-        <div className={classes.image.container}>
-          <img className={classes.image.image} src={employment.image} />
-        </div>
-        <div className={classes.text.container('left')}>
-          <h1 className={classes.text.name}>{employment.title}</h1>
-          <p className={classes.text.description} style={{ color: 'rgb(73 73 73)' }}>
-            {employment.description}
-          </p>
-        </div>
-      </section>
+      {/* Employment 2.0 */}
+      <AboutSection imageSide="left" className={classGen("employmentContainer")}>
+        <AboutSection.Image src={employment.image} alt="VentraIP Logo" offset={{ up: isMobile && 20, left: isMobile && 5 }} />
+        <AboutSection.ContentPair heading={employment.title} description={employment.description} />
+      </AboutSection>
 
-      {/* Programming */}
-      <section {...sectionProps.programming}>
-        <div className={classes.text.container('right')} style={{ marginRight: -20 }}>
-          <h1 className={classes.text.name}>{programming.title}</h1>
-          <p className={classes.text.description} style={{ color: 'white' }}>
-            {programming.description}
-          </p>
-        </div>
-        <div className={classes.image.container}>
-          <img className={classes.image.image} src={programming.image} style={{ height: 'clamp(110px, 22vw, 280px)', marginRight: 15, marginTop: isMobile ? 0 : -30 }}/>
-        </div>
-      </section>
+      {/* Programming 2.0 */}
+      <AboutSection imageSide="right" className={classGen("programmingContainer")}>
+        <AboutSection.Image src={programming.image} alt="Visual Studio Code Logo" offset={{ up: isMobile && 20 }} />
+        <AboutSection.ContentPair heading={programming.title} description={programming.description} />
+      </AboutSection>
 
-      {/* Projects */}
-      <section {...sectionProps.projects}>
-        <div className={classes.image.container}>
-          <img className={classes.image.image} src={projects.image} style={{ height: 'clamp(120px, 24vw, 280px)', marginRight: isMobile ? 10 : 20, marginTop: isMobile ? 20 : -30 }} />
-        </div>
-        <div className={classes.text.container('left')}>
-          <h1 className={classes.text.name}>{projects.title}</h1>
-          <p className={classes.text.description}>
-            {projects.description}
-          </p>
-        </div>
-      </section>
+      {/* Projects 2.0 */}
+      <AboutSection imageSide="left" className={classGen("projectsContainer")}>
+        <AboutSection.Image src={projects.image} alt="Lucid Logo" offset={{ up: 10 }} />
+        <AboutSection.ContentPair heading={projects.title} description={projects.description} />
+      </AboutSection>
 
-      {/* Contact */}
-      <section {...sectionProps.contact}>
-        <div className={classes.text.container('right')} style={{ marginRight: -20 }}>
-          <h1 className={classes.text.name}>{contact.title}</h1>
-          <p className={classes.text.description} style={{ color: 'white' }}>
-            {contact.description}
-          </p>
-        </div>
-        <div className={classes.image.container}>
-          <img className={classes.image.image} src={contact.image} style={isMobile ? { marginRight: -40, height: 150} : { marginTop: -70, marginRight: -90, marginLeft: -100 }}/>
-        </div>
-      </section>
+      {/* Contact 2.0 */}
+      <AboutSection imageSide="right" className={classGen("contactContainer")}>
+        <AboutSection.ContentPair heading={contact.title} description={contact.description} />
+        <AboutSection.Image src={contact.image} alt="Office365 Logo" />
+      </AboutSection>
     </div>
   );
 }

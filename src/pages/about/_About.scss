@@ -1,9 +1,82 @@
+/**
+const sectionProps = {
+    personal: {
+      className: classes.container
+    },
+    employment: {
+      className: classes.container,
+      style: { 
+        background: 'linear-gradient(61deg, rgba(0,255,44,1) 0%, rgba(0,239,255,1) 100%)',
+        boxShadow: "rgba(0, 242, 255, 0.65) 0px 0px 20px 0px"
+      } as CSSProperties
+    },
+    programming: {
+      className: classes.container,
+      style: { 
+        background: 'linear-gradient(90deg, hsla(192, 80%, 51%, 1) 0%, hsla(355, 85%, 63%, 1) 100%)',
+        boxShadow: "#d36071 0px 0px 20px 0px"
+      } as CSSProperties
+    },
+    projects: {
+      className: classes.container,
+      style: { 
+        background: 'linear-gradient(90deg, hsla(280, 84%, 41%, 1) 0%, hsla(218, 97%, 56%, 1) 100%)',
+        boxShadow: "#7423cb 0px 0px 20px 0px"
+      } as CSSProperties
+    },
+    contact: {
+      className: classes.container,
+      style: { 
+        background: 'linear-gradient(90deg, hsla(33, 100%, 34%, 1) 0%, hsla(58, 75%, 35%, 1) 100%)',
+        boxShadow: "#c0cb23 0px 0px 20px 0px"
+      } as CSSProperties
+    }
+  } as const;*/
+
+.AboutPage {
+
+  /***** Containers *****/
+  &__contactContainer {
+    background: linear-gradient(90deg, hsla(33, 100%, 34%, 1) 0%, hsla(58, 75%, 35%, 1) 100%);
+    box-shadow: #c0cb23 0px 0px 20px 0px;
+  }
+
+  &__projectsContainer {
+    background: linear-gradient(90deg, hsla(280, 84%, 41%, 1) 0%, hsla(218, 97%, 56%, 1) 100%);
+    box-shadow: #7423cb 0px 0px 20px 0px;
+  }
+
+  &__programmingContainer {
+    background: linear-gradient(90deg, hsla(192, 80%, 51%, 1) 0%, hsla(355, 85%, 63%, 1) 100%);
+    box-shadow: #d36071 0px 0px 20px 0px;
+  }
+
+  &__employmentContainer {
+    background: linear-gradient(61deg, rgba(0,255,44,1) 0%, rgba(0,239,255,1) 100%);
+    box-shadow: rgba(0, 242, 255, 0.65) 0px 0px 20px 0px;
+
+    .AboutSection__description {
+      color: #3d3d3d;
+    }
+  }
+
+  &__personalContainer {
+    background: linear-gradient(61deg, rgba(255,0,153,1) 0%, rgba(139,0,255,1) 100%);
+    box-shadow: rgb(255 0 191 / 65%) 0px 0px 20px 0px;
+    gap: 0;
+  }
+}
+
 
 .aboutPage {
   padding-inline: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
 
   @media (max-width: 576px) {
     padding-inline: 20px;
+    gap: 70px;
   }
 
   .container {
