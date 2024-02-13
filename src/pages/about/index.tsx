@@ -1,44 +1,24 @@
+import React, { useState } from "react";
+import classNames from "classnames";
 import Menu from "pages/blog/menu/menu";
 import { modes, getContent } from "./content";
 import { AboutSection } from "./components/AboutSection";
 import { useGreetings } from "./hooks";
-import { CSSProperties, useState } from "react";
-import classNames from "classnames";
 import { useMedia } from "hooks/useMedia";
 import { FlipToggle } from "pages/blog/menu/toggle/toggle";
-
-import "./_About.scss"
 import { bemBuilder } from "helpers/functions/bemBuilder";
 
-const classes = {
-  outer: 'aboutPage',
-  container: 'container',
-  text: {
-    container: (position: 'right' | 'left') => classNames('textContainer', {
-      'textContainer__right': position === 'right',
-      'textContainer__left': position === 'left'
-    }),
-    name: 'name',
-    description: 'description'
-  },
-  image: {
-    container: 'imageContainer',
-    image: 'image'
-  }
-} as const;
+import "./_About.scss"
 
-type TProps = {
+type TAbout = React.FC<{
   _mode?: typeof modes[keyof typeof modes]
-}
+}>
 
-export const About = ({ 
-  _mode = modes.PROFESSIONAL 
-}: TProps) => {
+export const About: TAbout = ({ _mode = modes.PROFESSIONAL }) => {
   /***** HOOKS *****/
   const [mode, setMode] = useState(_mode);
   const isMobile = useMedia(['xs', 'sm']);
-
-  const [, classGen] = bemBuilder('AboutPage')
+  const [base, classGen] = bemBuilder('AboutPage')
 
   const {
     employment,
@@ -50,50 +30,21 @@ export const About = ({
 
   const greeting = useGreetings(introduction.greetings);
 
-  const sectionProps = {
-    personal: {
-      className: classes.container
-    },
-    employment: {
-      className: classes.container,
-      style: { 
-        background: 'linear-gradient(61deg, rgba(0,255,44,1) 0%, rgba(0,239,255,1) 100%)',
-        boxShadow: "rgba(0, 242, 255, 0.65) 0px 0px 20px 0px"
-      } as CSSProperties
-    },
-    programming: {
-      className: classes.container,
-      style: { 
-        background: 'linear-gradient(90deg, hsla(192, 80%, 51%, 1) 0%, hsla(355, 85%, 63%, 1) 100%)',
-        boxShadow: "#d36071 0px 0px 20px 0px"
-      } as CSSProperties
-    },
-    projects: {
-      className: classes.container,
-      style: { 
-        background: 'linear-gradient(90deg, hsla(280, 84%, 41%, 1) 0%, hsla(218, 97%, 56%, 1) 100%)',
-        boxShadow: "#7423cb 0px 0px 20px 0px"
-      } as CSSProperties
-    },
-    contact: {
-      className: classes.container,
-      style: { 
-        background: 'linear-gradient(90deg, hsla(33, 100%, 34%, 1) 0%, hsla(58, 75%, 35%, 1) 100%)',
-        boxShadow: "#c0cb23 0px 0px 20px 0px"
-      } as CSSProperties
-    }
-  } as const;
+  const outerClassName = classNames(base, {
+    [classGen(undefined, 'mobile')]: isMobile
+  })
 
+  /***** RENDER *****/
   return (
-    <div className={classes.outer}>
+    <div className={outerClassName}>
       <Menu style={{ maxWidth: 800, marginInline: 'auto' }} author={"ViewableGravy"}/>
 
       <FlipToggle 
-        className="aboutPage__toggle" 
+        className={classGen("toggle")}
         titleEnabled="Career" 
         titleDisabled="Casual" 
         onChange={() => setMode(mode === modes.PROFESSIONAL ? modes.CASUAL : modes.PROFESSIONAL)} 
-        initialState={mode === "CASUAL"} 
+        initialState={mode === modes.CASUAL} 
       />
 
       {/* Personal Overview 2.0 */}
