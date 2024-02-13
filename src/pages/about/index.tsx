@@ -2,12 +2,11 @@ import Menu from "pages/blog/menu/menu";
 import { modes, getContent } from "./content";
 import { useGreetings } from "./hooks";
 import { CSSProperties, useState } from "react";
-
-import "./_About.scss"
 import classNames from "classnames";
-import { useStore } from "functionality/state/state";
 import { useMedia } from "hooks/useMedia";
 import { FlipToggle } from "pages/blog/menu/toggle/toggle";
+
+import "./_About.scss"
 
 const classes = {
   outer: 'aboutPage',
@@ -69,6 +68,13 @@ export const About = ({
       style: { 
         background: 'linear-gradient(90deg, hsla(280, 84%, 41%, 1) 0%, hsla(218, 97%, 56%, 1) 100%)',
         boxShadow: "#7423cb 0px 0px 20px 0px"
+      } as CSSProperties
+    },
+    contact: {
+      className: classes.container,
+      style: { 
+        background: 'linear-gradient(90deg, hsla(33, 100%, 34%, 1) 0%, hsla(58, 75%, 35%, 1) 100%)',
+        boxShadow: "#c0cb23 0px 0px 20px 0px"
       } as CSSProperties
     }
   } as const;
@@ -136,7 +142,7 @@ export const About = ({
       </section>
 
       {/* Contact */}
-      <section {...sectionProps.programming}>
+      <section {...sectionProps.contact}>
         <div className={classes.text.container('right')} style={{ marginRight: -20 }}>
           <h1 className={classes.text.name}>{contact.title}</h1>
           <p className={classes.text.description} style={{ color: 'white' }}>

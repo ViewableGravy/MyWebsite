@@ -4,7 +4,7 @@ import { About } from 'pages/about';
 import BlogArticle from 'pages/blog/article/article';
 import Blog from 'pages/blog/blog';
 import { Contact } from 'pages/contact/contact';
-import Home from 'pages/home/home';
+import { Dashboard } from 'pages/dashboard';
 import Login from 'pages/login/login';
 import Subdomains from 'pages/subdomains/subdomains';
 import React, { Suspense } from 'react';
@@ -38,7 +38,7 @@ const routes = {
   home: new Route({
     getParentRoute: () => rootRoute,
     path: '/',
-    component: Home,
+    component: Blog,
   }),
   about: new Route({
     getParentRoute: () => rootRoute,
@@ -69,7 +69,12 @@ const routes = {
     getParentRoute: () => rootRoute,
     path: '/blog/$post',
     component: BlogArticle,
-  })
+  }),
+  dashboard: new Route({
+    getParentRoute: () => rootRoute,
+    path: '/dashboard',
+    component: Dashboard,
+  }),
 };
 
 const routeTree = rootRoute.addChildren([
@@ -80,12 +85,13 @@ const routeTree = rootRoute.addChildren([
   routes.subdomains,
   routes.blog,
   routes.blogArticle,
+  routes.dashboard,
 ])
 
 export const router = new Router({
   notFoundRoute: new NotFoundRoute({
     getParentRoute: () => rootRoute,
-    component: Home,
+    component: Blog,
   }),
   routeTree,
 });

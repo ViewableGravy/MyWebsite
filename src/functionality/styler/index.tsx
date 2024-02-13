@@ -7,13 +7,12 @@ type TUseThemedStyles = () => {
     secondary: string,
     black: string,
     white: string,
+    link: string
   }
 }
 
 const useThemedStyles: TUseThemedStyles = () => {
-  const [{ theme }] = useStore((store) => ({
-    theme: store.theme
-  }));
+  const [theme] = useStore((store) => store.theme);
 
   return {
     color: {
@@ -21,6 +20,7 @@ const useThemedStyles: TUseThemedStyles = () => {
       secondary: `color--secondary-${theme}`,
       black: `color--black`,
       white: `color--white`,
+      link: `color--link-${theme}`
     }
   }
 }

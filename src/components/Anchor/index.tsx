@@ -4,23 +4,25 @@ import Text from "components/text";
 import { bemBuilder } from "helpers/functions/bemBuilder";
 import React from "react";
 
-type TAnchor = React.FC<{ children: React.ReactNode } & ({ href: string } | LinkProps)>;
+import './_Anchor.scss'
+
+type TAnchor = React.FC<{ children: React.ReactNode, className?: string } & ({ href: string } | LinkProps)>;
 
 /**
  * Application wide, standard Anchor component which can be used to link to internal or external pages.
  */
-export const Anchor: TAnchor = ({ children, ...rest }) => {
+export const Anchor: TAnchor = ({ children, className, ...rest }) => {
     const [base, classGen] = bemBuilder('Anchor');
 
     const classes = {
-        a: classNames(base, classGen('a')),
-        link: classNames(base, classGen('link'))
+        a: classNames(base, classGen('a'), className),
+        link: classNames(base, classGen('link'), className)
     } as const;
 
     if ('href' in rest) {
         return (
             <a href={rest.href} className={classes.a} key={rest.href}>
-                <Text span underline>
+                <Text span underline customColor="link">
                     {children}
                 </Text>
             </a>
@@ -30,7 +32,7 @@ export const Anchor: TAnchor = ({ children, ...rest }) => {
     if ('to' in rest && 'params' in rest) {
         return (
             <Link to={rest.to} params={rest.params} className={classes.link} key={rest.to}>
-                <Text span underline>
+                <Text span underline customColor="link">
                     {children}
                 </Text>
             </Link>

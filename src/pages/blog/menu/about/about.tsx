@@ -12,8 +12,8 @@ export const About = ({ style = {} }) => {
           <img alt={'ViewableGravy Portrait'} src={Portrait}></img>
         </div>
         <p className={'about'}>
-          Hi, my name is Lleyton but online you can call me Gravy. I&apos;m passionate about making things; right now that&apos;s in NodeJS and React. 
-          Recently I&apos;m entertaining myself with WebSockets, Express API&apos;s and learning new SCSS & JSS skills but I also love Server Administration, automation and writing scripts. 
+          Hi, my name is Lleyton but online you can call me Gravy. I&apos;m passionate about making things; right now that&apos;s in Typescript and React. 
+          Recently I&apos;ve I'm enjoying typescript and strongly typed libraries like Tanstack and Zod as well as hobbies like table tennis, automation, reverse proxies and scripting. 
           I currently Work at <a className={'link magic-link'} href="https://ventraip.com.au/">VentraIP Australia</a> as a frontend Developer
         </p>
       </div>
