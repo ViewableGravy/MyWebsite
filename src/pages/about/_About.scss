@@ -6,6 +6,7 @@
 
   &--mobile {
     gap: 70px;
+    padding-inline: 20px;
   }
 
   /***** Containers *****/
@@ -37,5 +38,14 @@
     background: linear-gradient(61deg, rgba(255,0,153,1) 0%, rgba(139,0,255,1) 100%);
     box-shadow: rgb(255 0 191 / 65%) 0px 0px 20px 0px;
     gap: 0;
+  }
+
+  /***** CUSTOM *****/
+  &__anchor {
+    &--contact {
+      .Text {
+        color: rgb(89 255 226);
+      }
+    }
   }
 }

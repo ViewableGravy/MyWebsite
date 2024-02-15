@@ -86,7 +86,13 @@ const getProjects = (mode: TModes) => {
 const getContact = (mode: TModes) => {
   const title = 'Contact';
   const image = officeLogo;
-  const description = <Text remove-margin className="aboutPage__text">If you have any questions, feedback, or would like to collaborate on a project, please feel free to reach out to me. You can find my contact information on the <Anchor params to="/contact">Contact Me</Anchor> page. Whether it's about my work, a potential opportunity, or just to say hello, I'm always happy to hear from you. Looking forward to connecting!</Text>
+  const description = (
+    <Text remove-margin className="AboutSection__description">
+      If you have any questions, feedback, or would like to collaborate on a project, please feel free to reach out to me. 
+      You can find my contact information on the <Anchor className="AboutPage__anchor--contact" params to="/contact">Contact Me</Anchor> page. 
+      Whether it's about my work, a potential opportunity, or just to say hello, I'm always happy to hear from you. Looking forward to connecting!
+    </Text>
+  );
 
   return {
     title,
