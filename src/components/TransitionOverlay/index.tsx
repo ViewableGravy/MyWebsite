@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useGlobalState } from "../../functionality/state/[LEGACY]state";
-import { timelineEvent, createTimeline } from "../../helpers/functions/createTimeline";
+import { timelineEvent, createTimeline } from "../../utilities/functions/createTimeline";
 import { useNavigate } from "@tanstack/react-router";
 import { VisitorMice } from "components/liveMouse";
 

@@ -63,7 +63,7 @@ export const Floater: TFloater = ({ children, className, clickable = false, dura
         <div className={classes.Floater} style={{ minHeight: height }} >
             <div 
                 className={classes.Inner}
-                ref={innerRef} 
+                ref={innerRef as React.RefObject<HTMLDivElement>} 
                 style={{ animationDuration: `${duration / 1000}s` }}
                 onClick={handleClick}
                 onMouseEnter={handleMouseOver}

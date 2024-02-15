@@ -6,7 +6,7 @@ import { AboutSection } from "./components/AboutSection";
 import { useGreetings } from "./hooks";
 import { useMedia } from "hooks/useMedia";
 import { FlipToggle } from "pages/blog/menu/toggle/toggle";
-import { bemBuilder } from "helpers/functions/bemBuilder";
+import { bemBuilder } from "utilities/functions/bemBuilder";
 
 import "./_About.scss"
 
@@ -17,8 +17,8 @@ type TAbout = React.FC<{
 export const About: TAbout = ({ _mode = modes.PROFESSIONAL }) => {
   /***** HOOKS *****/
   const [mode, setMode] = useState(_mode);
-  const isMobile = useMedia(['xs', 'sm']);
   const [base, classGen] = bemBuilder('AboutPage')
+  const isMobile = useMedia(['xs', 'sm']);
 
   const {
     employment,
@@ -47,31 +47,31 @@ export const About: TAbout = ({ _mode = modes.PROFESSIONAL }) => {
         initialState={mode === modes.CASUAL} 
       />
 
-      {/* Personal Overview 2.0 */}
+      {/* Personal Overview */}
       <AboutSection imageSide="right" className={classGen("personalContainer")}>
         <AboutSection.ContentPair heading={introduction.name} description={greeting + " " + introduction.description} />
         <AboutSection.Image src={introduction.profileImage} alt="Profile Image" offset={{ up: isMobile && 20, right: isMobile ? 15 : 10 }} />
       </AboutSection>
 
-      {/* Employment 2.0 */}
+      {/* Employment */}
       <AboutSection imageSide="left" className={classGen("employmentContainer")}>
         <AboutSection.Image src={employment.image} alt="VentraIP Logo" offset={{ up: isMobile && 20, left: isMobile && 5 }} />
         <AboutSection.ContentPair heading={employment.title} description={employment.description} />
       </AboutSection>
 
-      {/* Programming 2.0 */}
+      {/* Programming */}
       <AboutSection imageSide="right" className={classGen("programmingContainer")}>
         <AboutSection.Image src={programming.image} alt="Visual Studio Code Logo" offset={{ up: isMobile && 20 }} />
         <AboutSection.ContentPair heading={programming.title} description={programming.description} />
       </AboutSection>
 
-      {/* Projects 2.0 */}
+      {/* Projects */}
       <AboutSection imageSide="left" className={classGen("projectsContainer")}>
         <AboutSection.Image src={projects.image} alt="Lucid Logo" offset={{ up: 10 }} />
         <AboutSection.ContentPair heading={projects.title} description={projects.description} />
       </AboutSection>
 
-      {/* Contact 2.0 */}
+      {/* Contact */}
       <AboutSection imageSide="right" className={classGen("contactContainer")}>
         <AboutSection.ContentPair heading={contact.title} description={contact.description} />
         <AboutSection.Image src={contact.image} alt="Office365 Logo" />

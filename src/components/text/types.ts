@@ -1,5 +1,5 @@
 import useThemedStyles from 'functionality/styler';
-import { className } from '../../../src/helpers/runtimeInjectableProps/className';
+import { className } from '../../utilities/runtimeInjectableProps/className';
 
 import React from "react";
 

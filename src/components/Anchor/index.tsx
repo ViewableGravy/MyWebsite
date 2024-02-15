@@ -1,7 +1,7 @@
 import { Link, LinkProps } from "@tanstack/react-router";
 import classNames from "classnames";
 import Text from "components/text";
-import { bemBuilder } from "helpers/functions/bemBuilder";
+import { bemBuilder } from "utilities/functions/bemBuilder";
 import React from "react";
 
 import './_Anchor.scss'

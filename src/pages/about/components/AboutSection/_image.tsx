@@ -2,7 +2,7 @@ import { useMedia } from "hooks/useMedia";
 import { useAboutSectionContext } from ".";
 import classNames from "classnames";
 import { CSSProperties, useMemo } from "react";
-import { bemBuilder } from "helpers/functions/bemBuilder";
+import { bemBuilder } from "utilities/functions/bemBuilder";
 import { Style, chainSelectors, styleBuilder } from "./helpers";
 import { string } from "zod";
 
