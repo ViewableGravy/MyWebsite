@@ -9,16 +9,21 @@ import classNames from "classnames";
 type THeader = React.FC<{ 
     children: React.ReactNode[],
     title: string,
-    image: React.ReactNode 
+    image: React.ReactNode,
+    className?: string
 }>
 
-export const Header: THeader = ({ children, title, image }) => {
+const _Header: THeader = ({ children, title, image, className }) => {
     const [{ open, closed }, toggle] = useToggleState(['open', 'closed']);
     const isMobile = useMedia(['xs', 'sm']);
 
     const [outer, classGenerator] = bemBuilder('Header');
     const classes = {
-        outer,
+        outer: classNames(outer, className, {
+          [classGenerator(undefined, 'mobile')]: isMobile,
+          [classGenerator(undefined, 'open')]: open,
+          [classGenerator(undefined, 'closed')]: closed,
+        }),
         titleContainer: classNames(classGenerator('TitleContainer'), {
             [classGenerator('TitleContainer', 'mobile')]: isMobile,
             [classGenerator('TitleContainer', 'open')]: open,
@@ -52,3 +57,11 @@ export const Header: THeader = ({ children, title, image }) => {
         </div>
     )
 }
+
+export const Header = Object.assign(_Header, {
+    Button: React.lazy(() => 
+        import('./Button').then(module => ({ 
+            default: module._Button 
+        }))
+    ),
+});

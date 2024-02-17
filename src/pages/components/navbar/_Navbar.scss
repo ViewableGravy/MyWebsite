@@ -1,3 +1,50 @@
 .Header {
+    max-width: 1250px;
+    border-radius: 30px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
 
+    /** TEMP **/
+    margin-top: 40px;
+    box-shadow: #18001e 0px 7px 20px 0px;
+
+    &--mobile {
+
+    }
+
+    &--open {
+        height: 200px;
+        background-color: #24264f;
+    }
+
+    &--closed {
+
+    }
+
+    &__LinksContainer {
+        height: 44px;
+        border-bottom: 1px solid grey;
+
+        display: flex;
+    }
+
+    &__TitleContainer {
+        flex-grow: 1;
+    }
+
+    &Button {
+        border: none;
+        background: none;
+        color: white;
+        padding-inline: 30px;
+        cursor: pointer;
+        font-weight: 600;
+        background: #24264f;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: #323464;
+        }
+    }
 }

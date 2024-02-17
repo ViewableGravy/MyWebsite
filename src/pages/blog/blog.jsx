@@ -1,15 +1,29 @@
+/***** BASE IMPORTS *****/
 import classNames from 'classnames';
+import { useNavigate } from '@tanstack/react-router';
 
+/***** CUSTOM IMPORTS *****/
 import { Menu } from './menu/menu'
 import { About } from './menu/about/about'
 import Posts from './menu/posts/posts';
+import { Header } from 'pages/components/navbar';
 
+/***** CONSTS *****/
 import './blog.scss'
 
 export const Blog = () => {
+  const navigate = useNavigate();
+  
   return (
     <BlogContainer>
-      <Menu author={"ViewableGravy"}/>
+      <Menu author="ViewableGravy"/>
+      {import.meta.env.DEV && (
+        <Header title="ViewableGravy">
+          <Header.Button onClick={() => navigate({ to: "/dashboard" })}>Dashboard</Header.Button>
+          <Header.Button onClick={() => navigate({ to: "/about" })}>About</Header.Button>
+          <Header.Button onClick={() => navigate({ to: "/blog" })}>Blog</Header.Button>
+        </Header>
+        )}
       <About/>
       <Posts/>
     </BlogContainer>
@@ -21,8 +35,8 @@ export const BlogContainer = ({ children, className }) => {
 
   return (
     <div className={_className}>
-      <div id={"outer"}>
-        <div id={"background"}>
+      <div id="outer">
+        <div id="background">
           {children}
         </div>
       </div>
