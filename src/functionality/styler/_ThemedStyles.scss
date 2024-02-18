@@ -1,32 +1,44 @@
 
+$primary-light: #007bff;
+$primary-dark: #a831d6;
+
+$secondary-light: #6c757d;
+$secondary-dark: #e0e0e0;
+
+$background-header-dark: #730465;
+$background-header-light: #f5f5f5;
+
+$background-primary-dark: #191731;
+$background-primary-light: #f5f5f5;
+
 .color {
   &--primary {
     &-light {
-      color: #007bff;
+      color: $primary-light;
     }
 
     &-dark {
-      color: #a831d6;
+      color: $primary-dark;
     }
   }
 
   &--secondary {
     &-light {
-      color: #6c757d;
+      color: $secondary-light;
     }
 
     &-dark {
-      color: #e0e0e0;
+      color: $secondary-dark;
     }
   }
 
   &--link {
     &-light {
-      color: #007bff;
+      color: $primary-light;
     }
 
     &-dark {
-      color: #a831d6;
+      color: $primary-dark;
     }
   }
 
@@ -39,8 +51,30 @@
   }
 }
 
-$primary-light: #007bff;
-$primary-dark: #a831d6;
+.background {
+  &--primary {
+    &-dark {
+      background-color: $background-primary-dark;
+    }
 
-$secondary-light: #6c757d;
-$secondary-dark: #e0e0e0;
+    &-light {
+      /**
+       * TODO
+       */
+      background-color: $background-primary-light;
+    }
+  }
+
+  &--header {
+    &-dark {
+      background-color: $background-header-dark;
+    }
+
+    &--light {
+      /**
+       * TODO
+       */
+      background-color: #f5f5f5;
+    }
+  }
+}

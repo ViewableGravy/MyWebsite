@@ -9,6 +9,7 @@ import Posts from './menu/posts/posts';
 import { Header } from 'pages/components/navbar';
 
 /***** CONSTS *****/
+import logo from 'assets/images/lucidchartLogo.png';
 import './blog.scss'
 
 export const Blog = () => {
@@ -16,15 +17,34 @@ export const Blog = () => {
   
   return (
     <BlogContainer>
-      <Menu author="ViewableGravy"/>
       {import.meta.env.DEV && (
-        <Header title="ViewableGravy">
-          <Header.Button onClick={() => navigate({ to: "/dashboard" })}>Dashboard</Header.Button>
-          <Header.Button onClick={() => navigate({ to: "/about" })}>About</Header.Button>
-          <Header.Button onClick={() => navigate({ to: "/blog" })}>Blog</Header.Button>
+        <Header 
+          className="BlogContainer__Header" 
+          title="ViewableGravy" 
+          image={<img src={logo} alt="logo" />} 
+          width={{ 
+            desktop: ["300px", "calc(100% - 90px)", "calc(800px - 50px)"],
+            mobile: ["300px", "calc(100% - 50px)", "calc(800px - 50px)"]
+          }}
+        >
+          <Header.Button activeRoute="/dashboard" onClick={() => navigate({ to: "/dashboard" })}>
+            Dashboard
+          </Header.Button>
+          <Header.Button activeRoute="/about" onClick={() => navigate({ to: "/about" })}>
+            About
+          </Header.Button>
+          <Header.Button activeRoute="/blog" onClick={() => navigate({ to: "/blog" })}>
+            Blog
+          </Header.Button>
+          <Header.Button activeRoute="/contact" onClick={() => navigate({ to: "/contact" })}>
+            Contact
+          </Header.Button>
+          <Header.Button activeRoute="/login" onClick={() => navigate({ to: "/login" })}>
+            Login
+          </Header.Button>
         </Header>
-        )}
-      <About/>
+      )}
+      <About style={{ marginTop: 160 }} />
       <Posts/>
     </BlogContainer>
   )

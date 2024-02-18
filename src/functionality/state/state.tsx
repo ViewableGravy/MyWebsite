@@ -62,7 +62,7 @@ export const useStore = (
   );
 
   React.useEffect(() => {
-    return store.subscribe(() => setState(store.get()));
+    return store.subscribe(() => setState(selector(store.get())));
   }, []);
 
 

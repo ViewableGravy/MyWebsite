@@ -12,13 +12,14 @@ type TUseToggleState = <A extends string, B extends string>
  * A second param can be provided to set the initialValue of the state, otherwise the first key will be the default.
  */
 export const useToggleState: TUseToggleState = ([keyA, keyB], initialValue = keyA) => {
-    const [state, setState] = useState(initialValue === keyA);
+    const [state, setState] = useState(initialValue ?? keyA);
 
     const toggle = (state?: typeof keyA | typeof keyB) => setState((_state) => {
-        if (state === keyA) return false;
-        if (state === keyB) return true;
-        return !_state;
+        if (state) return state;
+        if (_state === keyA) return keyB;
+
+        return keyA;
     });
 
-    return [{ [keyA]: state, [keyB]: !state }, toggle] as any;
+    return [{ [keyA]: state === keyA, [keyB]: state === keyB }, toggle] as any;
 }
