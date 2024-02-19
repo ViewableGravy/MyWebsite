@@ -7,12 +7,12 @@
  * This is typed correctly and will properly infer the narrowest type possible given the inputs.
  */
 export const bemBuilder = <T extends string>(component: T) => {
-    const generator = (
-        <GElement extends string | undefined = undefined, GModifier extends string | undefined = undefined>
-        (element: GElement, modifier?: GModifier): 
-        `${T}${GElement extends undefined ? '' : `__${GElement}`}${GModifier extends undefined ? '' : `--${GModifier}`}` => 
-        `${component}${element ? `__${element}` : ''}${modifier ? `--${modifier}` : ''}` as any
-    )
+    type Generic = string | undefined;
+    type ReturnType<A extends Generic, B extends Generic> = `${T}${A extends undefined ? '' : `__${A}`}${B extends undefined ? '' : `--${B}`}`;
+
+    const generator = <GElement extends Generic = undefined, GModifier extends Generic = undefined>(element: GElement, modifier?: GModifier) => {
+        return `${component}${element ? `__${element}` : ''}${modifier ? `--${modifier}` : ''}` as ReturnType<GElement, GModifier>;
+    }
 
     return [
         component,
