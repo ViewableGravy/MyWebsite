@@ -3,9 +3,6 @@ import './_ThemedStyles.scss'
 
 const useThemedStyles = () => {
   const [theme] = useStore((store) => store.theme);
-  useStore((store) => console.log(store.theme))
-
-  console.log(theme)
 
   return {
     color: {

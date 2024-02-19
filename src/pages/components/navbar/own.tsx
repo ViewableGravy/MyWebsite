@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 
 
 export const HeaderContext = createContext({
-    isOpen: false,
+    isSmall: false,
     isMobile: false
 });
 

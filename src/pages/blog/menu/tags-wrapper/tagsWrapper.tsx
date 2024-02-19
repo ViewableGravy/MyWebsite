@@ -72,7 +72,6 @@ export const TagMenu: TTagMenu = ({ data }) => {
       style.color = dataset.color || 'white';
     });
     
-    console.log('here')
     innerContainer.current.style.width = `${widths.reduce((a, b) => a + b + 10, 0)}px`;
   };
 

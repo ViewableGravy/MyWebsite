@@ -23,8 +23,8 @@ export const Blog = () => {
           title="ViewableGravy" 
           image={<img src={logo} alt="logo" />} 
           width={{ 
-            desktop: ["300px", "calc(100% - 90px)", "calc(800px - 50px)"],
-            mobile: ["300px", "calc(100% - 50px)", "calc(800px - 50px)"]
+            desktop: ["230px", "calc(100% - 90px)", "calc(800px - 50px)"],
+            mobile: ["230px", "calc(100% - 50px)", "calc(800px - 50px)"]
           }}
         >
           <Header.Button activeRoute="/dashboard" onClick={() => navigate({ to: "/dashboard" })}>
