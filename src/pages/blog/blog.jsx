@@ -6,7 +6,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { Menu } from './menu/menu'
 import { About } from './menu/about/about'
 import Posts from './menu/posts/posts';
-import { Header } from 'pages/components/navbar';
+import { Header } from 'components/navbar';
 
 /***** CONSTS *****/
 import logo from 'assets/images/lucidchartLogo.png';

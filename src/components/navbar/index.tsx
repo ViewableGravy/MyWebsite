@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 
 import './_Navbar.scss';
 import { bemBuilder } from "utilities/functions/bemBuilder";
@@ -8,7 +8,7 @@ import classNames from "classnames";
 import Text from "components/text";
 import { HeaderContext } from "./own";
 import useThemedStyles from "functionality/styler";
-import { BurgerToggle } from "./BurgeFancy";
+import { BurgerToggle } from "./BurgerFancy";
 import { _Button } from "./Button";
 import { useEventListener } from "hooks/useEventListener";
 
