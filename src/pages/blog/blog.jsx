@@ -11,9 +11,11 @@ import { Header } from 'pages/components/navbar';
 /***** CONSTS *****/
 import logo from 'assets/images/lucidchartLogo.png';
 import './blog.scss'
+import { useMedia } from 'hooks/useMedia';
 
 export const Blog = () => {
   const navigate = useNavigate();
+  const isMobile = useMedia(['xs', 'sm'])
   
   return (
     <BlogContainer>
@@ -44,7 +46,7 @@ export const Blog = () => {
           </Header.Button>
         </Header>
       )}
-      <About style={{ marginTop: 160 }} />
+      <About style={{ marginTop: isMobile ? 50 : 160 }} />
       <Posts/>
     </BlogContainer>
   )

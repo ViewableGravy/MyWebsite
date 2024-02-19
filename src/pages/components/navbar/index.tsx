@@ -9,6 +9,8 @@ import Text from "components/text";
 import { HeaderContext } from "./own";
 import useThemedStyles from "functionality/styler";
 import { BurgerToggle } from "./BurgeFancy";
+import { _Button } from "./Button";
+import { useEventListener } from "hooks/useEventListener";
 
 type TClamp = [string | number, string | number, string | number];
 type THeaderProps = {
@@ -67,18 +69,9 @@ const _Header: THeader = ({ children, title, image, className, width, hideAbove 
         dropdownInner: gcn('dropdownInner')
     }
 
-    // this will probably be a performance issue, abstract and use a ref
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 50)
-                return toggle('small');
-            
-            toggle('large');
-        }
-
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, []);
+    useEventListener('scroll', () => {
+        window.scrollY > 50 ? toggle('small') : toggle('large');
+    }, undefined)
 
     const getWidth = () => {
         if (typeof width === 'object' && !Array.isArray(width)) {
@@ -137,9 +130,5 @@ const _Header: THeader = ({ children, title, image, className, width, hideAbove 
 }
 
 export const Header = Object.assign(_Header, {
-    Button: React.lazy(() => 
-        import('./Button').then(module => ({ 
-            default: module._Button 
-        }))
-    ),
+    Button: _Button,
 });
