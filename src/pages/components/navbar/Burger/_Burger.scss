@@ -1,0 +1,58 @@
+.Header__burger {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 0.15px 0;
+  width: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  >div:nth-child(1) {
+    background: rgb(215, 165, 121);
+    height: 6px;
+    width: 112%;
+    transform: rotateZ(1deg);
+    z-index: 1;
+  }
+
+  >div:nth-child(2) {
+    background: rgb(114, 72, 60);
+    height: 7px;
+    width: 100%;
+    transform: rotateZ(-0.5deg);
+  }
+
+  div:nth-child(3) {
+    background: rgb(216, 214, 77);
+    height: 2px;
+    width: 115%;
+    transform: rotateZ(-0.3deg);
+  }
+
+  div:nth-child(4) {
+    background: rgb(214, 55, 53);
+    height: 4px;
+    width: 105%;
+    transform: rotateZ(-0.5deg);
+  }
+
+  div:nth-child(5) {
+    background: rgb(123, 177, 102);
+    height: 4.5px;
+    width: 110%;
+    transform: rotateZ(0.5deg);
+  }
+
+  div:nth-child(6) {
+    background: rgb(215, 165, 121);
+    height: 8px;
+    width: 116%;
+    z-index: 1;
+    border-top-right-radius: 100px 20px;
+    border-top-left-radius: 100px 20px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
