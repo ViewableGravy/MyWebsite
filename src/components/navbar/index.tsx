@@ -4,13 +4,14 @@ import './_Navbar.scss';
 import { bemBuilder } from "utilities/functions/bemBuilder";
 import { useToggleState } from "hooks/useToggleState";
 import { useMedia } from "hooks/useMedia";
-import classNames from "classnames";
+import cn from "classnames";
 import Text from "components/text";
 import { HeaderContext } from "./own";
 import useThemedStyles from "functionality/styler";
 import { BurgerToggle } from "./BurgerFancy";
 import { _Button } from "./Button";
 import { useEventListener } from "hooks/useEventListener";
+import { TClampParameters, clamp } from "utilities/functions/clamp";
 
 type TClamp = [string | number, string | number, string | number];
 type THeaderProps = {
@@ -18,25 +19,14 @@ type THeaderProps = {
     title: string,
     image: React.ReactNode,
     className?: string,
-    width?: TClamp | number | string | {
-        desktop?: TClamp,
-        mobile?: TClamp
+    width?: TClampParameters | {
+        desktop?: TClampParameters,
+        mobile?: TClampParameters
     },
     hideAbove?: boolean
 }
 
 type THeader = React.FC<THeaderProps>
-
-type TClampGeneric = TClamp | string | number | undefined;
-type TClampReturnType<T extends TClampGeneric> = T extends undefined ? undefined : string;
-
-const clamp = <T extends TClampGeneric = undefined>(width?: T): TClampReturnType<T> => {
-    if (!width) return undefined as TClampReturnType<T>;
-    if (typeof width === 'string') return width as TClampReturnType<T>;
-    if (typeof width === 'number') return `${width}px` as TClampReturnType<T>;
-
-    return `clamp(${width.map((w) => clamp(w)).join(', ')})` as TClampReturnType<T>;
-}
 
 const _Header: THeader = ({ children, title, image, className, width, hideAbove = true }) => {
     const [{ small, large }, toggle] = useToggleState(['large', 'small']);
@@ -47,24 +37,25 @@ const _Header: THeader = ({ children, title, image, className, width, hideAbove 
 
     const [outer, gcn] = bemBuilder('Header');
     const classes = {
-        wrapper: classNames(gcn("wrapper")),
-        header: classNames(outer, className, background.header, {
+        wrapper: cn(gcn("wrapper")),
+        header: cn(outer, className, background.header, {
           [gcn(undefined, 'mobile')]: isMobile,
           [gcn(undefined, 'small')]: small,
           [gcn(undefined, 'large')]: large,
           [gcn(undefined, 'hideAbove')]: hideAbove
         }),
-        titleContainer: classNames(gcn('TitleContainer'), {
+        titleContainer: cn(gcn('TitleContainer'), {
             [gcn('TitleContainer', 'mobile')]: isMobile,
             [gcn('TitleContainer', 'small')]: small,
             [gcn('TitleContainer', 'large')]: large,
         }),
-        linksContainer: classNames(gcn('LinksContainer'), {
+        linksContainer: cn(gcn('LinksContainer'), {
             [gcn('LinksContainer', 'large')]: large,
+            [gcn('LinksContainer', 'small')]: small,
         }),
         title: gcn('Title'),
         image: gcn('Image'),
-        hider: classNames(gcn('hider'), background.primary),
+        hider: cn(gcn('hider'), background.primary),
         dropdown: gcn('dropdown'),
         dropdownInner: gcn('dropdownInner')
     }

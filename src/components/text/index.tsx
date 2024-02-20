@@ -46,10 +46,10 @@ const getPrimaryProperties  = (props: TextProps) => {
     return 'white';
   }
 
-  const getWeight = (props: TextProps) => {
-    if ('bold' in props && props.bold) return 'bold';
-    if ('italic' in props && props.italic) return 'italic';
-    if ('underline' in props && props.underline) return 'underline';
+  const getWeight = ({ bold, italic, underline }: TextProps) => {
+    if (bold) return 'bold';
+    if (italic) return 'italic';
+    if (underline) return 'underline';
 
     return '';
   }
@@ -59,23 +59,31 @@ const getPrimaryProperties  = (props: TextProps) => {
     if ('lead-1' in props) return 'lead--1';
   }
 
+  const getElement = (props: TextProps) => {
+    return {
+      span: 'span' in props && props.span,
+      div: 'div' in props && props.div
+    }
+  }
+
   return {
     color: getColor(props),
-    weight: getWeight(props)
+    weight: getWeight(props),
+    ...getElement(props)
   }
 
 };
 
 const Text = forwardRef(({ paragraph, ...props }: TextProps, ref): React.ReactElement => {
   const { children, className, innerHTML, sizeCustom } = props
-  const { size, align, span } = Object.keys(props).reduce<TDefaults>(reducer, {
+  const { size, align } = Object.keys(props).reduce<TDefaults>(reducer, {
     color: 'secondary',
     size: '',
     weight: '',
     align: '',
     span: false
   });
-  const { color, weight } = getPrimaryProperties(props);
+  const { color, weight, div, span } = getPrimaryProperties(props);
   const { color: themed } = useThemedStyles();
 
   /***** RENDER HELPERS *****/
@@ -97,13 +105,16 @@ const Text = forwardRef(({ paragraph, ...props }: TextProps, ref): React.ReactEl
   } as any;
 
   /***** RENDER *****/
-  if (span)
-    return <span {..._props} />
-
-  if (['string', 'number'].includes(typeof children) || Array.isArray(children) || paragraph)
-    return <p {..._props} />
-
-  return <div {..._props} />
+  switch (true) {
+    case !!span:
+      return <span {..._props} />
+    case !!div:
+      return <div {..._props} />
+    case ['string', 'number'].includes(typeof children) || Array.isArray(children) || paragraph:
+      return <p {..._props} />
+    default:
+      return <div {..._props} />
+  }
 });
 
 export default Object.assign(Text, {

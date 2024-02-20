@@ -23,10 +23,6 @@ type BaseTextProps = {
   'align-right'?: boolean;
 
   /**
-   * Force the use of a span tag
-   */
-  'span'?: boolean;
-  /**
    * Force the use of a paragraph tag
    */
   paragraph?: boolean;
@@ -56,7 +52,9 @@ type TInnerHTMLUnion = ({
   innerHTML?: false | undefined;
 })
 
-export type TextProps = BaseTextProps & TextColorProps & TInnerHTMLUnion;
+type TType = { span?: boolean } | { div?: boolean }
+
+export type TextProps = BaseTextProps & TType & TextColorProps & TInnerHTMLUnion;
 
 export const runtimeInjectableProps = {
   className,

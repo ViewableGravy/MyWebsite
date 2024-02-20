@@ -41,12 +41,6 @@ $top: 40px;
                 gap: 10px;
             }
         }
-
-        .LinksContainer {
-            height: 20px;
-            align-items: center;
-            padding-left: 10px;
-        }
     }
 
     &__LinksContainer {
@@ -55,6 +49,13 @@ $top: 40px;
 
         &--small, &--mobile {
             height: auto;
+            height: 20px;
+            align-items: center;
+            padding-left: 10px;
+        }
+
+        &--small {
+            height: 30px
         }
     }
 
@@ -116,9 +117,29 @@ $top: 40px;
         cursor: pointer;
         font-weight: 600;
         transition: background-color 0.3s;
-        border-radius: 15px;
+        border-radius: 12px;
 
         background: #470d59;
+
+        &__newTag {
+            position: absolute;
+            top: -10px;
+            right: -5px;
+            background-color: #753fff;
+        
+            padding: 2px;
+            padding-inline: 6px;
+            border-radius: 6px;
+
+            &--mobile {
+                right: 10px;
+            }
+        }
+
+        &--new {
+            position: relative;
+            border: 1px solid #753fff;
+        }
         
         &--active {
             background-color: #2e0145;
