@@ -12,6 +12,7 @@ import logo from 'assets/images/lucidchartLogo.png';
 import './blog.scss'
 import { useMedia } from 'hooks/useMedia';
 import { calc } from 'utilities/functions/calc';
+import React from 'react';
 
 export const Blog = () => {
   const navigate = useNavigate();
@@ -52,7 +53,12 @@ export const Blog = () => {
   )
 }
 
-export const BlogContainer = ({ children, className }) => {
+type TBlogContainer = React.FC<{
+  children: React.ReactNode,
+  className?: string
+}>
+
+export const BlogContainer: TBlogContainer = ({ children, className }) => {
   const _className = classNames('blog_container', className)
 
   return (

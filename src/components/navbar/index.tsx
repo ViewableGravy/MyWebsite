@@ -2,7 +2,7 @@ import React, {  useState } from "react";
 
 import './_Navbar.scss';
 import { bemBuilder } from "utilities/functions/bemBuilder";
-import { useToggleState } from "hooks/useToggleState";
+import { useToggleState, useToggleState2 } from "hooks/useToggleState";
 import { useMedia } from "hooks/useMedia";
 import cn from "classnames";
 import Text from "components/text";
@@ -29,7 +29,8 @@ type THeaderProps = {
 type THeader = React.FC<THeaderProps>
 
 const _Header: THeader = ({ children, title, image, className, width, hideAbove = true }) => {
-    const [{ small, large }, toggle] = useToggleState(['large', 'small']);
+    // const [{ small, large }, toggle] = useToggleState(['large', 'small']);
+    const [{ small, large }, toggle] = useToggleState2(['large', 'small'], { objectValues: true });
     const { background } = useThemedStyles();
     const isMobile = useMedia(['xs', 'sm']);
 
