@@ -4,18 +4,13 @@ import { TStore } from "functionality/state/types";
 import { FlipToggle } from "../toggle/toggle";
 import Text from "components/text";
 
-const PostsHeadDataFromStore = (store: TStore) => ({
-  draftMode: store.draftMode,
-  token: store.token
-})
-
 type TPostsHead = React.FC<{
   title: string,
   showToggle?: boolean
 }>;
 
 export const PostsHead: TPostsHead = ({ title, showToggle = true }) => {
-  const [{ token, draftMode }, dispatch] = useStore(PostsHeadDataFromStore);
+  const [{ token, draftMode }, dispatch] = useStore();
   const changeToggle = () => { dispatch({ draftMode: !draftMode })};
 
   const classes = {

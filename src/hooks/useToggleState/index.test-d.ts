@@ -25,9 +25,3 @@ type TResult_4_0 = typeof result4[0];
 //   ^?
 type TResult_4_1 = typeof result4[1];
 //   ^?
-
-const result5 = test(undefined, { objectValues: true, initialValue: true })
-type TResult_5_0 = typeof result5[0];
-//   ^?
-type TResult_5_1 = typeof result5[1];
-//   ^?

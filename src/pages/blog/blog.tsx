@@ -1,57 +1,38 @@
 /***** BASE IMPORTS *****/
 import classNames from 'classnames';
-import { useNavigate } from '@tanstack/react-router';
+import React from 'react';
 
 /***** CUSTOM IMPORTS *****/
 import { About } from './menu/about/about'
 import Posts from './menu/posts/posts';
 import { Header } from 'components/navbar';
 
-/***** CONSTS *****/
-import logo from 'assets/images/lucidchartLogo.png';
-import './blog.scss'
+/***** UTILITIES *****/
 import { useMedia } from 'hooks/useMedia';
-import { calc } from 'utilities/functions/calc';
-import React from 'react';
 
+/***** CONSTS *****/
+import './blog.scss'
+
+/***** COMPONENT START *****/
 export const Blog = () => {
-  const navigate = useNavigate();
+  /***** HOOKS *****/
   const isMobile = useMedia(['xs', 'sm'])
+
+  /***** RENDER HELPERS *****/
+  const headerProps = Header.useHeaderProps({
+    className: "BlogContainer__Header",
+  })
   
+  /***** RENDER *****/
   return (
     <BlogContainer>
-      {import.meta.env.DEV && (
-        <Header 
-          className="BlogContainer__Header" 
-          title="ViewableGravy" 
-          image={<img src={logo} alt="logo" />} 
-          width={{ 
-            desktop: [230, calc('100%', '-', 90), calc(800, '-', 50)],
-            mobile: [230, calc('100%', '-', 50), calc(800, '-', 50)]
-          }}
-        >
-          <Header.Button activeRoute="/dashboard" onClick={() => navigate({ to: "/dashboard" })}>
-            Dashboard
-          </Header.Button>
-          <Header.Button activeRoute="/about" onClick={() => navigate({ to: "/about" })} markNew >
-            About
-          </Header.Button>
-          <Header.Button activeRoute="/blog" onClick={() => navigate({ to: "/blog" })}>
-            Blog
-          </Header.Button>
-          <Header.Button activeRoute="/contact" onClick={() => navigate({ to: "/contact" })}>
-            Contact
-          </Header.Button>
-          <Header.Button activeRoute="/login" onClick={() => navigate({ to: "/login" })}>
-            Login
-          </Header.Button>
-        </Header>
-      )}
+      <Header {...headerProps}/>
       <About style={{ marginTop: isMobile ? 50 : 160 }} />
       <Posts/>
     </BlogContainer>
   )
 }
+/***** COMPONENT END *****/
 
 type TBlogContainer = React.FC<{
   children: React.ReactNode,

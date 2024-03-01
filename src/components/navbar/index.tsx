@@ -13,10 +13,11 @@ import { _HeaderButton } from "./Button";
 import { useEventListener } from "hooks/useEventListener";
 import { TClampParameters, clamp } from "utilities/functions/clamp";
 import { usePreconfiguredButtons } from "./useBaseHeaderButtons";
+import { useHeaderProps } from "./useBaseHeaderProps";
+import { FlipToggle } from "pages/blog/menu/toggle/toggle";
 
-type TClamp = [string | number, string | number, string | number];
-type THeaderProps = {
-    children: React.ReactNode[],
+export type THeaderProps = {
+    children: React.ReactNode,
     title: string,
     image: React.ReactNode,
     className?: string,
@@ -24,16 +25,22 @@ type THeaderProps = {
         desktop?: TClampParameters,
         mobile?: TClampParameters
     },
-    hideAbove?: boolean
+    hideAbove?: boolean,
+    /**
+     * This can be used to insert an element along the top row next to the title. Commonly used for a narrow button
+     * such as the ToggleButton Component
+     */
+    titleMore?: React.ReactNode
 }
 
 type THeader = React.FC<THeaderProps>
 
-const _Header: THeader = ({ children, title, image, className, width, hideAbove = true }) => {
+const _Header: THeader = ({ children, title, titleMore, image, className, width, hideAbove = true }) => {
     // const [{ small, large }, toggle] = useToggleState(['large', 'small']);
     const [{ small, large }, toggle] = useToggleState2(['large', 'small'], { objectValues: true });
     const { background } = useThemedStyles();
     const isMobile = useMedia(['xs', 'sm']);
+    const isMini = useMedia(['xs']);
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -94,6 +101,8 @@ const _Header: THeader = ({ children, title, image, className, width, hideAbove 
                                     {title}
                                 </Text>
                             </div>
+
+                            {!isMini && titleMore}
                         </div>
                     </div>
 
@@ -124,5 +133,6 @@ const _Header: THeader = ({ children, title, image, className, width, hideAbove 
 
 export const Header = Object.assign(_Header, {
     Button: _HeaderButton,
-    usePreconfiguredButtons
+    usePreconfiguredButtons,
+    useHeaderProps
 });

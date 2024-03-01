@@ -3,10 +3,12 @@
   display: flex;
   flex-direction: column;
   gap: 80px;
+  padding-top: 240px;
 
   &--mobile {
     gap: 70px;
     padding-inline: 20px;
+    padding-top: 160px;
   }
 
   /***** Containers *****/
@@ -47,5 +49,17 @@
         color: rgb(89 255 226);
       }
     }
+  }
+
+  &__toggle {
+    margin-left: auto;
+    
+    &--mobile {
+      margin-right: 10px;
+    }
+  }
+
+  &__header.Header {
+    box-shadow: 0px 0px 20px 0px #93225b;
   }
 }
