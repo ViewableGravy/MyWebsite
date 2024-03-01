@@ -1,15 +1,19 @@
 import { createUseStyles } from "react-jss"
-import { Menu } from "../blog/menu/menu"
 import { ContactInformation } from "./contact_information"
 import { ContactForm } from "./contact_form"
+import { Header } from "components/navbar"
+import { calc } from "utilities/functions/calc"
+import { useMedia } from "hooks/useMedia"
+import { useWindowDimensions } from "functionality/helper"
+import { useMediaListener } from "functionality/state/default/eventListener"
 
-const styles = {
+const useStyle = createUseStyles<'background', { isMobile: boolean }>({
   background: {
     '--primary': '#191731',
     '--font-deselected': '#8e7c9b',
     '--secondary': '#a91079',
     '--secondary-50': '#ca63aa',
-
+    paddingTop: ({ isMobile }) => isMobile ? 70 : 160,
     backgroundColor: 'var(--primary)',
     display: 'flex',
     justifyContent: 'center',
@@ -18,33 +22,33 @@ const styles = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     minWidth: '100vw',
-    marginTop: '200px',
     '& *' : {
       'box-sizing': 'border-box',
     },
     '@media screen and (max-width: 1280px)': {
-      marginTop: '0px',
+      paddingTop: 70,
+      marginTop: 0,
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'stretch'
+    },
+    '@media screen and (min-width: 1280px)': {
+      paddingTop: '250px !important',
     }
-  },
-  menu: {
-    paddingLeft: 'max(calc((100vw - 1240px) / 2), 40px)', //extra 10 for margin on title text
-    paddingRight: 'max(calc((100vw - 1230px) / 2), 40px)',
-    margin: 'auto',
-    backgroundColor: 'var(--primary)'
   }
-}
-
-const useStyle = createUseStyles(styles)
+})
 
 export const Contact = () => {
-  const classes = useStyle();
+  const isMobile = useMedia(['xs', 'sm']);
+  const classes = useStyle({ isMobile });
+
+  const headerProps = Header.useHeaderProps({
+    width: [100, calc('100vw', '-', 60), 1220],
+  });
 
   return (
     <>
-      <Menu author="ViewableGravy" style={styles.menu} />
+      <Header {...headerProps} />
       <section className={classes.background}>
         <ContactInformation />
         <ContactForm />

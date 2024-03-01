@@ -1,9 +1,9 @@
 
-type TCalcRaw = `${number}%` | `${number}v${'h' | 'w'}` | '-' | '+' | '*' | '/' | number | undefined;
-type TCalcReturnType<T extends TCalcRaw[]> = string | number;
-type TCalc = <T extends TCalcRaw[]>(...args: T) => TCalcReturnType<T>;
+export type TCalcRaw = `${number}%` | `${number}v${'h' | 'w'}` | '-' | '+' | '*' | '/' | number | undefined;
+type TCalcReturnType = string | number;
+type TCalc = <const T extends TCalcRaw[]>(...args: T) => TCalcReturnType;
 
-export const calc: TCalc = <T extends TCalcRaw[]>(...args: T) => {
+export const calc: TCalc = (...args) => {
     return args.reduce((acc, curr, i, arr) => {
         const isLast = i === arr.length - 1;
         const combine = () => {
@@ -18,5 +18,5 @@ export const calc: TCalc = <T extends TCalcRaw[]>(...args: T) => {
         }
 
         return isLast ? `${combine()})` : combine();
-    }, `calc(` as string) as TCalcReturnType<T>;
+    }, `calc(` as string) as TCalcReturnType;
 }

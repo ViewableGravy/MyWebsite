@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 
-const getWindowDimensions = () => [window.innerWidth, window.innerHeight];
+const getWindowDimensions = () => [window.innerWidth, window.innerHeight] as [
+  width: number,
+  height: number
+];
 
 export const useWindowDimensions = () => {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
