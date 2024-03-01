@@ -1,5 +1,5 @@
 
-type TCalcRaw = `${number}%` | `${number}v${'h' | 'w'}` | number | undefined;
+type TCalcRaw = `${number}%` | `${number}v${'h' | 'w'}` | '-' | '+' | '*' | '/' | number | undefined;
 type TCalcReturnType<T extends TCalcRaw[]> = string | number;
 type TCalc = <T extends TCalcRaw[]>(...args: T) => TCalcReturnType<T>;
 

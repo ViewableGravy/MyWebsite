@@ -4,15 +4,17 @@ import cn from "classnames";
 import { useHeader } from "../own";
 import { bemBuilder } from "utilities/functions/bemBuilder";
 
-type TButton = React.FC<{
+export type TButtonProps = {
     children: React.ReactNode,
     activeRoute: string,
     onClick: () => void,
     className?: string,
     markNew?: boolean
-}>
+}
 
-export const _Button: TButton = ({ children, onClick, activeRoute, className, markNew }) => {
+export type TButton = React.FC<TButtonProps>
+
+export const _HeaderButton: TButton = ({ children, onClick, activeRoute, className, markNew }) => {
     const { isSmall, isMobile } = useHeader();
     const { parseLocation } = useRouter();  
     

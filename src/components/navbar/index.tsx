@@ -9,9 +9,10 @@ import Text from "components/text";
 import { HeaderContext } from "./own";
 import useThemedStyles from "functionality/styler";
 import { BurgerToggle } from "./BurgerFancy";
-import { _Button } from "./Button";
+import { _HeaderButton } from "./Button";
 import { useEventListener } from "hooks/useEventListener";
 import { TClampParameters, clamp } from "utilities/functions/clamp";
+import { usePreconfiguredButtons } from "./useBaseHeaderButtons";
 
 type TClamp = [string | number, string | number, string | number];
 type THeaderProps = {
@@ -122,5 +123,6 @@ const _Header: THeader = ({ children, title, image, className, width, hideAbove 
 }
 
 export const Header = Object.assign(_Header, {
-    Button: _Button,
+    Button: _HeaderButton,
+    usePreconfiguredButtons
 });
