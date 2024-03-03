@@ -172,4 +172,4 @@ export const domains = [
       "server": "home",
     }
   },
-]
+];

@@ -12,7 +12,7 @@ import { useSocketContext } from 'components/socketProvider/own';
 export const useStatus = () => {
   /**** HOOKS *****/
   const { send, leave } = useSocketContext();
-  const [{ data, status }] = useAtom(store.sockets.serviceStatus)
+  const [{ data, status }] = useAtom(store.sockets.serviceStatus);
 
   /**** EFFECTS *****/
   useEffect(() => {
