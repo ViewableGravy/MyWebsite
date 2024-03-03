@@ -48,7 +48,7 @@ export const _generateSocketsAtoms = () => {
     const setSocketAtoms = atom<null, [TSocketResponseType & { status?: ReadyState }], void>(
         null,
         (get, set, { status, ...data }) => {
-            if (status) {
+            if (status && convertStatusToServiceStatus(status) !== get(baseStatus)) {
                 set(baseStatus, convertStatusToServiceStatus(status) ?? get(baseStatus));
             }
 

@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from 'react';
+import React, { useRef } from 'react';
 import { domains } from './subdomain-list';
 import { Menu } from '../blog/menu/menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,6 +7,7 @@ import { createUseStyles } from 'react-jss';
 import Text from 'components/text';
 import './subdomains.scss'
 import { useStatus } from 'hooks/useStatus';
+import { Header } from 'components/navbar';
 
 const styles = {
   menu: {
@@ -37,10 +38,12 @@ export const Subdomains = () => {
       status: relative ? relative.status : "unknown"
     }
   })
+
+  const headerProps = Header.useHeaderProps();
   
   return (
     <div>
-      <Menu author="ViewableGravy" className={classes.menu} />
+      <Header {...headerProps} />
       <div className='subdomains_wrapper'>
         <ul className='outer_list'> 
           {domainsWithStatus.map((subdomain, index) => <Subdomain {...subdomain} key={index} index={index}/>)}

@@ -1,8 +1,8 @@
 /***** BASE IMPORTS *****/
 import { useAtom } from "jotai/react";
-import { useEffect } from "react";
-import useWebSocket from "react-use-websocket";
+import { useCallback, useEffect, useMemo } from "react";
 import { z } from "zod";
+import useWebSocket from "react-use-websocket";
 
 /***** STORE IMPORTS *****/
 import { store } from "store";
@@ -39,13 +39,18 @@ export const SocketProvider: NSocketProvider.TSocketProvider = ({ children }) =>
     }, [readyState])
     
     /**** FUNCTIONS *****/
-    const leave: NSocketProvider.TLeave = (rooms) => {
+    const leave: NSocketProvider.TLeave = useCallback((rooms) => {
         send({ event: 'unsubscribe', data: rooms });
-    }
+    }, []);
+
+    /**** CONTEXT *****/
+    const context = useMemo(() => ({ 
+        send, leave 
+    }), []);
 
     /**** RENDER *****/
     return (
-        <SocketContext.Provider value={{ send, leave }}>
+        <SocketContext.Provider value={context}>
             {children}
         </SocketContext.Provider>
     )
