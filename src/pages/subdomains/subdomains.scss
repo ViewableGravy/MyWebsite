@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 165px;
     
   /* devanagari */
   @font-face {
@@ -183,6 +184,8 @@
   }
 
   @media (width < 576px) {
+    padding-top: 90px;
+
     .outer_list li a {
       font-size: 3rem;
     }

@@ -1,0 +1,45 @@
+@import "../../../functionality/styler/_ThemedStyles.scss";
+
+.Header__Burger {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 400ms;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    height: 40px;
+    width: 40px;
+
+    &--active {
+        transform: rotate(45deg);
+
+        .Header__Burger__top {
+            stroke-dashoffset: -98px;
+        }
+
+        .Header__Burger__bottom {
+            stroke-dashoffset: -138px;
+        }
+    }
+
+    &__line {
+        fill:none;
+        transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
+        stroke: $background-primary-dark;
+        stroke-width:5.5;
+        stroke-linecap:round;
+    }
+
+    &__bottom {
+        stroke-dasharray: 40 180;
+    }
+
+    &__middle {
+
+    }
+
+    &__top {
+        stroke-dasharray: 40 139;
+    }
+}

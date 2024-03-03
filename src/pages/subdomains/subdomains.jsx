@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { domains } from './subdomain-list';
 import { Menu } from '../blog/menu/menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,6 +7,7 @@ import { createUseStyles } from 'react-jss';
 import Text from 'components/text';
 import './subdomains.scss'
 import { useStatus } from 'hooks/useStatus';
+import { Header } from 'components/navbar';
 
 const styles = {
   menu: {
@@ -37,10 +38,12 @@ export const Subdomains = () => {
       status: relative ? relative.status : "unknown"
     }
   })
+
+  const headerProps = Header.useHeaderProps();
   
   return (
     <div>
-      <Menu author="ViewableGravy" className={classes.menu} />
+      <Header {...headerProps} />
       <div className='subdomains_wrapper'>
         <ul className='outer_list'> 
           {domainsWithStatus.map((subdomain, index) => <Subdomain {...subdomain} key={index} index={index}/>)}
@@ -50,7 +53,15 @@ export const Subdomains = () => {
   )
 };
 
-const Subdomain = ({name, domain, path, color, information, status, index: SubdomainIndex}) => {
+const Subdomain = ({
+  name, 
+  domain, 
+  path, 
+  color, 
+  information, 
+  status, 
+  index: SubdomainIndex
+}) => {
   const style = { 
     "--clr": color, 
     opacity: information?.disabled ? '50%' : "100%"
@@ -62,17 +73,15 @@ const Subdomain = ({name, domain, path, color, information, status, index: Subdo
     <li style={style} >
       <a href={`https://${domain}${path}`} data-text={name}>{name}</a>
       <sub>{domain}</sub>
-      {
-        informationKeys.map((key, iconIndex) => (
-          <SubdomainIcon 
-            value={information[key]}
-            key={iconIndex}
-            subindex={SubdomainIndex}
-            iconIndex={iconIndex + 1}
-            type={key}
-          />
-        ))
-      }
+      {informationKeys.map((key, iconIndex) => (
+        <SubdomainIcon 
+          value={information[key]}
+          key={iconIndex}
+          subindex={SubdomainIndex}
+          iconIndex={iconIndex + 1}
+          type={key}
+        />
+      ))}
       <SubdomainIcon
         value={status}
         subindex={SubdomainIndex}
@@ -135,40 +144,47 @@ const SubdomainIcon = ({type, subindex, iconIndex, value}) => {
 };
 
 /**
- * 
- * @param {icon} icon font awesome icon
- * @param {id} id id of the containing element to provide a unique class for the hover information
- * @param {index} index index of the icon to provide a unique class for the hover information as well as increment right position
- * @param {children} children children of the hover information
- * @returns 
+ * @param {Object} props
+ * @param {any} props.icon - icon font awesome icon
+ * @param {string} props.id - id of the containing element to provide a unique class for the hover information
+ * @param {number} props.index - index index of the icon to provide a unique class for the hover information as well as increment right position
+ * @param {React.ReactNode} props.children - children children of the hover information
  */
-const IconWithHover = ({children, icon, id, index}) => {
+const IconWithHover = ({ children, icon, id, index }) => {
+  const hoverInformationRef = useRef(null);
+
+  const handleClick = () => {
+    const display = hoverInformationRef.current.style.display;
+    
+    if (display === 'block') {
+      hoverInformationRef.current.style.display = 'none';
+    } else {
+      hoverInformationRef.current.style.display = 'block';
+    }
+  }
+
+  const handleMouseEnter = () => {
+    hoverInformationRef.current.style.display = 'block';
+  }
+
+  const handleMouseLeave = () => {
+    hoverInformationRef.current.style.display = 'none';
+  }
+
+  const fontAwesomeProps = {
+    icon,
+    size: 'lg',
+    color: "--clr",
+    className: "padlock_icon",
+    onClick: handleClick,
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave
+  }
 
   return (
     <div className={"padlock_icon_container"} style={{ right: `${index > 1 ? (28 * index) - 20 : 10}px`, width: '25px' }}>
-      <FontAwesomeIcon
-        icon={icon} 
-        size='lg' 
-        color={"--clr"} 
-        className={"padlock_icon"} 
-        onMouseLeave={() => {
-          document.querySelector(`.${id}-${index}`).style.display = 'none';
-        }}
-        onMouseEnter={() => {
-          document.querySelector(`.${id}-${index}`).style.display = 'block';
-        }}
-        onClick={(e) => {
-          e.preventDefault();
-          const display = document.querySelector(`.${id}-${index}`).style.display;
-          
-          if (display === 'block') {
-            document.querySelector(`.${id}-${index}`).style.display = 'none';
-          } else {
-            document.querySelector(`.${id}-${index}`).style.display = 'block';
-          }
-        }}
-      />
-      <div className={`padlock_hover_information ${id}-${index}`}>
+      <FontAwesomeIcon {...fontAwesomeProps} />
+      <div className={`padlock_hover_information ${id}-${index}`} ref={hoverInformationRef}>
         {children}
       </div>
     </div>

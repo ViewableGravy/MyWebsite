@@ -1,26 +1,15 @@
+/***** BASE IMPORTS *****/
+import { useAtom } from 'jotai/react';
 import { useRouterState } from '@tanstack/react-router';
-import { safeParse } from 'hooks/useStatus';
 import { useEffect, useRef } from 'react';
-import useWebSocket, { ReadyState } from 'react-use-websocket';
 
-const server = {
-    host: import.meta.env.VITE_APP_BACKEND_SERVER || "localhost",
-    port: import.meta.env.VITE_APP_BACKEND_PORT || "3002",
-    protocol: import.meta.env.VITE_APP_WEBSOCKET_PROTOCOL || 'wss',
-} as Record<string, string>;
+/***** STORE IMPORTS *****/
+import { store } from 'store';
 
-const wsapi = `${server.protocol}://${server.host}:${server.port}/api/socket`;
+/***** SHARED *****/
+import { useSocketContext } from 'components/socketProvider/own';
 
-type TUseMousePositionMessage = {
-    event: 'mousePosition',
-    data: Array<{
-        x: number,
-        y: number,
-        username: string,
-        route: string,
-    }>
-}
-
+/***** HOOK START *****/
 const useLocalMousePosition = () => {
     const mousePosition = useRef({ x: 0, y: 0 });
     const hasMouseMoved = useRef(false);
@@ -52,24 +41,23 @@ const useLocalMousePosition = () => {
     };
 }
 
+/***** HOOK START *****/
 export const useMousePosition = (username: string) => {
-    const { lastMessage, readyState, sendJsonMessage } = useWebSocket(wsapi, {
-        shouldReconnect: () => true,
-    });
+    const { send } = useSocketContext();
+    const [{ status, data }] = useAtom(store.sockets.mousePosition);
+
     const { mousePosition, hasMouseMoved } = useLocalMousePosition();
     const { location: { pathname } } = useRouterState();
 
-    const _data = safeParse<TUseMousePositionMessage>(lastMessage?.data);
-    const isInitializing = readyState !== ReadyState.OPEN;
-    const isError = _data && 'error' in _data;
-    const isSuccess = _data && 'data' in _data && _data.event === 'mousePosition';
-    const data = _data && 'error' in _data ? null : _data?.data ?? null
+    const isError = data && 'error' in data;
+    const isSuccess = data?.length > 0;
+    const isInitializing = status === 'open';
 
     useEffect(() => {
         const interval = setInterval(() => {
             if (!hasMouseMoved.current) return;
 
-            sendJsonMessage({ 
+            send({
                 event: 'mousePosition',
                 data: {
                     x: mousePosition.current.x,

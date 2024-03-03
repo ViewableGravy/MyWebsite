@@ -1,4 +1,14 @@
 .BlogArticle {
+  padding-top: 100px;
+
+  &--mobile {
+    padding-top: 0px;
+  }
+
+  #background {
+    padding-inline: 25px;
+  }
+  
   //TODO: This either needs to be moved or it needs to have the 
   //styling updated as it is just randomly sitting on the title at the moment
   .FlipToggle {
@@ -92,6 +102,7 @@
 
 .blog-article .AboutComponent {
   margin-top: 80px;
+  margin-inline: 0;
 }
 
 .footer {

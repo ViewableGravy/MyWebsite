@@ -7,9 +7,10 @@
 import classNames from "classnames";
 
 /***** CONSTS *****/
-import './_Floater.scss'
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 import { useDelayedCallback } from "components/liveMouse/ownVisitorMouse/useDelay";
+import { useResizeObserver } from "hooks/useResizeObserver";
+import './_Floater.scss'
 
 type TFloater = React.FC<{
     children: React.ReactNode;
@@ -25,7 +26,11 @@ export const Floater: TFloater = ({ children, className, clickable = false, dura
     /***** STATE *****/
     const [height, setHeight] = useState<undefined | number>(undefined);
     const [isAnimating, setIsAnimating] = useState(false);
-    const innerRef = useRef<HTMLDivElement>(null);
+    const innerRef = useResizeObserver(() => {
+        if (innerRef.current) {
+            setHeight(innerRef.current.clientHeight + 2); // +2 from the 2px border
+        }
+    });
 
     /***** HOOKS *****/
     const { initiate } = useDelayedCallback(() => setIsAnimating(false), duration)
@@ -58,7 +63,7 @@ export const Floater: TFloater = ({ children, className, clickable = false, dura
         <div className={classes.Floater} style={{ minHeight: height }} >
             <div 
                 className={classes.Inner}
-                ref={innerRef} 
+                ref={innerRef as React.RefObject<HTMLDivElement>} 
                 style={{ animationDuration: `${duration / 1000}s` }}
                 onClick={handleClick}
                 onMouseEnter={handleMouseOver}

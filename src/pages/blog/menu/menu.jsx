@@ -39,8 +39,9 @@ export const Menu = ({
       <div id="right" className={menuClassName}> 
         <a href="https://status.gravy.cc/">Uptime</a>
         <a href="https://github.com/ViewableGravy">Github</a>
-        <Link to="/">Home</Link>
+        <Link to="/dashboard">Dashboard</Link>
         <Link to="/blog">Blog</Link>
+        <Link to="/about">About Me</Link>
         <OwnAuthenticationAction />
         {['xs', 'sm'].includes(media) && (
           <div id="close" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}></div>

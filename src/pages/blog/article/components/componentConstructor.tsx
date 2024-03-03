@@ -3,28 +3,9 @@ import { Paragraph } from "./paragraph";
 import { Fieldset } from "./fieldSet";
 import { z } from "zod";
 import { OwnDevHandleMessage } from "./devmode";
-
-/**
- * Base object with validators for the props of components. Component props are based on the validator types and are accessible
- * via the TComponentProps type. This is used to ensure that the component props are always in sync with the validator.
- */
-const validators = {
-  Paragraph: z.object({
-    type: z.literal('Paragraph'),
-    props: z.object({
-      text: z.string(),
-      isFirst: z.boolean().optional()
-    })
-  }),
-  Fieldset: z.object({
-    type: z.literal('Fieldset'),
-    props: z.object({
-      legend: z.string(),
-      content: z.string(),
-      color: z.string().optional()
-    })
-  })
-}
+import { validators } from "./validators";
+import { Span } from "./span";
+import { Anchor } from "./anchor";
 
 export type TComponentProps<Name extends keyof typeof validators> = z.infer<typeof validators[Name]>['props'];
 export type TComponentNames = keyof typeof validators;
@@ -37,8 +18,16 @@ const Components = {
   Fieldset: {
     component: Fieldset,
     validator: validators.Fieldset
+  },
+  Span: {
+    component: Span,
+    validator: validators.Span
+  },
+  Anchor: {
+    component: Anchor,
+    validator: validators.Anchor
   }
-}
+} as const;
 
 /**
  * Safe parse is used to parse the props of a component and return the component if the props are valid. If the props are invalid
@@ -53,19 +42,22 @@ const safeParse = ({
   validator: keyof typeof validators,
   Component: React.FC<any>
 }) => {
-  if (!(validator in validators)) return (
-    <OwnDevHandleMessage 
-      type={validator} 
-      validator={validator} 
-      props={props} 
-      parsed={{ error: 'Validator not found' }} 
-    />
-  )
+  if (!(validator in validators)) {
+    return (
+      <OwnDevHandleMessage 
+        type={validator} 
+        validator={validator} 
+        props={props} 
+        parsed={{ error: 'Validator not found' }} 
+      />
+    )
+  }
 
   const parsed = validators[validator].safeParse({ type: validator, props });
 
-  if (parsed.success)
+  if (parsed.success) {
     return <Component {...parsed.data.props} />
+  }
 
   return (
     <OwnDevHandleMessage 
@@ -79,7 +71,8 @@ const safeParse = ({
 
 type TComponentConstructor = React.FC<{ 
   type: TComponentNames | undefined, 
-  props: TComponentProps<keyof typeof validators> 
+  props: TComponentProps<keyof typeof validators>,
+  allowed?: TComponentNames[]
 }>;
 
 /**
@@ -87,8 +80,16 @@ type TComponentConstructor = React.FC<{
  * Although the response from the API "SHOULD" match the expected format, validation is done at this layer to ensure 
  * all the relevant prop information is present;
  */
-export const ConstructComponent: TComponentConstructor = ({ type, props }) => {
+export const ConstructComponent: TComponentConstructor = ({ type, props, allowed }) => {
   if (!type) return null;
+
+  if (allowed && !allowed.includes(type)) {
+    if (import.meta.env.DEV) {
+      throw new Error(`Type ${type} is not allowed. Allowed types are: ${allowed.join(', ')}`)
+    }
+
+    return null; // fallback to null in production
+  }
 
   return safeParse({
     props, 

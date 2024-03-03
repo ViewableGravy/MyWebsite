@@ -1,65 +1,65 @@
-
-.aboutPage {
+.AboutPage {
   padding-inline: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  padding-top: 240px;
 
-  .container {
+  &--mobile {
+    gap: 70px;
+    padding-inline: 20px;
+    padding-top: 160px;
+  }
+
+  /***** Containers *****/
+  &__contactContainer {
+    background: linear-gradient(90deg, hsla(33, 100%, 34%, 1) 0%, hsla(58, 75%, 35%, 1) 100%);
+    box-shadow: #c0cb23 0px 0px 20px 0px;
+  }
+
+  &__projectsContainer {
+    background: linear-gradient(90deg, hsla(280, 84%, 41%, 1) 0%, hsla(218, 97%, 56%, 1) 100%);
+    box-shadow: #7423cb 0px 0px 20px 0px;
+  }
+
+  &__programmingContainer {
+    background: linear-gradient(90deg, hsla(192, 80%, 51%, 1) 0%, hsla(355, 85%, 63%, 1) 100%);
+    box-shadow: #d36071 0px 0px 20px 0px;
+  }
+
+  &__employmentContainer {
+    background: linear-gradient(61deg, rgba(0,255,44,1) 0%, rgba(0,239,255,1) 100%);
+    box-shadow: rgba(0, 242, 255, 0.65) 0px 0px 20px 0px;
+
+    .AboutSection__description {
+      color: #3d3d3d;
+    }
+  }
+
+  &__personalContainer {
     background: linear-gradient(61deg, rgba(255,0,153,1) 0%, rgba(139,0,255,1) 100%);
-    width: 1000px;
-    max-width: 100%;
-    height: 280px;
-    margin: auto;
-    margin-top: 100px;
-    border-radius: 40px;
-    display: flex;
-    justify-content: flex-end;
-    container: about__section;
     box-shadow: rgb(255 0 191 / 65%) 0px 0px 20px 0px;
+    gap: 0;
   }
 
-  .textContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 40px;
-    flex-grow: 1;
-
-    &__right {
-      margin-right: -75px;
-    }
-
-    &__left {
-      margin-left: -40px;
+  /***** CUSTOM *****/
+  &__anchor {
+    &--contact {
+      .Text {
+        color: rgb(89 255 226);
+      }
     }
   }
 
-  .name {
-    font-size: 2rem;
-    margin: 0;
-    margin-bottom: 20px;
-    color: white;
-  }
-
-  .description {
-    font-size: clamp(14px, 2vw, 18px);
-    margin: 0;
-    color: white;
-  }
-
-  .imageContainer {
-    height: 100%;
-  }
-
-  .image {
-    margin-right: 0;
-    margin-top: -50px;
-    height: clamp(150px, 32vw, 330px);
-
-    &__right {
-      margin-right: -100px;
+  &__toggle {
+    margin-left: auto;
+    
+    &--mobile {
+      margin-right: 10px;
     }
+  }
 
-    &__left {
-      margin-left: -100px;
-    }
+  &__header.Header {
+    box-shadow: 0px 0px 20px 0px #93225b;
   }
 }

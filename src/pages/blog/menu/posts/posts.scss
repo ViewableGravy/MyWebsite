@@ -3,15 +3,38 @@
   src: url('../../../../assets/fonts/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
 }
 
-.BlogArticle #posts-head #posts-title {
-  color: var(--standard-text);
-  text-align: center;
-  width: 100%;
-  margin-top: 100px;
-  padding-bottom: 20px;
-  margin-bottom: 25px;
-  font-size: 45px;
-  border-bottom: 1px solid cornflowerblue;
+.BlogArticle {
+  .Posts__title {
+    color: var(--standard-text);
+    text-align: center;
+    width: 100%;
+    margin-top: 100px;
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+    font-size: 22px;
+    border-bottom: 1px solid cornflowerblue;
+
+    & > h1 {
+      margin: 0;
+    }
+  }
+
+  #posts-head .FlipToggle {
+    display: none;
+  }
+}
+
+.Posts {
+  &__title {
+    color: var(--standard-text);
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    @media (max-width: 576px) {
+      width: 100%;
+    }
+  }
 }
 
 //blog home heading (Drafts | Posts)
@@ -378,10 +401,11 @@
       .right-section {
         flex-direction: column;
         align-items: left;
+        margin-left: 0;
 
         .date {
           width: calc(100% - 19px);
-          text-align: left;
+          text-align: center;
         }
       }
     }

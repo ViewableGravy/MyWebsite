@@ -1,19 +1,8 @@
 import { useStore } from 'functionality/state/state';
 import './_ThemedStyles.scss'
 
-type TUseThemedStyles = () => {
-  color: {
-    primary: string,
-    secondary: string,
-    black: string,
-    white: string,
-  }
-}
-
-const useThemedStyles: TUseThemedStyles = () => {
-  const [{ theme }] = useStore((store) => ({
-    theme: store.theme
-  }));
+const useThemedStyles = () => {
+  const [theme] = useStore((store) => store.theme);
 
   return {
     color: {
@@ -21,8 +10,13 @@ const useThemedStyles: TUseThemedStyles = () => {
       secondary: `color--secondary-${theme}`,
       black: `color--black`,
       white: `color--white`,
+      link: `color--link-${theme}`
+    },
+    background: {
+      primary: `background--primary-${theme}`,
+      header: `background--header-${theme}`,
     }
-  }
-}
+  } as const;
+};
 
 export default useThemedStyles;

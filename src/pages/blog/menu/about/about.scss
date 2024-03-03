@@ -11,6 +11,11 @@
     border-radius: 30px;
     padding: 20px 35px;
     background-color: #24264f;
+
+    @media (max-width: 576px) {
+      flex-direction: column;
+      padding-inline: 10px;
+    }
   }
 
   .circle {
@@ -34,9 +39,6 @@
   }
 
   @media (max-width: 576px) {
-    flex-direction: column;
-    padding-inline: 10px;
-
     p {
       margin-left: 0;
     }

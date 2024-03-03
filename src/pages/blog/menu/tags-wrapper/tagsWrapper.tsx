@@ -72,7 +72,6 @@ export const TagMenu: TTagMenu = ({ data }) => {
       style.color = dataset.color || 'white';
     });
     
-    console.log('here')
     innerContainer.current.style.width = `${widths.reduce((a, b) => a + b + 10, 0)}px`;
   };
 
@@ -159,7 +158,7 @@ export const GenerateTag = React.forwardRef(({ color = '#e008ce', text, classNam
     className: classNames(className, 'tag'),
     'data-color': isDarkColor(color) ? '#f1f1f1' : '#000000',
     ref,
-    onclick
+    onClick
   } as const;
 
   return (

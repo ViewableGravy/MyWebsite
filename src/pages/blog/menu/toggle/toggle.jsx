@@ -8,7 +8,16 @@ import { useIsMouseDown } from 'hooks/isMouseDown';
 /***** CONSTS *****/
 import './toggle.scss'
 
-export const FlipToggle = ({ onChange, initialState, titleEnabled, titleDisabled }) => {
+/**
+ * @param {{ 
+ *   onChange: () => void,
+ *   initialState: boolean,
+ *   titleEnabled: string,
+ *   titleDisabled: string,
+ *   className?: string
+ * }} props
+ */
+export const FlipToggle = ({ onChange, initialState, titleEnabled, titleDisabled, className }) => {
   /***** STATE *****/
   const [isChecked, setIsChecked] = useState(!initialState);
   const [isMouseDown, mouseDownEventHandlers] = useIsMouseDown();
@@ -20,6 +29,7 @@ export const FlipToggle = ({ onChange, initialState, titleEnabled, titleDisabled
   }
 
   const classes = {
+    outer: classNames('FlipToggle', className),
     input: 'FlipToggle__input',
     label: classNames('FlipToggle__label', {
       'FlipToggle__label--checked': isChecked,
@@ -29,7 +39,7 @@ export const FlipToggle = ({ onChange, initialState, titleEnabled, titleDisabled
 
   /***** RENDER *****/
   return (
-    <div className="FlipToggle">
+    <div className={classes.outer}>
       <label 
         {...mouseDownEventHandlers}
         className={classes.label} 

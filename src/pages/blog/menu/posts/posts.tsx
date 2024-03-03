@@ -7,13 +7,13 @@ import { useGetPostsOrDraftsQuery } from "./queries";
 import { Footer } from "./_footer";
 import useConditional from "../../../../hooks/useConditional";
 import './posts.scss'
+import { useMemo } from "react";
 
 export const Posts = () => {
-  const [{ draftMode }] = useStore((store) => ({ draftMode: store.draftMode }));
+  const [{ draftMode }] = useStore();
   const { isLoading, data, error } = useGetPostsOrDraftsQuery(draftMode)
   const title = useConditional(draftMode, 'Drafts', 'Posts');
-
-  const postcards = [...Array(5).keys()].map((_, i) => <PostsCard key={i}/>);
+  const postcards = useMemo(() => [...Array(5).keys()].map((_, i) => <PostsCard key={i}/>), []);
   
   return (
     <>

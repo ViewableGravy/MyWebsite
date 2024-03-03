@@ -1,74 +1,92 @@
+import React, { useState } from "react";
+import cn from "classnames";
 import Menu from "pages/blog/menu/menu";
 import { modes, getContent } from "./content";
+import { AboutSection } from "./components/AboutSection";
 import { useGreetings } from "./hooks";
-import { useState } from "react";
+import { useMedia } from "hooks/useMedia";
+import { FlipToggle } from "pages/blog/menu/toggle/toggle";
+import { bemBuilder } from "utilities/functions/bemBuilder";
 
 import "./_About.scss"
-import classNames from "classnames";
+import { Header } from "components/navbar";
+import { clamp } from "utilities/functions/clamp";
 
-const classes = {
-  outer: 'aboutPage',
-  container: 'container',
-  text: {
-    container: (position: 'right' | 'left') => classNames('textContainer', {
-      'textContainer__right': position === 'right',
-      'textContainer__left': position === 'left'
-    }),
-    name: 'name',
-    description: 'description'
-  },
-  image: {
-    container: 'imageContainer',
-    image: 'image'
-  }
-} as const;
-
-type TProps = {
+type TAbout = React.FC<{
   _mode?: typeof modes[keyof typeof modes]
-}
+}>
 
-export const About = ({ 
-  _mode = modes.PROFESSIONAL 
-}: TProps) => {
+export const About: TAbout = ({ _mode = modes.PROFESSIONAL }) => {
+  /***** HOOKS *****/
   const [mode, setMode] = useState(_mode);
+  const [base, cgn] = bemBuilder('AboutPage')
+  const isMobile = useMedia(['xs', 'sm']);
 
   const {
-    name,
-    description,
-    greetings,
-    profileImage
+    employment,
+    introduction,
+    programming,
+    projects,
+    contact
   } = getContent(mode);
 
-  const greeting = useGreetings(greetings);
+  const greeting = useGreetings(introduction.greetings);
 
+  const outerClassName = cn(base, {
+    [cgn(undefined, 'mobile')]: isMobile
+  })
+
+  const headerProps = Header.useHeaderProps({
+    width: {
+      desktop: clamp([100, 9999, 'min(1000px, 100% - 100px)']),
+      mobile: clamp([100, '100%', 'min(1000px, 100% - 40px)'])
+    },
+    titleMore: (
+      <FlipToggle 
+        className={cn(cgn("toggle"), { [cgn("toggle", "mobile")]: isMobile })}
+        titleEnabled="Career" 
+        titleDisabled="Casual" 
+        onChange={() => setMode(mode === modes.PROFESSIONAL ? modes.CASUAL : modes.PROFESSIONAL)} 
+        initialState={mode === modes.CASUAL} 
+      />
+    ),
+    className: cgn("header")
+  });
+
+  /***** RENDER *****/
   return (
-    <div className={classes.outer} style={{
-      paddingInline: 50
-    }}>
-      <Menu style={{ maxWidth: 800, marginInline: 'auto' }} author={"ViewableGravy"}/>
+    <div className={outerClassName}>
+      <Header {...headerProps} />
 
-      <button onClick={() => setMode(mode === modes.PROFESSIONAL ? modes.CASUAL : modes.PROFESSIONAL)}>Toggle Mode</button>
+      {/* Personal Overview */}
+      <AboutSection imageSide="right" className={cgn("personalContainer")}>
+        <AboutSection.ContentPair heading={introduction.name} description={greeting + " " + introduction.description} />
+        <AboutSection.Image src={introduction.profileImage} alt="Profile Image" offset={{ up: isMobile && 20, right: isMobile ? 15 : 10 }} />
+      </AboutSection>
 
-      <section className={classes.container}>
-        <div className={classes.text.container('right')}>
-          <h1 className={classes.text.name}>{name}</h1>
-          <p className={classes.text.description}>{greeting} {description}</p>
-        </div>
-        <div className={classes.image.container}>
-          <img className={classes.image.image} src={profileImage} />
-        </div>
-      </section>
+      {/* Employment */}
+      <AboutSection imageSide="left" className={cgn("employmentContainer")}>
+        <AboutSection.Image src={employment.image} alt="VentraIP Logo" offset={{ up: isMobile && 20, left: isMobile && 5 }} />
+        <AboutSection.ContentPair heading={employment.title} description={employment.description} />
+      </AboutSection>
 
-      <section className={classes.container} style={{ 
-        background: 'linear-gradient(61deg, rgba(0,255,44,1) 0%, rgba(0,239,255,1) 100%)',
-        boxShadow: "rgba(0, 242, 255, 0.65) 0px 0px 20px 0px"
-      }}>
-        <p>Ultimately my goal here is to burn out your retinas with these pretty bright colours. I&apos;ve stared into the abyss long enough at this point</p>
-      </section>
+      {/* Programming */}
+      <AboutSection imageSide="right" className={cgn("programmingContainer")}>
+        <AboutSection.Image src={programming.image} alt="Visual Studio Code Logo" offset={{ up: isMobile && 20 }} />
+        <AboutSection.ContentPair heading={programming.title} description={programming.description} />
+      </AboutSection>
 
-      <section className={classes.container}>
-        
-      </section>
+      {/* Projects */}
+      <AboutSection imageSide="left" className={cgn("projectsContainer")}>
+        <AboutSection.Image src={projects.image} alt="Lucid Logo" offset={{ up: 10 }} />
+        <AboutSection.ContentPair heading={projects.title} description={projects.description} />
+      </AboutSection>
+
+      {/* Contact */}
+      <AboutSection imageSide="right" className={cgn("contactContainer")}>
+        <AboutSection.ContentPair heading={contact.title} description={contact.description} />
+        <AboutSection.Image src={contact.image} alt="Office365 Logo" />
+      </AboutSection>
     </div>
   );
 }

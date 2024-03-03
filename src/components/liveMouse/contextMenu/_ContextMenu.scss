@@ -40,16 +40,18 @@
         width: 80px;
         position: absolute;
         left: 30px;
-        top: 52px;
+        top: 53px;
         cursor: pointer;
+        height: 35px;
 
         &Hover {
             transition: opacity 0.3s ease-in-out;
             width: 100px;
             position: absolute;
             left: 18px;
-            top: 49.5px;
+            top: 53px;
             opacity: 0;
+            height: 42px;
 
             &--show {
                 opacity: 1;
