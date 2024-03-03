@@ -1,6 +1,6 @@
-import { TToggleState2 } from ".";
+import { TToggleState } from ".";
 
-const test: TToggleState2 = () => void 0 as any;
+const test: TToggleState = () => void 0 as any;
 
 const result1 = test(['a', 'b', 'c'], { objectValues: true })
 type TResult_1_0 = typeof result1[0];

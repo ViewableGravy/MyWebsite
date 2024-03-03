@@ -1,30 +1,31 @@
-import useWebSocket, { ReadyState } from 'react-use-websocket';
+/***** BASE IMPORTS *****/
+import { useEffect } from 'react';
+import { useAtom } from 'jotai/react';
 
-const server = import.meta.env.VITE_APP_BACKEND_SERVER || "localhost";
-const port = import.meta.env.VITE_APP_BACKEND_PORT || "3002";
-const protocol = import.meta.env.VITE_APP_WEBSOCKET_PROTOCOL || 'wss';
-const wsapi = `${protocol}://${server}:${port}`;
-const path = 'api/status';
+/***** STORE IMPORTS *****/
+import { store } from 'store';
 
+/***** UTILITIES *****/
+import { useSocketContext } from 'components/socketProvider/own';
+
+/***** HOOK START *****/
 export const useStatus = () => {
-  const { lastMessage, readyState } = useWebSocket(`${wsapi}/${path}`, {
-    shouldReconnect: () => true,
-  });
-  const { data } = lastMessage || {};
-  const isLoading = readyState !== ReadyState.OPEN || !data;
+  /**** HOOKS *****/
+  const { send, leave } = useSocketContext();
+  const [{ data, status }] = useAtom(store.sockets.serviceStatus)
 
+  /**** EFFECTS *****/
+  useEffect(() => {
+    send({ event: 'serviceStatus' });
+
+    return () => {
+      leave(['serviceStatus']);
+    }
+  }, []);
+
+  /**** RETURN *****/
   return {
-    data: safeParse(data),
-    isLoading
+    data,
+    isLoading: status !== 'open' || data.length === 0,
   } as const;
-}
-
-export const safeParse = <T, >(data?: string) => {
-  if (!data) return null;
-
-  try {
-    return JSON.parse(data) as T;
-  } catch (error) {
-    return { error };
-  }
 }

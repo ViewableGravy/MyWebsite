@@ -1,7 +1,6 @@
 import { BlogContainer } from '../blog';
 import { PostsHead } from '../menu/posts/head';
 import { GenerateTag } from '../menu/tags-wrapper/tagsWrapper';
-import Menu from '../menu/menu'
 import useAxios from "axios-hooks";
 import About from '../menu/about/about';
 import { Navigate, useParams } from '@tanstack/react-router';
@@ -9,8 +8,12 @@ import { QuerySwitch } from 'components/conditionalRender/conditionalRender';
 import { Socials } from '../menu/posts/_socials';
 import { ConstructComponent } from './components/componentConstructor';
 import { router } from 'router';
+import cn from 'classnames';
 
 import './article.scss'
+import { Header } from 'components/navbar';
+import { bemBuilder } from 'utilities/functions/bemBuilder';
+import { useMedia } from 'hooks/useMedia';
 
 const server = import.meta.env.VITE_APP_BACKEND_SERVER;
 const port = import.meta.env.VITE_APP_BACKEND_PORT;
@@ -29,13 +32,16 @@ const getYear = () => {
 export const BlogArticle = () => {
   const { post } = useParams({ from: '/blog/$post' });
   const [result] = useAxios( `${url}/api/blog/posts/${post}`);
+  const isMobile = useMedia(['xs', 'sm']);
+  const headerProps = Header.useHeaderProps();
+  const [base, cgn] = bemBuilder('BlogArticle');
   const onError = <Navigate to='/blog'/>;
 
   return (
     <QuerySwitch queryData={result} onError={onError}>
       {(post) => (
-        <BlogContainer className="BlogArticle">
-          <Menu author="ViewableGravy"/>
+        <BlogContainer className={cn(base, { [cgn(undefined, 'mobile')]: isMobile })}>
+          <Header {...headerProps} />
           <OwnMeta post={post} />
           <OwnContent post={post} />
           <OwnFooter/>
