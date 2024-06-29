@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
-import Padding from "../padding";
-import Text from "../text";
+import Padding from "../utility/padding";
+import Text from "../utility/text";
 import './_Box.scss';
 
 type TBoxProps = {

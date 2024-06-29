@@ -8,6 +8,7 @@ const useThemedStyles = () => {
     color: {
       primary: `color--primary-${theme}`,
       secondary: `color--secondary-${theme}`,
+      tertiary: `color--tertiary-${theme}`,
       black: `color--black`,
       white: `color--white`,
       link: `color--link-${theme}`

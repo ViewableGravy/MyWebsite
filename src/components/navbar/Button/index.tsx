@@ -1,4 +1,4 @@
-import Text from "components/text";
+import Text from "components/utility/text";
 import { useRouter } from '@tanstack/react-router'
 import cn from "classnames";
 import { useHeader } from "../own";

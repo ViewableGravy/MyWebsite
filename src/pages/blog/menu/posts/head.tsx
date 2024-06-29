@@ -2,7 +2,7 @@ import React from "react";
 import { useStore } from 'functionality/state/state';
 import { TStore } from "functionality/state/types";
 import { FlipToggle } from "../toggle/toggle";
-import Text from "components/text";
+import Text from "components/utility/text";
 
 type TPostsHead = React.FC<{
   title: string,

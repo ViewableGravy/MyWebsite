@@ -14,7 +14,11 @@ $font-size-xxl: 2rem;
 $font-size-xxxl: 2.5rem;
 
 $default-font-weight: 400;
-$font-family: 'Roboto', sans-serif;
+$font-family: "Figtree", "Nunito-sans", 'Roboto', sans-serif;
+
+:root {
+    --default-spacing: 5px;
+}
 
 * {
     box-sizing: border-box;

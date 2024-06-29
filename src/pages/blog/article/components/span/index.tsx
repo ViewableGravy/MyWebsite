@@ -1,4 +1,4 @@
-import Text from "components/text"
+import Text from "components/utility/text"
 import React from "react"
 import { TComponentProps } from "../componentConstructor"
 

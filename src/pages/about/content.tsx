@@ -4,7 +4,7 @@ import vscodeLogo from '../../assets/images/Visual_Studio_Code_1.35_icon.svg.png
 import lucidLogo from '../../assets/images/lucidchartLogo.png'
 import officeLogo from '../../assets/images/outlookLogo.svg';
 import zeroTwo from '../../assets/images/9cf4f0296dc287ce13c6997004dcf8eb (1).png'
-import Text from 'components/text';
+import Text from 'components/utility/text';
 import { Anchor } from 'components/Anchor';
 
 export const modes = {

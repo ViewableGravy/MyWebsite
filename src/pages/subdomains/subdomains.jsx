@@ -4,7 +4,7 @@ import { Menu } from '../blog/menu/menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock, faServer, faHome, faGlobe, faQuestionCircle, faCircleCheck, faCross } from '@fortawesome/free-solid-svg-icons'
 import { createUseStyles } from 'react-jss';
-import Text from 'components/text';
+import Text from 'components/utility/text';
 import './subdomains.scss'
 import { useStatus } from 'hooks/useStatus';
 import { Header } from 'components/navbar';

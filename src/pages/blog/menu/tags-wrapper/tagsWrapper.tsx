@@ -154,7 +154,7 @@ export const GenerateTag = React.forwardRef(({ color = '#e008ce', text, classNam
       touchAction: 'pan-x',
       backgroundColor: color,
       color: isDarkColor(color) ? '#f1f1f1' : '#000000',
-    } satisfies CSSProperties,
+    } as CSSProperties,
     className: classNames(className, 'tag'),
     'data-color': isDarkColor(color) ? '#f1f1f1' : '#000000',
     ref,

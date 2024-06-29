@@ -1,4 +1,4 @@
-@import '../../_global.scss';
+@import '../../../_global.scss';
 
 .Text {
   font-family: $font-family;
@@ -58,6 +58,24 @@
 
     &-right {
       text-align: right;
+    }
+  }
+
+  &--lead {
+    &-0 {
+      line-height: 0;
+    }
+
+    &-1 {
+      line-height: 1;
+    }
+
+    &-md {
+      line-height: 1.25rem;
+    }
+
+    &-lg {
+      line-height: 1.5rem;
     }
   }
 

@@ -1,5 +1,5 @@
 import useThemedStyles from 'functionality/styler';
-import { className } from '../../utilities/runtimeInjectableProps/className';
+import { className } from '../../../utilities/runtimeInjectableProps/className';
 
 import React from "react";
 
@@ -21,6 +21,19 @@ type BaseTextProps = {
   'align-left'?: boolean;
   'align-center'?: boolean;
   'align-right'?: boolean;
+
+  "lead-0"?: boolean;
+  "lead-1"?: boolean;
+  
+  /**
+   * 1.25rem
+   */
+  "lead-md"?: boolean;
+
+  /**
+   * 1.5rem
+   */
+  "lead-lg"?: boolean;
 
   /**
    * Force the use of a paragraph tag

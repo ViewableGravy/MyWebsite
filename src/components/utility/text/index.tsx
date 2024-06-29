@@ -2,7 +2,7 @@ import React, { CSSProperties, forwardRef } from "react";
 import classNames from "classnames";
 
 import { TDefaults, TextColorProps, TextProps } from "./types";
-import useThemedStyles from "../../functionality/styler";
+import useThemedStyles from "../../../functionality/styler";
 import Heading from "./heading";
 
 import './_text.scss';
@@ -55,8 +55,10 @@ const getPrimaryProperties  = (props: TextProps) => {
   }
 
   const getLead = (props: TextProps) => {
-    if ('lead-0' in props) return 'lead--0';
-    if ('lead-1' in props) return 'lead--1';
+    if ('lead-0' in props) return 'lead-0';
+    if ('lead-1' in props) return 'lead-1';
+    if ('lead-md' in props) return 'lead-md';
+    if ('lead-lg' in props) return 'lead-lg';
   }
 
   const getElement = (props: TextProps) => {
@@ -69,6 +71,7 @@ const getPrimaryProperties  = (props: TextProps) => {
   return {
     color: getColor(props),
     weight: getWeight(props),
+    lead: getLead(props),
     ...getElement(props)
   }
 
@@ -83,7 +86,7 @@ const Text = forwardRef(({ paragraph, ...props }: TextProps, ref): React.ReactEl
     align: '',
     span: false
   });
-  const { color, weight, div, span } = getPrimaryProperties(props);
+  const { color, weight, div, span, lead } = getPrimaryProperties(props);
   const { color: themed } = useThemedStyles();
 
   /***** RENDER HELPERS *****/
@@ -95,12 +98,13 @@ const Text = forwardRef(({ paragraph, ...props }: TextProps, ref): React.ReactEl
       [`Text--${size}`]: !!size,
       [`Text--${weight}`]: !!weight,
       [`Text--${align}`]: !!align,
+      [`Text--${lead}`]: !!lead,
       [`Text--remove-margin`]: !!props['remove-margin'],
       [themed[color]]: !!themed[color],
     }, className),
     style: { 
       fontSize: typeof sizeCustom === 'number' ? `${sizeCustom}px` : sizeCustom ?? size
-    } satisfies CSSProperties,
+    } as CSSProperties,
     ref: ref ?? undefined
   } as any;
 

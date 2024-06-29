@@ -2,9 +2,9 @@ import classNames from "classnames"
 import { ConstructComponent, type TComponentProps } from "../componentConstructor"
 
 import './_Paragraph.scss'
-import Text from "components/text"
+import Text from "components/utility/text"
 import React, { createElement } from "react"
-import { TextProps } from "components/text/types"
+import { TextProps } from "components/utility/text/types"
 import { useResizeObserver } from "hooks/useResizeObserver"
 import { useNumberOfLines } from "hooks/useNumberOfLines"
 

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import Text from "components/text";
+import Text from "components/utility/text";
 import { useMedia } from "hooks/useMedia";
 import { useAboutSectionContext } from ".";
 

@@ -1,0 +1,28 @@
+.Grid {
+  display: grid;
+  
+  &--columns {
+    --grid-template-columns: initial;
+    grid-template-columns: var(--grid-template-columns);
+  }
+  
+  &--rows {
+    --grid-template-rows: initial;
+    grid-template-rows: var(--grid-template-rows);
+  }
+  
+  &--gap {
+    --gap: initial;
+    gap: calc(var(--gap) * var(--default-spacing));
+  }
+  
+  &--column-gap {
+    --column-gap: initial;
+    column-gap: calc(var(--column-gap) * var(--default-spacing));
+  }
+  
+  &--row-gap {
+    --row-gap: initial;
+    row-gap: calc(var(--row-gap) * var(--default-spacing));
+  }
+}

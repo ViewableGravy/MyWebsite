@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-extra-semi */
 import classNames from "classnames";
-import React from "react";
 import './_flex.scss';
-import ClassInjector from "../childInjector/classInjector";
+import ClassInjector from "../../childInjector/classInjector";
 
 type TFlexProps = {
   children: JSX.Element,

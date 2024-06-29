@@ -162,3 +162,26 @@
     }
 }
 
+.Dashboard2 {
+    padding: 40px;
+}
+
+.ProfileTile {
+    --profile-background-color: #272256;
+    
+    border-radius: 20px;
+    width: 320px;
+    height: 600px;
+    background-color: var(--profile-background-color);
+    padding: 20px;
+    
+    &__avatar {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+    }
+}
+
+
+
+

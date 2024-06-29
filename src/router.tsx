@@ -4,7 +4,7 @@ import { About } from 'pages/about';
 import BlogArticle from 'pages/blog/article/article';
 import Blog from 'pages/blog/blog';
 import { Contact } from 'pages/contact/contact';
-import { Dashboard } from 'pages/dashboard';
+import { Dashboard, Dashboard2 } from 'pages/dashboard';
 import Login from 'pages/login/login';
 import Subdomains from 'pages/subdomains/subdomains';
 import React, { Suspense } from 'react';
@@ -76,7 +76,7 @@ const routes = {
   dashboard: new Route({
     getParentRoute: () => rootRoute,
     path: '/dashboard',
-    component: Dashboard,
+    component: Dashboard2,
   }),
 };
 

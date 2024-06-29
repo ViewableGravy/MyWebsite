@@ -5,7 +5,7 @@ import { bemBuilder } from "utilities/functions/bemBuilder";
 import { useToggleState } from "hooks/useToggleState";
 import { useMedia } from "hooks/useMedia";
 import cn from "classnames";
-import Text from "components/text";
+import Text from "components/utility/text";
 import { HeaderContext } from "./own";
 import useThemedStyles from "functionality/styler";
 import { BurgerToggle } from "./BurgerFancy";
