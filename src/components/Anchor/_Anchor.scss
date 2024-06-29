@@ -2,7 +2,16 @@
     transition: color 0.15s ease-in-out;
     color: var(--inline-link);
 
+    & svg {
+        transition: fill 0.15s ease-in-out; 
+        fill:  var(--inline-link);
+    }
+
     &:hover {
         color: var(--inline-link-hover);
+
+        & svg {
+            fill: var(--inline-link-hover);
+        }
     }
 }

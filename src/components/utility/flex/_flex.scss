@@ -1,6 +1,8 @@
 @import '../../../_global.scss';
 
 .Flex {
+  --gap-modifier: 5px;
+
   display: flex;
 
   &--justify {
@@ -67,56 +69,14 @@
   }
 
   &--gap {
-    &-row {
-      &-xs {
-        row-gap: $padding-xs;
-      }
+    gap: calc(var(--flex-gap) * var(--gap-modifier))
+  }
 
-      &-sm {
-        row-gap: $padding-sm;
-      }
+  &--row-gap {
+    row-gap: calc(var(--flex-row-gap) * var(--gap-modifier))
+  }
 
-      &-md {
-        row-gap: $padding-md;
-      }
-
-      &-lg {
-        row-gap: $padding-lg;
-      }
-
-      &-xl {
-        row-gap: $padding-xl;
-      }
-
-      &-xxl {
-        row-gap: $padding-xxl;
-      }
-    }
-
-    &-col {
-      &-xs {
-        column-gap: $padding-xs;
-      }
-
-      &-sm {
-        column-gap: $padding-sm;
-      }
-
-      &-md {
-        column-gap: $padding-md;
-      }
-
-      &-lg {
-        column-gap: $padding-lg;
-      }
-
-      &-xl {
-        column-gap: $padding-xl;
-      }
-
-      &-xxl {
-        column-gap: $padding-xxl;
-      }
-    }
+  &--col-gap {
+    column-gap: calc(var(--flex-col-gap) * var(--gap-modifier))
   }
 }

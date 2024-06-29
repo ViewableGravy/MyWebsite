@@ -2,7 +2,7 @@ import React, { CSSProperties, forwardRef } from "react";
 import classNames from "classnames";
 
 import { TDefaults, TextColorProps, TextProps } from "./types";
-import useThemedStyles from "../../../functionality/styler";
+import useThemedClasses from "../../../functionality/styler/useThemedClasses";
 import Heading from "./heading";
 
 import './_text.scss';
@@ -87,7 +87,7 @@ const Text = forwardRef(({ paragraph, ...props }: TextProps, ref): React.ReactEl
     span: false
   });
   const { color, weight, div, span, lead } = getPrimaryProperties(props);
-  const { color: themed } = useThemedStyles();
+  const { color: themed } = useThemedClasses();
 
   /***** RENDER HELPERS *****/
   const _props = {

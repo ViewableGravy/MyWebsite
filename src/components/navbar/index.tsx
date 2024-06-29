@@ -7,7 +7,7 @@ import { useMedia } from "hooks/useMedia";
 import cn from "classnames";
 import Text from "components/utility/text";
 import { HeaderContext } from "./own";
-import useThemedStyles from "functionality/styler";
+import useThemedClasses from "functionality/styler/useThemedClasses";
 import { BurgerToggle } from "./BurgerFancy";
 import { _HeaderButton } from "./Button";
 import { useEventListener } from "hooks/useEventListener";
@@ -36,7 +36,7 @@ type THeader = React.FC<THeaderProps>
 
 const _Header: THeader = ({ children, title, titleMore, image, className, width, hideAbove = true }) => {
     const [{ small, large }, toggle] = useToggleState(['large', 'small'], { objectValues: true });
-    const { background } = useThemedStyles();
+    const { background } = useThemedClasses();
     const isMobile = useMedia(['xs', 'sm']);
     const isMini = useMedia(['xs']);
 

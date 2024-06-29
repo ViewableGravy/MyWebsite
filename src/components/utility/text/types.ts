@@ -1,4 +1,4 @@
-import useThemedStyles from 'functionality/styler';
+import useThemedClasses from 'functionality/styler/useThemedClasses';
 import { className } from '../../../utilities/runtimeInjectableProps/className';
 
 import React from "react";
@@ -44,7 +44,7 @@ type BaseTextProps = {
   'remove-margin'?: boolean;
 }
 
-type RTThemedColors = ReturnType<typeof useThemedStyles>['color']
+type RTThemedColors = ReturnType<typeof useThemedClasses>['color']
 export type TextColorProps = {
   primary?: boolean
 } | {

@@ -9,9 +9,7 @@ type Anchor = React.FC<_AnchorProps & {
   decoration?: 'underline' | 'none',
 }>
 
-export const _Anchor: Anchor = ({ decoration, ...props }) => {
-  console.log(decoration)
-  
+export const _Anchor: Anchor = ({ decoration, ...props }) => {  
   /***** HOOKS *****/
   const style = useStyle<CSSVariables>({
     '--anchor-decoration': decoration

@@ -1,0 +1,28 @@
+.Border {
+  --border-color: #000;
+  --border-radius-multiplier: 2;
+  
+  &--top {
+    border-top: var(--border-top) solid var(--border-color);
+  }
+
+  &--right {
+    border-right: var(--border-right) solid var(--border-color);
+  }
+
+  &--bottom {
+    border-bottom: var(--border-bottom) solid var(--border-color);
+  }
+
+  &--left {
+    border-left: var(--border-left) solid var(--border-color);
+  }
+
+  &--all {
+    border: var(--border-all) solid var(--border-color);
+  }
+
+  &--radius {
+    border-radius: calc(var(--border-radius) * var(--border-radius-multiplier));
+  }
+}

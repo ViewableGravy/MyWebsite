@@ -1,7 +1,7 @@
 import { useStore } from 'functionality/state/state';
 import './_ThemedStyles.scss'
 
-const useThemedStyles = () => {
+const useThemedClasses = () => {
   const [theme] = useStore((store) => store.theme);
 
   return {
@@ -20,4 +20,4 @@ const useThemedStyles = () => {
   } as const;
 };
 
-export default useThemedStyles;
+export default useThemedClasses;
