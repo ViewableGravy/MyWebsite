@@ -2,8 +2,10 @@
 $primary-light: #007bff;
 $primary-dark: #a831d6;
 
+$link-dark: var(--inline-link);;
+
 $secondary-light: #6c757d;
-$secondary-dark: #e0e0e0;
+$secondary-dark: #dadffd;
 
 $background-header-dark: #730465;
 $background-header-light: #f5f5f5;
@@ -48,7 +50,7 @@ $background-primary-light: #f5f5f5;
     }
 
     &-dark {
-      color: $primary-dark;
+      color: $link-dark;
     }
   }
 

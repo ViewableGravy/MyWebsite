@@ -14,13 +14,14 @@ type Border = React.FC<{
   all?: boolean | number,
   color?: Tokens,
   children: React.ReactNode,
-  className?: string
+  className?: string,
+  shadow?: boolean
 }>
 
 type BorderCSSVariables = '--border-color' | '--border-top' | '--border-left' | '--border-right' | '--border-bottom' | '--border-all' | '--border-radius'
 
 /***** COMPONENT START *****/
-export const Border: Border = ({ radius, className, top, left, right, bottom, all, color, children }) => {
+export const Border: Border = ({ radius, className, top, left, right, bottom, all, color, children, shadow }) => {
   /***** HOOKS *****/
   const selectedColor = useThemedStyles((data) => color ? data[color] : data.color_primary)  
 
@@ -41,7 +42,8 @@ export const Border: Border = ({ radius, className, top, left, right, bottom, al
     "Border--right": right,
     "Border--bottom": bottom,
     "Border--all": all,
-    "Border--radius": radius
+    "Border--radius": radius,
+    "Border--shadow": shadow
   })
 
   /***** RENDER *****/

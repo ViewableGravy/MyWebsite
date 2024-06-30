@@ -54,7 +54,7 @@ export type TextColorProps = {
 } | {
   white?: boolean
 } | {
-  customColor?: keyof RTThemedColors
+  customColor?: keyof RTThemedColors | false
 };
 
 type TInnerHTMLUnion = ({

@@ -43,7 +43,7 @@ const getPrimaryProperties  = (props: TextProps) => {
     if ('secondary' in props && props.secondary) return 'secondary';
     if ('customColor' in props && props.customColor) return props.customColor;
 
-    return 'white';
+    return 'secondary';
   }
 
   const getWeight = ({ bold, italic, underline }: TextProps) => {
