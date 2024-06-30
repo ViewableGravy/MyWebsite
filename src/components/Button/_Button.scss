@@ -1,0 +1,16 @@
+.Button {
+  all: unset;
+
+  transition: background-color 0.3s ease-in-out;
+  border-radius: 16px;
+  padding: 12px;
+  background-color: var(--button-background-color-primary);
+
+  cursor: pointer;
+
+  color: var(--color-secondary);
+
+  &:hover {
+    background-color: var(--button-background-color-primary-hovered);
+  }
+}

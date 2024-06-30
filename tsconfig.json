@@ -35,11 +35,7 @@
       "components/*": ["components/*"],
       "assets/*": ["assets/*"],
       "hooks/*": ["hooks/*"],
-    },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
-    "rootDirs": [
-      // "src",
-      // "components",
-    ],                                   /* Allow multiple folders to be treated as one when resolving modules. */
+    },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */  
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
     "types": ["vite/client"],                                      /* Specify type package names to be included without being referenced in a source file. */
     // "allowUmdGlobalAccess": true,                     /* Allow accessing UMD globals from modules. */

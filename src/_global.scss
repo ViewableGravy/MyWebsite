@@ -18,6 +18,23 @@ $font-family: "Figtree", "Nunito-sans", 'Roboto', sans-serif;
 
 :root {
     --default-spacing: 5px;
+
+    --color-primary: #a67ee6;
+    --color-secondary: #dadffd;
+    --color-tertiary: #8172bf;
+
+    --color-link: #00ffeed0;
+    --color-link-hover: #3161fe;
+
+    --border-color-primary: #a67ee6;
+    
+    --background-color-primary: #191731;
+    --background-color-secondary: #272256;
+    --background-color-vibrant: #8e319c;
+
+    --button-background-color-primary: #302a68;
+    --button-background-color-primary-hovered: #4a3eb8;
+
 }
 
 * {

@@ -1,4 +1,4 @@
-import { Hover } from "../../../../components/hover";
+import { HoverFollow } from "../../../../components/hover";
 import { useStore } from 'functionality/state/state';
 import { PostsHead } from "./head";
 import { PostsCard } from "./postcard";
@@ -19,7 +19,7 @@ export const Posts = () => {
     <>
       <PostsHead title={title} />
       <div className="posts">
-        <Hover onSize={['md', 'lg', 'xl', 'dual-lg', 'dual-xl', 'dual-xxl']}>
+        <HoverFollow onSize={['md', 'lg', 'xl', 'dual-lg', 'dual-xl', 'dual-xxl']}>
           {({ onMouseOver, onMouseLeave }) => (
             <ConditionalRender condition={!isLoading && !error} onFalse={postcards}>
               {data?.map((post) => (
@@ -32,7 +32,7 @@ export const Posts = () => {
               ))}
             </ConditionalRender>
           )}
-        </Hover>
+        </HoverFollow>
       </div>
       <Footer/>
     </>

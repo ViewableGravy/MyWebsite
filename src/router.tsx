@@ -1,4 +1,4 @@
-import { NotFoundRoute, Outlet, RootRoute, Route, Router } from '@tanstack/react-router';
+import { createRouter, NotFoundRoute, Outlet, RootRoute, Route, Router } from '@tanstack/react-router';
 import { VisitorMice } from 'components/liveMouse';
 import { About } from 'pages/about';
 import BlogArticle from 'pages/blog/article/article';
@@ -91,11 +91,8 @@ const routeTree = rootRoute.addChildren([
   routes.dashboard,
 ])
 
-export const router = new Router({
-  notFoundRoute: new NotFoundRoute({
-    getParentRoute: () => rootRoute,
-    component: Blog,
-  }),
+export const router = createRouter({
+  defaultNotFoundComponent: Blog,
   routeTree,
 });
 

@@ -32,7 +32,7 @@ const useStyles = createUseStyles({
  * 
  * Ensure that left/right aligns with the child as it does not currently (if they have different widths)
  */
-export const Hover: Hover = ({ children, onSize }) => {
+export const HoverFollow: Hover = ({ children, onSize }) => {
   const isMatchMedia = useMedia(onSize);
   const classes = useStyles();
   const ref = React.useRef<HTMLDivElement | null>(null);
