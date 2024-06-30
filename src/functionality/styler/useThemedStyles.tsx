@@ -12,7 +12,7 @@ export const styles = {
     "background_color_primary": "#f5f5f5",
   },
   dark: {
-    "color_primary": "#c8bfef",
+    "color_primary": "#a67ee6",
     "color_secondary": "#dadffd",
     "color_tertiary": "#8172bf",
     "background_color_primary": "#191731"

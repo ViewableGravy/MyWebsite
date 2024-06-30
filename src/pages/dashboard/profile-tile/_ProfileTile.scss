@@ -1,0 +1,62 @@
+.ProfileTile {
+  --profile-background-color: #272256;
+  --profile-border-radius: 20px;
+  
+  border-radius: var(--profile-border-radius);
+  width: 320px;
+  background-color: var(--profile-background-color);
+  padding: 20px;
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-in-out;
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+      transition: transform 0.3s ease-out;
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(142,50,154,1) 0%, rgba(156,0,255,1) 100%);
+      z-index: -1;
+      border-radius: var(--profile-border-radius);
+  }
+
+  &::after {
+      transition: transform 0.3s ease-out;
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: var(--profile-background-color);
+      border-radius: var(--profile-border-radius);
+      z-index: -1;
+  }
+
+  &:hover {
+      transform: rotateZ(-1deg);
+      &::before {
+          transform: rotateZ(2deg);
+      }
+  }
+  
+  &__avatar {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+  }
+
+  &__feature {
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      background: var(--background);
+
+      &:hover {
+          transform: scale(1.05);
+      }
+
+      .Padding {
+          transition: padding 0.2s ease-in-out;
+      }
+  }
+
+  &__Special {
+      transition: color 0.2s ease-in-out;
+  }
+}

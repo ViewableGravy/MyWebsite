@@ -3,18 +3,23 @@ import { Anchor } from "../../../components/Anchor"
 import Flex from "../../../components/utility/flex"
 import { Padding } from "../../../components/utility/padding"
 import Text from "../../../components/utility/text"
+import { Hover } from "../../../components/utility/hover"
+
+/***** COMPONENTS *****/
+import { ProfileTileFeature } from "./feature"
 
 /***** CONSTS *****/
 import { Icons } from "../../blog/menu/posts/_socials"
 import ProfileImage from 'assets/images/Lleyton.png'
-import { ProfileTileFeature } from "./feature"
-import { Hover } from "../../../components/utility/hover"
+import './_ProfileTile.scss'
 
+/***** TYPE DEFINITIONS *****/
 type SpecialHover = React.FC<{
   children: React.ReactNode,
   href?: string
 }>
 
+/***** COMPONENT START *****/
 const SpecialHover: SpecialHover = ({ children, href }) => {
   const { hovered } = Hover.useContext();
 

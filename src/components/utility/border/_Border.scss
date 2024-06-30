@@ -59,4 +59,8 @@
   &--radius {
     border-radius: calc(var(--border-radius) * var(--border-radius-multiplier));
   }
+
+  &--no-overflow {
+    overflow: hidden;
+  }
 }

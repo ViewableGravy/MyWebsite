@@ -9,6 +9,8 @@ import { Grid } from '../../components/utility/grid';
 import Text from '../../components/utility/text';
 import { Padding } from '../../components/utility/padding';
 import { ProfileTile } from './profile-tile';
+import { Border } from '../../components/utility/border';
+import { Shine } from '../../components/css/shine';
 
 export const Dashboard = () => {
   return (
@@ -37,6 +39,28 @@ const Achievements = () => {
   return (
     <Padding top={20}>
       <Text.Heading level={3} size-xl>Achievements</Text.Heading>
+      <Grid columns={["1fr", "1fr", "1fr"]} gap={5}>
+
+        <Border no-overflow all radius={8}>
+          <Shine full-height>
+            <Padding all={12}>
+              <Text size-sm remove-margin bold lead-md>Typed up</Text>
+              <Text remove-margin size-xs>Write a multi-line type</Text>
+            </Padding>
+          </Shine>
+        </Border>
+
+        <Border no-overflow all radius={8}>
+          <Shine full-height>
+            <Padding all={12}>
+              <Text size-sm remove-margin bold lead-md>Not so junior</Text>
+              <Text remove-margin size-xs>
+                Maintain a professional developer position for 1 year
+              </Text>
+            </Padding>
+          </Shine>
+        </Border>
+      </Grid>
     </Padding>
   )
 }
