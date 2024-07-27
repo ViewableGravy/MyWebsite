@@ -79,7 +79,6 @@ const Achievements = () => {
           <Achievement title="Meet the Tanman">Have Tanner Linsley respond to a discussion post</Achievement>
           <Achievement title="Self Hosted">Host Software from a dedicated home server</Achievement>
         </Subset>
-
       </Grid>
     </Padding>
   )

@@ -16,13 +16,19 @@ type Border = React.FC<{
   children: React.ReactNode,
   className?: string,
   shadow?: boolean,
+  outline?: boolean,
+
+  /**
+   * 
+   */
+  type?: "outline" | "border" | "shadow"
   "no-overflow"?: boolean
 }>
 
 type BorderCSSVariables = '--border-color' | '--border-top' | '--border-left' | '--border-right' | '--border-bottom' | '--border-all' | '--border-radius'
 
 /***** COMPONENT START *****/
-export const Border: Border = ({ radius, className, top, left, right, bottom, all, color, children, shadow, "no-overflow": noOverflow }) => {
+export const Border: Border = ({ radius, className, top, left, right, bottom, all, color, children, "no-overflow": noOverflow, type = "border" }) => {
   /***** HOOKS *****/
   const selectedColor = useThemedStyles((data) => color ? data[color] : data.color_primary)  
 
@@ -34,17 +40,16 @@ export const Border: Border = ({ radius, className, top, left, right, bottom, al
     '--border-bottom': bottom,
     '--border-all': all,
     '--border-radius': radius
-  }, { number: useStyle.transformers.pixel.number })
+  }, useStyle.transformers.pixel)
 
   /***** RENDER HELPERS *****/
-  const classes = classNames("Border", className, {
+  const classes = classNames("Border", `Border--type-${[type]}`, className, {
     "Border--top": top,
     "Border--left": left,
     "Border--right": right,
     "Border--bottom": bottom,
     "Border--all": all,
     "Border--radius": radius,
-    "Border--shadow": shadow,
     "Border--no-overflow": noOverflow
   })
 

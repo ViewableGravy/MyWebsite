@@ -7,7 +7,7 @@ export const ProfileTileFeature = ({ children }: { children: React.ReactNode }) 
   return (
     <Hover>
       {({ hovered }) => (
-        <Border shadow all={hovered ? 2 : 1} radius={3} color='color_tertiary' className='ProfileTile__feature'>
+        <Border type="shadow" all={hovered ? 2 : 1} radius={3} color='color_tertiary' className='ProfileTile__feature'>
           <Padding all={12}>
             <Text lead-1 remove-margin customColor="tertiary" bold>
               {children}

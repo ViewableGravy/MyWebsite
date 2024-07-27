@@ -7,38 +7,20 @@ import { Hover } from "../../../components/utility/hover"
 
 /***** COMPONENTS *****/
 import { ProfileTileFeature } from "./feature"
+import { SpecialHover } from "../components/specialHover"
 
 /***** CONSTS *****/
 import { Icons } from "../../blog/menu/posts/_socials"
 import ProfileImage from 'assets/images/Lleyton.png'
 import './_ProfileTile.scss'
 
-/***** TYPE DEFINITIONS *****/
-type SpecialHover = React.FC<{
-  children: React.ReactNode,
-  href?: string
-}>
-
-/***** COMPONENT START *****/
-const SpecialHover: SpecialHover = ({ children, href }) => {
-  const { hovered } = Hover.useContext();
-
-  return (
-    <Anchor href={href ?? "#"} decoration='none'>
-      <Text span customColor={hovered && "link"} className="ProfileTile__Special">
-        {children}
-      </Text>
-    </Anchor>
-  )
-}
+const specialNexigen = <SpecialHover href="https://nexigen.digital/">Nexigen Digital</SpecialHover>;
+const specialTanstack = <SpecialHover href="https://tanstack.com/">Tanstack</SpecialHover>;
+const specialReact = <SpecialHover href="https://reactjs.org/">React</SpecialHover>;
+const specialTypescript = <SpecialHover href="https://www.typescriptlang.org/">Typescript</SpecialHover>;
 
 /***** COMPONENT START *****/
 export const ProfileTile = () => {
-  const specialNexigen = <SpecialHover href="https://nexigen.digital/">Nexigen Digital</SpecialHover>;
-  const specialTanstack = <SpecialHover href="https://tanstack.com/">Tanstack</SpecialHover>;
-  const specialReact = <SpecialHover href="https://reactjs.org/">React</SpecialHover>;
-  const specialTypescript = <SpecialHover href="https://www.typescriptlang.org/">Typescript</SpecialHover>;
-
   return (
     <div className='ProfileTile'>
       <img className="ProfileTile__avatar" src={ProfileImage} />

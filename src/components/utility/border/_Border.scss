@@ -2,56 +2,61 @@
   --border-radius-multiplier: 2;
   
   &--top {
-    &:not(.Border--shadow) {
+    &.Border--type-border {
       border-top: var(--border-top) solid var(--border-color);
     }
 
-    &.Border--shadow {
+    &.Border--type-shadow {
       box-shadow: 0 0px 0px var(--border-top) var(--border-color);
       clip-path: inset(0px calc(var(--border-top) * -1) 0px var(--border-radius));
     }
   }
 
   &--right {
-    &:not(.Border--shadow) {
+    &.Border--type-border {
       border-right: var(--border-right) solid var(--border-color);
     }
 
-    &.Border--shadow {
+    &.Border--type-shadow {
       box-shadow: 0 0px 0px var(--border-right) var(--border-color);
       clip-path: inset(var(--border-radius) 0px 0px 0px);
     }
   }
 
   &--bottom {
-    &:not(.Border--shadow) {
+    &.Border--type-border {
       border-bottom: var(--border-bottom) solid var(--border-color);
     }
 
-    &.Border--shadow {
+    &.Border--type-shadow {
       box-shadow: 0 0px 0px var(--border-bottom) var(--border-color);
       clip-path: inset(0px calc(var(--border-bottom) * -1) 0px var(--border-radius));
     }
   }
 
   &--left {
-    &:not(.Border--shadow) {
+    &.Border--type-border {
       border-left: var(--border-left) solid var(--border-color);
     }
 
-    &.Border--shadow {
+    &.Border--type-shadow {
       box-shadow: 0 0px 0px var(--border-left) var(--border-color);
       clip-path: inset(var(--border-radius) 0px 0px 0px);
     }
   }
 
   &--all {
-    &:not(.Border--shadow) {
+    &.Border--type-border {
       border: var(--border-all) solid var(--border-color);
     }
 
-    &.Border--shadow {
+    &.Border--type-shadow {
       box-shadow: 0 0px 0px var(--border-all) var(--border-color);
+    }
+
+
+    &.Border--type-outline {
+      outline: var(--border-all) solid var(--border-color);
     }
   }
 
