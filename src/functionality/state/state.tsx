@@ -50,16 +50,15 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
 }
 
 export const useStore = <T extends any = undefined>(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   selector: (store: TStore) => T = (store: TStore) => store as any
 ): [T extends undefined ? TStore : T, TDispatch] => {
   const store = React.useContext(storeContext);
-  if (!store) 
-    throw new Error('useStore must be used within a StoreProvider.');
 
-  const [state, setState] = React.useState(
-    selector(store.get())
-  );
+  if (!store) {
+    throw new Error('useStore must be used within a StoreProvider.');
+  }
+
+  const [state, setState] = React.useState(selector(store.get()));
 
   React.useEffect(() => {
     return store.subscribe(() => setState(selector(store.get())));

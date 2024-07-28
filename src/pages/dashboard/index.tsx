@@ -21,6 +21,8 @@ import { Subset } from '../../components/utility/subset';
 import { useState } from 'react';
 import { Button } from '../../components/Button';
 import Flex from '../../components/utility/flex';
+import { Page } from '../../components/Page';
+import { useMedia } from '../../hooks/useMedia';
 
 export const Dashboard = () => {
   return (
@@ -71,7 +73,7 @@ const Achievements = () => {
           <Button onClick={() => setShowAll(!showAll)}>Show All</Button>
         </Flex>
       </Padding>
-      <Grid columns={["1fr", "1fr", "1fr"]} gap={5}>
+      <Grid columns={["repeat(auto-fit, minmax(245px, 1fr))"]} gap={5}>
         <Subset count={showAll ? Infinity : 3}>
           <Achievement title="Typed up">Write a multi-line type</Achievement>
           <Achievement title="Not so junior">Industry Software Engineer for 1 year</Achievement>
@@ -119,12 +121,18 @@ const DashboardContent = () => {
 }
 
 export const Dashboard2 = () => {
+  /***** HOOKS *****/
+  const columns = useMedia(["xs", "sm", "md"], {
+    select: (isMobile) => isMobile ? "1fr" : ["auto", "1fr"]
+  })
+
+  /***** RENDER *****/
   return (
-    <div className='Dashboard2'>
-      <Grid columns={["auto", "1fr"]} gap={6}>
+    <Page>
+      <Grid columns={columns} gap={6}>
         <ProfileTile />
         <DashboardContent />
       </Grid>
-    </div>
+    </Page>
   )
 }

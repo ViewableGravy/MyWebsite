@@ -1,0 +1,12 @@
+
+.Page {
+  margin-inline: auto;
+  max-width: 1440px;
+  padding: 40px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 20px;
+  }
+
+}

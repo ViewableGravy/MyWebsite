@@ -14,6 +14,7 @@ import { useEventListener } from "hooks/useEventListener";
 import { TClampParameters, clamp } from "utilities/functions/clamp";
 import { usePreconfiguredButtons } from "./useBaseHeaderButtons";
 import { useHeaderProps } from "./useBaseHeaderProps";
+import { ConditionalRender } from "../conditionalRender/turneryRender";
 
 export type THeaderProps = {
     children: React.ReactNode,
@@ -35,13 +36,20 @@ export type THeaderProps = {
 type THeader = React.FC<THeaderProps>
 
 const _Header: THeader = ({ children, title, titleMore, image, className, width, hideAbove = true }) => {
+    /***** STATE *****/
+    const [isOpen, setIsOpen] = useState(false);
+
+    /***** HOOKS *****/
     const [{ small, large }, toggle] = useToggleState(['large', 'small'], { objectValues: true });
     const { background } = useThemedClasses();
     const isMobile = useMedia(['xs', 'sm']);
     const isMini = useMedia(['xs']);
 
-    const [isOpen, setIsOpen] = useState(false);
+    useEventListener('scroll', () => {
+        window.scrollY > 50 ? toggle('small') : toggle('large');
+    });
 
+    /***** RENDER HELPERS *****/
     const [outer, gcn] = bemBuilder('Header');
     const classes = {
         wrapper: cn(gcn("wrapper")),
@@ -67,10 +75,7 @@ const _Header: THeader = ({ children, title, titleMore, image, className, width,
         dropdownInner: gcn('dropdownInner')
     }
 
-    useEventListener('scroll', () => {
-        window.scrollY > 50 ? toggle('small') : toggle('large');
-    }, undefined)
-
+    /***** FUNCTIONS *****/
     const getWidth = () => {
         if (typeof width === 'object' && !Array.isArray(width)) {
             return isMobile ? clamp(width?.mobile) : clamp(width?.desktop);
@@ -79,13 +84,9 @@ const _Header: THeader = ({ children, title, titleMore, image, className, width,
         return clamp(width);
     }
 
-    const context = {
-        isSmall: small,
-        isMobile
-    }
-
+    /***** RENDER *****/
     return (
-        <HeaderContext.Provider value={context}>
+        <HeaderContext.Provider value={{ isSmall: small, isMobile }}>
             <div style={{ width: getWidth() }} className={classes.wrapper}>
                 <div className={classes.hider} />
                 <div className={classes.header}>
@@ -104,15 +105,11 @@ const _Header: THeader = ({ children, title, titleMore, image, className, width,
                         </div>
                     </div>
 
-                    {!isMobile && (
+                    <ConditionalRender condition={!isMobile} onFalse={<BurgerToggle active={isOpen} setActive={setIsOpen} />}>
                         <div className={classes.linksContainer}>
                             {children}
                         </div>
-                    )}
-
-                    {isMobile && (
-                        <BurgerToggle active={isOpen} setActive={setIsOpen} />
-                    )}
+                    </ConditionalRender>
                 </div>
 
                 {/* Mobile Dropdown */}
